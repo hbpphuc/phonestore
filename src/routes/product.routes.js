@@ -4,6 +4,15 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
-router.route('/').get(authController.protect, productController.getAllProduct);
+router
+    .route('/')
+    .get(productController.getAllProduct)
+    .post(productController.createProduct);
+
+router
+    .route('/:id')
+    .get(productController.getProduct)
+    .put(productController.updateProduct)
+    .delete(productController.deleteProduct);
 
 module.exports = router;
