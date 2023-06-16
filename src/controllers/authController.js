@@ -1,8 +1,10 @@
-const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const asyncHandler = require('express-async-handler');
-const { AppError } = require('../utils');
+const User = require('../models/userModel');
 const { createAccessToken, createRefreshToken } = require('../middlewares/jwt');
+const { AppError, Email } = require('../utils');
+const { findOne } = require('../models/userModel');
 
 const sendToken = asyncHandler(async (user, statusCode, req, res) => {
     const token = createAccessToken(user._id, user.email);
@@ -30,6 +32,9 @@ exports.signup = asyncHandler(async (req, res, next) => {
     const newUser = await User.create(req.body);
 
     sendToken(newUser, 201, req, res);
+
+    // const url = `${req.protocol}://${req.get('host')}`;
+    // await new Email(newUser, url).sendWelcome();
 });
 
 exports.login = asyncHandler(async (req, res, next) => {
@@ -90,4 +95,75 @@ exports.protect = asyncHandler(async (req, res, next) => {
     req.user = currentUser;
     res.locals.user = currentUser;
     next();
+});
+
+exports.restrictTo = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            return next(
+                new AppError(
+                    'You do not have permission to perform this action',
+                    403
+                )
+            );
+        }
+        next();
+    };
+};
+
+exports.forgotPassword = asyncHandler(async (req, res, next) => {
+    const user = await User.findOne({ email: req.body.email });
+
+    if (!user)
+        return next(
+            new AppError('There is no user with this email address.', 404)
+        );
+
+    const resetToken = user.createResetPasswordToken();
+    await user.save({ validateBeforeSave: false });
+
+    // send Email
+
+    try {
+        const url = `${req.protocol}://${req.get(
+            'host'
+        )}/api/v1/users/resetPassword/${resetToken}`;
+        await new Email(user, url).sendResetPassword();
+
+        res.status(200).json({
+            status: 'success',
+            message: 'Request sent to email!',
+        });
+    } catch (error) {
+        user.passwordResetToken = undefined;
+        user.passwordResetExpires = undefined;
+        await user.save({ validateBeforeSave: false });
+        return next(
+            new AppError(
+                'There was an error sending the email! Please try later!',
+                500
+            )
+        );
+    }
+});
+
+exports.resetPassword = asyncHandler(async (req, res, next) => {
+    const hashedToken = crypto
+        .createHash('sha256')
+        .update(req.params.token)
+        .digest('hex');
+
+    const user = await User.findOne({
+        passwordResetToken: hashedToken,
+        passwordResetExpires: { $gt: Date.now() },
+    });
+
+    if (!user) return next(new AppError('Invalid token or has expired!', 400));
+    user.password = req.body.password;
+    user.passwordConfirm = req.body.passwordConfirm;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save();
+
+    sendToken(user, 200, req, res);
 });

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 const userSchema = new mongoose.Schema(
     {
@@ -71,16 +72,42 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
+userSchema.pre('save', function (next) {
+    if (!this.isModified('password') || this.isNew) return next();
+    this.passwordChangeAt = Date.now() - 1000;
+    next();
+});
+
 // userSchema.pre(/^find/, function (next) {
 //     this.find({ active: { $ne: false } });
 //     next();
 // });
 
-userSchema.methods.correctPassword = async function (
-    candidatePassword,
-    userPassword
-) {
-    return await bcrypt.compare(candidatePassword, userPassword);
+userSchema.methods = {
+    async correctPassword(candidatePassword, userPassword) {
+        return await bcrypt.compare(candidatePassword, userPassword);
+    },
+
+    changePasswordAfter(timestamp) {
+        if (this.passwordChangeAt) {
+            const changeTimestamp = parseInt(
+                this.passwordChangeAt.getTime() / 1000,
+                10
+            );
+            return timestamp < changeTimestamp;
+        }
+        return false;
+    },
+
+    createResetPasswordToken() {
+        const resetToken = crypto.randomBytes(32).toString('hex');
+        this.passwordResetToken = crypto
+            .createHash('sha256')
+            .update(resetToken)
+            .digest('hex');
+        this.passwordResetExpires = Date.now() + 15 * 60 * 1000;
+        return resetToken;
+    },
 };
 
 const User = mongoose.model('User', userSchema);
