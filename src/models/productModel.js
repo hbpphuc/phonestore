@@ -48,7 +48,7 @@ const productSchema = new mongoose.Schema(
             {
                 star: { type: Number },
                 postedBy: { type: mongoose.Types.ObjectId, ref: 'User' },
-                comment: { type: String },
+                review: { type: String },
             },
         ],
         totalRatings: {
@@ -60,7 +60,7 @@ const productSchema = new mongoose.Schema(
 );
 
 productSchema.pre('save', function (next) {
-    this.slug = slugify(this.name, { lower: true });
+    this.slug = slugify(this.name, { lower: true, locale: 'vi' });
     next();
 });
 

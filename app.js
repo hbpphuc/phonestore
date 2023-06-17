@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
 const { AppError, globalErrorHandler } = require('./src/utils/');
-const { userRouter, productRouter } = require('./src/routes/');
+const { userRouter, productRouter, categoryRouter } = require('./src/routes/');
 
 const app = express();
 
@@ -25,6 +25,7 @@ app.use(cookieParser());
 
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/products', productRouter);
+app.use('/api/v1/categorys', categoryRouter);
 
 app.all('*', function (req, res, next) {
     next(new AppError(`Route ${req.originalUrl} not found`, 404));

@@ -1,4 +1,5 @@
 const asyncHandler = require('express-async-handler');
+const slugify = require('slugify');
 const { AppError, APIFeatures } = require('../utils');
 
 exports.getAll = (Model) =>
@@ -64,9 +65,14 @@ exports.updateOne = (Model) =>
             runValidators: true,
         });
 
+        if (doc.slug)
+            doc.slug = slugify(doc.name, { lower: true, locale: 'vi' });
+
         if (!doc) {
             return next(new AppError('No document found with this ID', 404));
         }
+
+        await doc.save();
 
         res.status(200).json({
             status: 'success',
