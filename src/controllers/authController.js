@@ -97,7 +97,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
     next();
 });
 
-exports.restrictTo = (...roles) => {
+exports.restrict = (...roles) => {
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) {
             return next(
@@ -123,7 +123,6 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     await user.save({ validateBeforeSave: false });
 
     // send Email
-
     try {
         const url = `${req.protocol}://${req.get(
             'host'
@@ -158,12 +157,34 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
         passwordResetExpires: { $gt: Date.now() },
     });
 
-    if (!user) return next(new AppError('Invalid token or has expired!', 400));
+    if (!user) {
+        return next(new AppError('Invalid token or has expired!', 400));
+    }
+
     user.password = req.body.password;
     user.passwordConfirm = req.body.passwordConfirm;
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
+
     await user.save();
 
     sendToken(user, 200, req, res);
+});
+
+exports.updatePassword = asyncHandler(async (req, res, next) => {
+    const curUser = await User.findById(req.user.id).select('+password');
+    const correct = curUser.correctPassword(
+        req.body.passwordCurrent,
+        curUser.password
+    );
+
+    if (!correct)
+        return next(new AppError('Your current password is wrong!', 401));
+
+    curUser.password = req.body.password;
+    curUser.passwordConfirm = req.body.passwordConfirm;
+    await curUser.save();
+
+    // 4. Log user in, send JWT
+    createSendToken(curUser, 201, req, res);
 });

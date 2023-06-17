@@ -67,7 +67,7 @@ userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) {
         return next();
     }
-    this.password = await bcrypt.hashSync(this.password, 12);
+    this.password = await bcrypt.hash(this.password, 12);
     this.passwordConfirm = undefined;
     next();
 });
@@ -78,10 +78,10 @@ userSchema.pre('save', function (next) {
     next();
 });
 
-// userSchema.pre(/^find/, function (next) {
-//     this.find({ active: { $ne: false } });
-//     next();
-// });
+userSchema.pre(/^find/, function (next) {
+    this.find({ active: { $ne: false } });
+    next();
+});
 
 userSchema.methods = {
     async correctPassword(candidatePassword, userPassword) {
