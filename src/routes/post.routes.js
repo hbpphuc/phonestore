@@ -16,5 +16,8 @@ router
     .delete(postController.deletePost);
 
 router.route('/:id/liking').put(authController.protect, postController.liking);
+router
+    .route('/:id/disliking')
+    .put(authController.protect, postController.disliking);
 
 module.exports = router;
