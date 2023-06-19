@@ -1,15 +1,15 @@
 const asyncHandler = require('express-async-handler');
 const multer = require('multer');
 const sharp = require('sharp');
-const CRUD = require('./crudHandler');
+const crud = require('./crudHandler');
 const Product = require('../models/productModel');
 const { AppError } = require('../utils');
 
-exports.getAllProduct = CRUD.getAll(Product);
-exports.createProduct = CRUD.createOne(Product);
-exports.getProduct = CRUD.getOne(Product);
-exports.updateProduct = CRUD.updateOne(Product);
-exports.deleteProduct = CRUD.deleteOne(Product);
+exports.getAllProduct = crud.getAll(Product);
+exports.createProduct = crud.createOne(Product);
+exports.getProduct = crud.getOne(Product);
+exports.updateProduct = crud.updateOne(Product);
+exports.deleteProduct = crud.deleteOne(Product);
 
 exports.searchProduct = asyncHandler(async (req, res, next) => {
     const product = await Product.find({

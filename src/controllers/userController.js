@@ -1,7 +1,7 @@
 const User = require('../models/userModel');
 const asyncHandler = require('express-async-handler');
 const { AppError } = require('../utils');
-const CRUD = require('./crudHandler');
+const crud = require('./crudHandler');
 
 exports.getMe = (req, res, next) => {
     req.params.id = req.user.id;
@@ -48,8 +48,8 @@ exports.deleteMe = asyncHandler(async (req, res, next) => {
     });
 });
 
-exports.getAllUser = CRUD.getAll(User);
-exports.getUser = CRUD.getOne(User);
+exports.getAllUser = crud.getAll(User);
+exports.getUser = crud.getOne(User);
 // DO NOT UPDATE PASSWORD WITH THIS
-exports.updateUser = CRUD.updateOne(User);
-exports.deleteUser = CRUD.deleteOne(User);
+exports.updateUser = crud.updateOne(User);
+exports.deleteUser = crud.deleteOne(User);

@@ -1,8 +1,8 @@
 const Category = require('../models/categoryModel');
-const CRUD = require('./crudHandler');
+const crud = require('./crudHandler');
 
-exports.getAllCategory = CRUD.getAll(Category);
-exports.createCategory = CRUD.createOne(Category);
-exports.getCategory = CRUD.getOne(Category);
-exports.updateCategory = CRUD.updateOne(Category);
-exports.deleteCategory = CRUD.deleteOne(Category);
+exports.getAllCategory = crud.getAll(Category);
+exports.createCategory = crud.createOne(Category);
+exports.getCategory = crud.getOne(Category);
+exports.updateCategory = crud.updateOne(Category);
+exports.deleteCategory = crud.deleteOne(Category);
