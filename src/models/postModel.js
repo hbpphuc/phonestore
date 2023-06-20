@@ -57,6 +57,14 @@ postSchema.pre('save', function (next) {
     next();
 });
 
+postSchema.pre(/^find/, function (next) {
+    this.populate({
+        path: 'likes dislikes',
+        select: 'name -_id',
+    });
+    next();
+});
+
 const Post = mongoose.model('Post', postSchema);
 
 module.exports = Post;

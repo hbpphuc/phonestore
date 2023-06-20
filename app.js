@@ -13,6 +13,7 @@ const {
     topicRouter,
     postRouter,
     reviewRouter,
+    brandRouter,
 } = require('./src/routes/');
 
 const app = express();
@@ -39,6 +40,7 @@ app.use('/api/v1/categorys', categoryRouter);
 app.use('/api/v1/topics', topicRouter);
 app.use('/api/v1/posts', postRouter);
 app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/brands', brandRouter);
 
 app.all('*', function (req, res, next) {
     next(new AppError(`Route ${req.originalUrl} not found`, 404));

@@ -16,7 +16,8 @@ const productSchema = new mongoose.Schema(
             type: String,
         },
         brand: {
-            type: String,
+            type: mongoose.Types.ObjectId,
+            ref: 'Brand',
             required: [true, 'A product must have a brand'],
         },
         price: {
@@ -26,6 +27,7 @@ const productSchema = new mongoose.Schema(
         category: {
             type: mongoose.Types.ObjectId,
             ref: 'Category',
+            required: [true, 'A product must have a category'],
         },
         quantity: {
             type: Number,
@@ -44,14 +46,11 @@ const productSchema = new mongoose.Schema(
             type: String,
             enum: ['Black', 'White', 'Red'],
         },
-        ratings: [
-            {
-                star: { type: Number },
-                postedBy: { type: mongoose.Types.ObjectId, ref: 'User' },
-                review: { type: String },
-            },
-        ],
-        totalRatings: {
+        ratings_average: {
+            type: Number,
+            default: 0,
+        },
+        ratings_count: {
             type: Number,
             default: 0,
         },
@@ -72,6 +71,14 @@ productSchema.virtual('reviews', {
     ref: 'Review',
     foreignField: 'product',
     localField: '_id',
+});
+
+productSchema.pre(/^find/, function (next) {
+    this.populate({
+        path: 'brand category',
+        select: 'name -_id',
+    });
+    next();
 });
 
 const Product = mongoose.model('Product', productSchema);
