@@ -5,6 +5,7 @@ const categoryRouter = require('./category.routes');
 const topicRouter = require('./topic.routes');
 const reviewRouter = require('./review.routes');
 const brandRouter = require('./brand.routes');
+const couponRouter = require('./coupon.routes');
 
 module.exports = {
     userRouter,
@@ -14,4 +15,5 @@ module.exports = {
     topicRouter,
     reviewRouter,
     brandRouter,
+    couponRouter,
 };
