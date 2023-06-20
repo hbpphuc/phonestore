@@ -1,8 +1,11 @@
 const express = require('express');
 const productController = require('../controllers/productController');
 const authController = require('../controllers/authController');
+const reviewRouter = require('../routes/review.routes');
 
 const router = express.Router();
+
+router.use('/:prodId/reviews', reviewRouter);
 
 router.route('/search').get(productController.searchProduct);
 

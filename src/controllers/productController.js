@@ -7,7 +7,10 @@ const { AppError } = require('../utils');
 
 exports.getAllProduct = crud.getAll(Product);
 exports.createProduct = crud.createOne(Product);
-exports.getProduct = crud.getOne(Product);
+exports.getProduct = crud.getOne(Product, {
+    path: 'reviews',
+    select: 'content rating user',
+});
 exports.updateProduct = crud.updateOne(Product);
 exports.deleteProduct = crud.deleteOne(Product);
 

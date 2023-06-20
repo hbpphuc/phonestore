@@ -1,4 +1,4 @@
-const Topic = require('../models/categoryModel');
+const Topic = require('../models/topicModel');
 const crud = require('./crudHandler');
 
 exports.getAllTopic = crud.getAll(Topic);

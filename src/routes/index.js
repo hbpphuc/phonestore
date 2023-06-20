@@ -3,6 +3,7 @@ const productRouter = require('./product.routes');
 const postRouter = require('./post.routes');
 const categoryRouter = require('./category.routes');
 const topicRouter = require('./topic.routes');
+const reviewRouter = require('./review.routes');
 
 module.exports = {
     userRouter,
@@ -10,4 +11,5 @@ module.exports = {
     categoryRouter,
     postRouter,
     topicRouter,
+    reviewRouter,
 };
