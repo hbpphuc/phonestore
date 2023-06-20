@@ -36,11 +36,5 @@ couponSchema.pre('save', function (next) {
     next();
 });
 
-// couponSchema.methods = {
-//     setExpiredDate() {
-//         return (this.expire = Date.now() + 15 * 24 * 60 * 60 * 1000);
-//     },
-// };
-
 const Coupon = mongoose.model('Coupon', couponSchema);
 module.exports = Coupon;

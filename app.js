@@ -6,16 +6,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 
 const { AppError, globalErrorHandler } = require('./src/utils/');
-const {
-    userRouter,
-    productRouter,
-    categoryRouter,
-    topicRouter,
-    postRouter,
-    reviewRouter,
-    brandRouter,
-    couponRouter,
-} = require('./src/routes/');
+const initRoutes = require('./src/routes');
 
 const app = express();
 
@@ -35,18 +26,7 @@ app.use(bodyParser.json({ limit: '10kb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookieParser());
 
-app.use('/api/v1/users', userRouter);
-app.use('/api/v1/products', productRouter);
-app.use('/api/v1/categorys', categoryRouter);
-app.use('/api/v1/topics', topicRouter);
-app.use('/api/v1/posts', postRouter);
-app.use('/api/v1/reviews', reviewRouter);
-app.use('/api/v1/brands', brandRouter);
-app.use('/api/v1/coupons', couponRouter);
-
-app.all('*', function (req, res, next) {
-    next(new AppError(`Route ${req.originalUrl} not found`, 404));
-});
+initRoutes(app);
 
 app.use(globalErrorHandler);
 
