@@ -6,6 +6,7 @@ const topicRouter = require('./topic.routes');
 const reviewRouter = require('./review.routes');
 const brandRouter = require('./brand.routes');
 const couponRouter = require('./coupon.routes');
+const { AppError } = require('../utils');
 
 const initRoutes = (app) => {
     app.use('/api/v1/users', userRouter);

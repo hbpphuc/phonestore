@@ -36,10 +36,11 @@ const postSchema = new mongoose.Schema(
                 ref: 'User',
             },
         ],
-        imageCover: {
+        thumbnail: {
             type: String,
             default: 'default-post.jpg',
         },
+        images: [String],
         author: {
             type: String,
             default: 'Administrator',

@@ -1,6 +1,35 @@
 const asyncHandler = require('express-async-handler');
 const Post = require('../models/postModel');
 const crud = require('./crudHandler');
+const uploadCloud = require('../configs/cloudinary.config');
+
+exports.populatedImages = uploadCloud.fields([
+    { name: 'thumbnail', maxCount: 1 },
+    { name: 'images', maxCount: 10 },
+]);
+
+exports.uploadPostImages = asyncHandler(async (req, res, next) => {
+    if (!req.files.imageCover || !req.files.images) {
+        return next(new AppError('There is no thumbnail or images.', 404));
+    }
+
+    const post = await Post.findByIdAndUpdate(
+        req.params.id,
+        {
+            imageCover: req.files.imageCover[0].path,
+            $push: {
+                images: { $each: req.files.images.map((file) => file.path) },
+            },
+        },
+        { new: true }
+    ).select('title thumbnail images');
+
+    res.status(200).json({
+        data: {
+            post,
+        },
+    });
+});
 
 exports.getAllPost = crud.getAll(Post);
 exports.createPost = crud.createOne(Post);

@@ -2,6 +2,7 @@ const User = require('../models/userModel');
 const asyncHandler = require('express-async-handler');
 const { AppError } = require('../utils');
 const crud = require('./crudHandler');
+const uploadCloud = require('../configs/cloudinary.config');
 
 exports.getMe = (req, res, next) => {
     req.params.id = req.user.id;
@@ -16,6 +17,8 @@ const filterObj = (obj, ...fields) => {
     return newObj;
 };
 
+exports.populatedImages = uploadCloud.single('photo');
+
 exports.updateMe = asyncHandler(async (req, res, next) => {
     if (req.body.password || req.body.passwordConfirm)
         return next(
@@ -26,6 +29,7 @@ exports.updateMe = asyncHandler(async (req, res, next) => {
         );
 
     const filterBody = filterObj(req.body, 'name', 'email');
+    if (req.file) filterBody.photo = req.file.path;
     const user = await User.findByIdAndUpdate(req.user.id, filterBody, {
         new: true,
         runValidators: true,

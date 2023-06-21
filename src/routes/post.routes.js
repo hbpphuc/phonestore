@@ -5,6 +5,10 @@ const authController = require('../controllers/authController');
 const router = express.Router();
 
 router
+    .route('/uploads/:id')
+    .put(postController.populatedImages, postController.uploadPostImages);
+
+router
     .route('/')
     .get(postController.getAllPost)
     .post(postController.createPost);

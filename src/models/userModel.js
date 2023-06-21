@@ -38,11 +38,11 @@ const userSchema = new mongoose.Schema(
         },
         photo: {
             type: String,
-            default: 'default.jpg',
+            default:
+                'https://res.cloudinary.com/dqsmvz7lv/image/upload/v1687345761/Phonestore/qviw1rylnqoqjmeyrucb.jpg',
         },
-        phone: {
-            type: String,
-        },
+        phone: String,
+        address: String,
         role: {
             type: String,
             enum: ['user', 'admin'],

@@ -1,9 +1,38 @@
 const asyncHandler = require('express-async-handler');
-const multer = require('multer');
 const sharp = require('sharp');
+
 const crud = require('./crudHandler');
 const Product = require('../models/productModel');
 const { AppError } = require('../utils');
+const uploadCloud = require('../configs/cloudinary.config');
+
+exports.populatedImages = uploadCloud.fields([
+    { name: 'imageCover', maxCount: 1 },
+    { name: 'images', maxCount: 10 },
+]);
+
+exports.uploadProductImages = asyncHandler(async (req, res, next) => {
+    if (!req.files.imageCover || !req.files.images) {
+        return next(new AppError('There is no image cover or images.', 404));
+    }
+
+    const product = await Product.findByIdAndUpdate(
+        req.params.id,
+        {
+            imageCover: req.files.imageCover[0].path,
+            $push: {
+                images: { $each: req.files.images.map((file) => file.path) },
+            },
+        },
+        { new: true }
+    ).select('name imageCover images');
+
+    res.status(200).json({
+        data: {
+            product,
+        },
+    });
+});
 
 exports.getAllProduct = crud.getAll(Product);
 exports.createProduct = crud.createOne(Product);

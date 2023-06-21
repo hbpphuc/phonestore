@@ -7,16 +7,21 @@ const router = express.Router();
 
 router.use('/:prodId/reviews', reviewRouter);
 
+router
+    .route('/uploads/:id')
+    .put(
+        productController.populatedImages,
+        productController.uploadProductImages
+    );
+
 router.route('/search').get(productController.searchProduct);
 
-router
-    .route('/')
-    .get(productController.getAllProduct)
-    .post(
-        authController.protect,
-        authController.restrict('admin'),
-        productController.createProduct
-    );
+router.route('/').get(productController.getAllProduct).post(
+    authController.protect,
+    authController.restrict('admin'),
+
+    productController.createProduct
+);
 
 router
     .route('/:id')
