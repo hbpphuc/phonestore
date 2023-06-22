@@ -1,3 +1,4 @@
+const { AppError } = require('../utils');
 const userRouter = require('./user.routes');
 const productRouter = require('./product.routes');
 const postRouter = require('./post.routes');
@@ -6,7 +7,7 @@ const topicRouter = require('./topic.routes');
 const reviewRouter = require('./review.routes');
 const brandRouter = require('./brand.routes');
 const couponRouter = require('./coupon.routes');
-const { AppError } = require('../utils');
+const orderRouter = require('./order.routes');
 
 const initRoutes = (app) => {
     app.use('/api/v1/users', userRouter);
@@ -17,6 +18,7 @@ const initRoutes = (app) => {
     app.use('/api/v1/reviews', reviewRouter);
     app.use('/api/v1/brands', brandRouter);
     app.use('/api/v1/coupons', couponRouter);
+    app.use('/api/v1/orders', orderRouter);
 
     app.all('*', function (req, res, next) {
         next(new AppError(`Route ${req.originalUrl} not found`, 404));

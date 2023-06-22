@@ -1,8 +1,9 @@
-const User = require('../models/userModel');
 const asyncHandler = require('express-async-handler');
-const { AppError } = require('../utils');
-const crud = require('./crudHandler');
 const uploadCloud = require('../configs/cloudinary.config');
+const crud = require('./crudHandler');
+const { AppError } = require('../utils');
+const User = require('../models/userModel');
+const Product = require('../models/productModel');
 
 exports.getMe = (req, res, next) => {
     req.params.id = req.user.id;
@@ -49,6 +50,48 @@ exports.deleteMe = asyncHandler(async (req, res, next) => {
     res.status(204).json({
         status: 'success',
         data: null,
+    });
+});
+
+exports.updateCart = asyncHandler(async (req, res, next) => {
+    const { product, quantity, color } = req.body;
+    const user = await User.findById(req.user.id);
+    const checkProduct = await Product.findById(product);
+
+    if (!checkProduct) {
+        return next(new AppError('This product does not exist.', 404));
+    }
+
+    if (quantity > checkProduct.quantity) {
+        return next(
+            new AppError(`This product only has ${checkProduct.quantity}.`, 404)
+        );
+    }
+
+    const productInCart = user?.cart?.find(
+        (item) => item.product.toString() === product && item.color === color
+    );
+
+    let curCart;
+
+    if (productInCart) {
+        productInCart.quantity = quantity;
+        curCart = await user.save({ validateBeforeSave: false });
+    } else {
+        curCart = await User.findByIdAndUpdate(
+            req.user.id,
+            {
+                $push: { cart: req.body },
+            },
+            { new: true }
+        );
+    }
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            curCart,
+        },
     });
 });
 

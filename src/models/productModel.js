@@ -31,7 +31,7 @@ const productSchema = new mongoose.Schema(
         },
         quantity: {
             type: Number,
-            default: 0,
+            default: 10,
         },
         sold: {
             type: Number,
@@ -44,11 +44,14 @@ const productSchema = new mongoose.Schema(
         images: [String],
         color: {
             type: String,
+            default: 'Black',
             enum: ['Black', 'White', 'Red'],
         },
         ratings_average: {
             type: Number,
             default: 0,
+            min: 1,
+            max: 5,
         },
         ratings_count: {
             type: Number,

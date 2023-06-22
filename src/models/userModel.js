@@ -56,6 +56,13 @@ const userSchema = new mongoose.Schema(
             default: true,
             select: false,
         },
+        cart: [
+            {
+                product: { type: mongoose.Types.ObjectId, ref: 'Product' },
+                quantity: Number,
+                color: String,
+            },
+        ],
         passwordChangeAt: Date,
         passwordResetToken: String,
         passwordResetExpires: Date,

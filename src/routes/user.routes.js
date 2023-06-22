@@ -14,12 +14,18 @@ router.route('/resetPassword/:token').put(authController.resetPassword);
 router.use(authController.protect);
 
 router.route('/me', userController.getMe);
-router.route('/updateMe', userController.updateMe);
+router.route(
+    '/updateMe',
+    userController.populatedImages,
+    userController.updateMe
+);
 router.route('/deleteMe', userController.deleteMe);
 
 router.route('/updatePassword').put(authController.updatePassword);
 
-router.use(authController.restrict('admin'))
+router.route('/updateCart').put(userController.updateCart);
+
+router.use(authController.restrict('admin'));
 
 router.route('/').get(userController.getAllUser);
 
