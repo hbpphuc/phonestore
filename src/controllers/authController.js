@@ -4,7 +4,6 @@ const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
 const { createAccessToken, createRefreshToken } = require('../middlewares/jwt');
 const { AppError, Email } = require('../utils');
-const { findOne } = require('../models/userModel');
 
 const sendToken = asyncHandler(async (user, statusCode, req, res) => {
     const token = createAccessToken(user._id, user.email);
@@ -92,12 +91,12 @@ exports.protect = asyncHandler(async (req, res, next) => {
             )
         );
 
-    req.user = currentUser;
     res.locals.user = currentUser;
+    req.user = currentUser;
     next();
 });
 
-exports.restrict = (...roles) => {
+exports.restrictTo = (...roles) => {
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) {
             return next(

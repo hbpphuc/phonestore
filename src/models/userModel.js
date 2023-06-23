@@ -17,6 +17,11 @@ const userSchema = new mongoose.Schema(
             lowercase: true,
             validate: [validator.isEmail, 'Please enter a valid email'],
         },
+        role: {
+            type: String,
+            enum: ['user', 'manager', 'admin'],
+            default: 'user',
+        },
         password: {
             type: String,
             required: [true, 'User must have a password'],
@@ -43,11 +48,7 @@ const userSchema = new mongoose.Schema(
         },
         phone: String,
         address: String,
-        role: {
-            type: String,
-            enum: ['user', 'admin'],
-            default: 'user',
-        },
+
         refreshToken: {
             type: String,
         },

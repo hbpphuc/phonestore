@@ -16,25 +16,15 @@ router
 
 router.route('/search').get(productController.searchProduct);
 
-router.route('/').get(productController.getAllProduct).post(
-    authController.protect,
-    authController.restrict('admin'),
-
-    productController.createProduct
-);
+router
+    .route('/')
+    .get(productController.getAllProduct)
+    .post(productController.createProduct);
 
 router
     .route('/:id')
     .get(productController.getProduct)
-    .put(
-        authController.protect,
-        authController.restrict('admin'),
-        productController.updateProduct
-    )
-    .delete(
-        authController.protect,
-        authController.restrict('admin'),
-        productController.deleteProduct
-    );
+    .put(productController.updateProduct)
+    .delete(productController.deleteProduct);
 
 module.exports = router;
