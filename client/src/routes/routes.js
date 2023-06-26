@@ -1,9 +1,10 @@
 const routes = {
     default: '/',
     home: '',
-    product: '/product',
+    product: '/products',
+    blog: '/posts',
     signup: '/signup',
     login: '/login',
-};
+}
 
-export default routes;
+export default routes

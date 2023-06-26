@@ -11,9 +11,13 @@ module.exports = {
                 main: '#0eb1f2',
             },
             colors: {
-                main: '#505050',
-                primary: '#0eb1f2',
-                secondary: '#8b8b8b',
+                main: '#0eb1f2',
+                primary: '#505050',
+                secondary: '#151515',
+            },
+            borderColor: {
+                main: '#0eb1f2',
+                primary: '#101010',
             },
         },
     },
