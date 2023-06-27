@@ -16,12 +16,12 @@
     }
 
     html ::-webkit-scrollbar {
-        width: 4px;
+        width: 6px;
     }
 
     html ::-webkit-scrollbar-thumb {
         border-radius: 4px;
-        background-color: #ffffff4d;
+        background-color: #0000004d;
         -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
     }
 
@@ -29,4 +29,13 @@
         -webkit-box-shadow: inset #fff;
         border-radius: 4px;
     }
+}
+
+.product-item:hover .product-item-options {
+    bottom: 30px;
+    transition: all 0.5s ease;
+}
+
+.product-action {
+    @apply bg-white border border-[#c5cfd6] text-[#2a2a2a] hover:text-white hover:bg-[#2a2a2a] hover:border-[#2a2a2a];
 }

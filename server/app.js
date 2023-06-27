@@ -25,9 +25,9 @@ app.enable('trust proxy');
 app.use(express.static(path.join(__dirname, 'public')));
 
 const corsOptions = {
-    origin: true, //included origin as true
-    credentials: true, //included credentials as true
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
 };
 
 app.use(cors(corsOptions));

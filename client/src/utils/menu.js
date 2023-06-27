@@ -1,3 +1,5 @@
+import { Icon } from '../components'
+
 export const navigatorMenu = [
     {
         id: 1,
@@ -14,12 +16,32 @@ export const navigatorMenu = [
         path: '/posts',
         title: 'blog',
     },
+    {
+        id: 4,
+        path: '/categories',
+        title: 'category',
+    },
+]
+
+export const productAction = [
+    {
+        title: 'Wishlist',
+        icon: <Icon.FaHeart />,
+    },
+    {
+        title: 'Detail',
+        icon: <Icon.HiMenu />,
+    },
+    {
+        title: 'Quick View',
+        icon: <Icon.FaEye />,
+    },
 ]
 
 export const footerMenu = [
     {
         title: 'who we are',
-        items: ['Typography', 'Gallery', 'Store Location', "Today's Deals", "Today's Deals"],
+        items: ['Typography', 'Gallery', 'Store Location', "Today's Deals", "Today's Choice"],
     },
     {
         title: 'infomation',

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Slide = () => {
+const Slider = () => {
     return (
         <div className="w-full max-h-[600px] mb-10">
             <img
@@ -12,4 +12,4 @@ const Slide = () => {
     )
 }
 
-export default Slide
+export default Slider

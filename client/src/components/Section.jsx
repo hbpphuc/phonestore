@@ -1,6 +1,6 @@
 import React from 'react'
 import Blog from './Blog'
-import Product from './Product'
+import ProductItem from './ProductItem'
 
 const Section = ({ data, type, title }) => {
     return (
@@ -11,8 +11,8 @@ const Section = ({ data, type, title }) => {
             </div>
             <div className="w-full h-auto flex gap-5">
                 {type === 'product'
-                    ? data.map((item) => <Product data={item} />)
-                    : data.slice(0, 3).map((item) => <Blog data={item} />)}
+                    ? data.map((item) => <ProductItem key={item} data={item} />)
+                    : data.slice(0, 3).map((item) => <Blog key={item} data={item} />)}
             </div>
         </div>
     )
