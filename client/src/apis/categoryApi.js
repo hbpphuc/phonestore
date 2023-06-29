@@ -8,3 +8,12 @@ export const getAllCategory = async () => {
         console.log(error)
     }
 }
+
+export const getCategory = async ({ cateId }) => {
+    try {
+        const res = await httpRequest.get(`categories/${cateId}`)
+        return res.data
+    } catch (error) {
+        console.log(error)
+    }
+}

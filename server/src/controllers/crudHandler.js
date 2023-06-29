@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler');
 const slugify = require('slugify');
 const { AppError, APIFeatures } = require('../utils');
 
-exports.getAll = (Model) =>
+exports.getAll = (Model, popOptions) =>
     asyncHandler(async (req, res, next) => {
         // To allow for nested GET review on tour
         let filter = {};
@@ -15,7 +15,11 @@ exports.getAll = (Model) =>
             .limitFields()
             .pagination();
 
-        const docs = await features.query;
+        let docs;
+
+        if (popOptions) docs = features.query.populate(popOptions);
+
+        docs = await features.query;
 
         // SEND RESPONSE
         res.status(200).json({

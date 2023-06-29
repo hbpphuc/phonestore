@@ -39,3 +39,27 @@
 .product-action {
     @apply bg-white border border-[#c5cfd6] text-[#2a2a2a] hover:text-white hover:bg-[#2a2a2a] hover:border-[#2a2a2a];
 }
+
+.react-tabs__tab--selected {
+    @apply text-main outline-none;
+}
+
+button.slick-next,
+button.slick-prev {
+    @apply w-20 h-20 bg-transparent flex justify-center items-center z-10;
+}
+
+button.slick-next::before {
+    @apply content-['\276F'] text-[#151515] w-20 h-20 bg-transparent text-3xl flex justify-center items-center hover:text-main hover:bg-white hover:border;
+}
+button.slick-prev::before {
+    @apply content-['\276E'] text-[#151515] w-20 h-20 bg-transparent text-3xl flex justify-center items-center hover:text-main hover:bg-white hover:border;
+}
+
+.product-item-favourite {
+    @apply absolute top-1 right-[-5px] px-4 text-sm leading-[1.6rem] font-normal text-white;
+}
+
+.product-item-favourite::after {
+    @apply content-[""] absolute bottom-[-5px] right-0 border-t-[6px] border-r-[6px] border-r-transparent brightness-75;
+}
