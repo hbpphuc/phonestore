@@ -13,29 +13,20 @@ export const navigatorMenu = [
     },
     {
         id: 3,
-        path: '/posts',
-        title: 'blog',
+        path: '/categories',
+        title: 'collection',
     },
     {
         id: 4,
-        path: '/categories',
-        title: 'category',
+        path: '/posts',
+        title: 'blog',
     },
 ]
 
 export const productAction = [
-    {
-        title: 'Wishlist',
-        icon: <Icon.FaHeart />,
-    },
-    {
-        title: 'Detail',
-        icon: <Icon.HiMenu />,
-    },
-    {
-        title: 'Quick View',
-        icon: <Icon.FaEye />,
-    },
+    { id: 1, title: 'Wishlist', icon: <Icon.FaHeart /> },
+    { id: 2, title: 'Detail', icon: <Icon.HiMenu /> },
+    { id: 3, title: 'Quick View', icon: <Icon.FaEye /> },
 ]
 
 export const footerMenu = [

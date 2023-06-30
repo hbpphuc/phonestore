@@ -32,7 +32,8 @@
 }
 
 .product-item:hover .product-item-options {
-    bottom: 30px;
+    position: absolute;
+    bottom: 10px;
     transition: all 0.5s ease;
 }
 
@@ -44,16 +45,18 @@
     @apply text-main outline-none;
 }
 
-button.slick-next,
+button.slick-next {
+    @apply -right-[72px] w-20 h-20 flex justify-center items-center;
+}
 button.slick-prev {
-    @apply w-20 h-20 bg-transparent flex justify-center items-center z-10;
+    @apply -left-[72px] w-20 h-20 flex justify-center items-center;
 }
 
 button.slick-next::before {
-    @apply content-['\276F'] text-[#151515] w-20 h-20 bg-transparent text-3xl flex justify-center items-center hover:text-main hover:bg-white hover:border;
+    @apply content-['\276F'] text-[#151515] text-5xl flex justify-center items-center hover:text-main;
 }
 button.slick-prev::before {
-    @apply content-['\276E'] text-[#151515] w-20 h-20 bg-transparent text-3xl flex justify-center items-center hover:text-main hover:bg-white hover:border;
+    @apply content-['\276E'] text-[#151515] text-5xl flex justify-center items-center hover:text-main;
 }
 
 .product-item-favourite {

@@ -38,7 +38,7 @@ const Header = () => {
                             />
                             <button
                                 type="submit"
-                                className="w-[42px] h-[42px] flex justify-center items-center text-white bg-main"
+                                className="w-[42px] h-[42px] flex justify-center items-center text-white bg-main hover:brightness-95 transition-all"
                             >
                                 <Icon.TbSearch size={24} />
                             </button>

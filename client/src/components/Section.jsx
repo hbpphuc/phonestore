@@ -33,7 +33,7 @@ const Section = ({ prodData, cateData, type, title }) => {
                 <span className="w-10 h-[3px] bg-[#ccc] absolute bottom-0"></span>
             </div>
             {cateData && (
-                <ul className="w-full mb-[30px] flex flex-row-reverse justify-center items-center">
+                <ul className="w-full mb-[30px] flex justify-center items-center">
                     {cateData?.data?.map((item) => (
                         <li
                             key={item.slug}
@@ -56,7 +56,7 @@ const Section = ({ prodData, cateData, type, title }) => {
                             ))}
                         </Slider>
                     ) : (
-                        <div className="w-full flex justify-center items-cente text-red-600 text-xl">No products</div>
+                        <div className="w-full flex justify-center items-cente text-[#8b8b8b] text-xl">No products</div>
                     )
                 ) : (
                     <Slider {...settingsBlogs}>

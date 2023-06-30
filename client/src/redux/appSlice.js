@@ -5,13 +5,17 @@ const appSlice = createSlice({
     name: 'app',
     initialState: {
         isLoading: false,
+        isShowModal: false,
         categories: null,
         products: null,
-        cateId: null,
+        cateId: '6492a18d3670201250b67d32',
     },
     reducers: {
         getCateId(state, action) {
             state.cateId = action.payload
+        },
+        setShowModal(state, action) {
+            state.isShowModal = action.payload
         },
     },
     extraReducers: (builder) => {
@@ -45,6 +49,6 @@ const appSlice = createSlice({
     },
 })
 
-export const { getCateId } = appSlice.actions
+export const { getCateId, setShowModal } = appSlice.actions
 
 export default appSlice.reducer

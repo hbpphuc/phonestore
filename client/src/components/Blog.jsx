@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
+import Icon from './Icons'
 
 const Blog = ({ data }) => {
     return (
@@ -17,8 +18,12 @@ const Blog = ({ data }) => {
                     THE STANDARD LOREM IPSUM PASSAGE, USED SINCE THE 1500S
                 </Link>
                 <div className="w-full justify-evenly flex mb-[10px] text-[13px] text-[#8b8b8b]">
-                    <span>June 26, 2023</span>
-                    <span>{data} comment</span>
+                    <span className="flex justify-center gap-2">
+                        <Icon.BsCalendar3 size={16} /> June 26, 2023
+                    </span>
+                    <span className="flex justify-center gap-2">
+                        <Icon.FaRegComments size={16} /> {data} comment
+                    </span>
                 </div>
                 <p className="text-center text-[13px] text-primary leading-[24px]">
                     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
