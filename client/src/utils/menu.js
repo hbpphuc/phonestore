@@ -25,8 +25,8 @@ export const navigatorMenu = [
 
 export const productAction = [
     { id: 1, title: 'Wishlist', icon: <Icon.FaHeart /> },
-    { id: 2, title: 'Detail', icon: <Icon.HiMenu /> },
-    { id: 3, title: 'Quick View', icon: <Icon.FaEye /> },
+    { id: 2, title: 'Detail', icon: <Icon.BiDetail /> },
+    { id: 3, title: 'Overview', icon: <Icon.FaEye /> },
 ]
 
 export const footerMenu = [
