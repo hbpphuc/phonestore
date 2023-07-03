@@ -1,4 +1,4 @@
-import { Default, Home, Product, Post, Login } from '../pages/public'
+import { Default, Home, AllProduct, DetailProduct, Post, Login } from '../pages/public'
 import routes from './routes'
 
 export const defaultRoute = { path: routes.default, component: Default }
@@ -10,7 +10,11 @@ export const publicRoutes = [
     },
     {
         path: routes.product,
-        component: Product,
+        component: AllProduct,
+    },
+    {
+        path: routes.product_item,
+        component: DetailProduct,
     },
     {
         path: routes.blog,

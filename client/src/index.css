@@ -12,10 +12,11 @@
     }
 
     html {
-        overflow-y: overlay;
+        overflow: overlay;
     }
 
     html ::-webkit-scrollbar {
+        height: 8px;
         width: 6px;
     }
 
@@ -42,7 +43,7 @@
 }
 
 .react-tabs__tab--selected {
-    @apply text-main outline-none;
+    @apply text-main outline-none border;
 }
 
 button.slick-next {
@@ -60,7 +61,7 @@ button.slick-prev::before {
 }
 
 .product-item-favourite {
-    @apply absolute top-1 right-[-5px] px-4 text-sm leading-[1.6rem] font-normal text-white;
+    @apply absolute top-1 -right-[6px] px-4 text-sm leading-[1.6rem] font-normal text-white;
 }
 
 .product-item-favourite::after {
