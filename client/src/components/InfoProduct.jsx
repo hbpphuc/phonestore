@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Select from 'react-select'
-import Slider from 'react-slick'
+import { routes } from '../routes/routes'
 
 const InfoProduct = ({ data, detail }) => {
     const quantityRef = useRef()
@@ -36,8 +36,8 @@ const InfoProduct = ({ data, detail }) => {
             <div className="flex-1 h-full flex flex-col justify-around items-center">
                 <div className={`${detail ? 'w-full border p-5' : 'w-[70%]'} max-h-[80%]`}>
                     <img
-                        src={data.imageCover || 'https://app.advaiet.com/item_dfile/default_product.png'}
-                        alt={data.name}
+                        src={data?.imageCover || 'https://app.advaiet.com/item_dfile/default_product.png'}
+                        alt={data?.name}
                         className="w-full h-full object-contain"
                     />
                 </div>
@@ -46,8 +46,9 @@ const InfoProduct = ({ data, detail }) => {
                         detail ? 'border' : ''
                     } overflow-x-auto`}
                 >
-                    {[1, 2, 3, 4].map((item) => (
+                    {[1, 2, 3, 4].map((item, index) => (
                         <img
+                            key={index}
                             src={'https://app.advaiet.com/item_dfile/default_product.png'}
                             alt={'item'}
                             className="w-full h-full object-contain"
@@ -57,8 +58,11 @@ const InfoProduct = ({ data, detail }) => {
             </div>
             <div className="flex-1 h-full">
                 <div className="w-full mb-5 ">
-                    <Link to="/" className="text-[#1c1c1c] text-xl font-semibold hover:text-main transition-colors">
-                        {data.name}
+                    <Link
+                        to={`${routes.product}/${data?.category?.slug}/${data?.slug}`}
+                        className="text-[#1c1c1c] text-xl font-semibold hover:text-main transition-colors"
+                    >
+                        {data?.name}
                     </Link>
                 </div>
                 <ul className="w-full ml-4 mb-[15px] list-disc">
@@ -72,7 +76,7 @@ const InfoProduct = ({ data, detail }) => {
                     <li>CPU: Quad-core</li>
                     <li>Inter...</li>
                 </ul>
-                <h2 className="w-full mb-[15px] text-xl font-semibold text-main">${data.price} USD</h2>
+                <h2 className="w-full mb-[15px] text-xl font-semibold text-main">${data?.price} USD</h2>
                 <div className="w-full mb-[15px]">
                     <div className="w-full mb-[15px] flex items-center">
                         <h2 className="min-w-[80px] mr-[10px] text-sm font-semibold text-[#151515]">Internal</h2>

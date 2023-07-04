@@ -1,5 +1,5 @@
 import { Icon } from '../components'
-import routes from '../routes/routes'
+import { routes } from '../routes/routes'
 
 export const navigatorMenu = [
     {
@@ -50,8 +50,7 @@ export const detailProductTabs = [
         id: 1,
         title: 'description',
         subTitle: '',
-        content: `There's no way you have missed the Xiaomi Redmi Note 3. 
-            It's been the bang-for-buck benchmark for a while now, delivering a feature set and performance way above what its price tag suggests.To refresh your memory Xiaomi launched the Redmi Note 3 at the turn of last year and it was powered by a MediaTek Helio X10. 
+        content: `There's no way you have missed the Xiaomi Redmi Note 3. It's been the bang-for-buck benchmark for a while now, delivering a feature set and performance way above what its price tag suggests.To refresh your memory Xiaomi launched the Redmi Note 3 at the turn of last year and it was powered by a MediaTek Helio X10. 
             In the spring of 2016, a Qualcomm-driven Redmi Note 3 followed and broke the company's sales record in India. Now this full review admittedly comes a little late, but the Xiaomi Redmi Note 3 is still on many people's radar, so we figured a way to compare the Mediatek-powered original and the Snapdragon edition might come in handy.  
             Besides the chipset, there's also a new camera sensor, a 16MP unit even if it is limited to 1080p video recording. Another difference is the second SIM card tray can now take microSD cards. It's the hybrid kind, which isn't ideal for people who want to have it all. Other than that, the hardware is perfectly familiar.`,
     },
@@ -61,7 +60,7 @@ export const detailProductTabs = [
         subTitle: 'warranty infomation',
         content: `LIMITED WARRANTIES
         Limited Warranties are non-transferable. The following Limited Warranties are given to the original retail purchaser of the following Ashley Furniture Industries, Inc.Products:
-        
+
         Frames Used In Upholstered and Leather Products
         Limited Lifetime Warranty
         A Limited Lifetime Warranty applies to all frames used in sofas, couches, love seats, upholstered chairs, ottomans, sectionals, and sleepers. Ashley Furniture Industries,Inc. warrants these components to you, the original retail purchaser, to be free from material manufacturing defects.`,
@@ -92,5 +91,38 @@ export const detailProductTabs = [
         id: 5,
         title: 'customer review',
         content: ``,
+    },
+]
+
+export const productExtrainInfo = [
+    {
+        id: 1,
+        title: 'Guarantee',
+        subTitle: 'Quality Checked',
+        icon: <Icon.FaShieldHalved />,
+    },
+    {
+        id: 2,
+        title: 'Free Shipping',
+        subTitle: 'Free On All Products',
+        icon: <Icon.BiSolidTruck />,
+    },
+    {
+        id: 3,
+        title: 'Special Gift Cards',
+        subTitle: 'Special Gift Cards',
+        icon: <Icon.FaGift />,
+    },
+    {
+        id: 4,
+        title: 'Free Return',
+        subTitle: 'Within 7 Days',
+        icon: <Icon.GiReturnArrow />,
+    },
+    {
+        id: 5,
+        title: 'Consultancy',
+        subTitle: 'Lifetime 24/7/356',
+        icon: <Icon.TiPhone />,
     },
 ]

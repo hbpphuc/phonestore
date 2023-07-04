@@ -40,6 +40,10 @@ exports.getProduct = crud.getOne(Product, {
     path: 'reviews',
     select: 'content rating user',
 });
+exports.getProductSlug = crud.getOneSlug(Product, {
+    path: 'reviews',
+    select: 'content rating user',
+});
 exports.updateProduct = crud.updateOne(Product);
 exports.deleteProduct = crud.deleteOne(Product);
 

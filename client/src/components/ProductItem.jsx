@@ -1,17 +1,18 @@
 /* eslint-disable react/style-prop-object */
-import React, { memo, useRef, useState } from 'react'
+import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import useModal from '../hooks/useModal'
-import Popup from './Popup'
+
+import { routes } from '../routes/routes'
 import { productAction } from '../utils/menu'
-import Icon from './Icons'
 import InfoProduct from './InfoProduct'
+import Popup from './Popup'
+import Icon from './Icons'
 
 const ProductItem = ({ data }) => {
     const { isShowing, toggle } = useModal()
-    const [prodId, setProdId] = useState(null)
     const isNew = true
 
     const handleClickActionBtn = (item) => {
@@ -34,10 +35,10 @@ const ProductItem = ({ data }) => {
                             <span>New</span>
                         </div>
                         <div className="w-full h-full flex justify-center items-start">
-                            <Link to="/">
+                            <Link to={`${routes.product}/${data?.category?.slug}/${data?.slug}`}>
                                 <img
-                                    src={data.imageCover || 'https://app.advaiet.com/item_dfile/default_product.png'}
-                                    alt={data.name}
+                                    src={data?.imageCover || 'https://app.advaiet.com/item_dfile/default_product.png'}
+                                    alt={data?.name}
                                     className="w-full h-full object-center"
                                 />
                             </Link>
@@ -55,12 +56,15 @@ const ProductItem = ({ data }) => {
                             ))}
                         </div>
                     </div>
-                    <Link to="/" className="mb-[6px] hover:text-main transition-colors line-clamp-1">
-                        {data.name}
+                    <Link
+                        to={`${routes.product}/${data?.category?.slug}/${data?.slug}`}
+                        className="mb-[6px] hover:text-main transition-colors line-clamp-1"
+                    >
+                        {data?.name}
                     </Link>
                     <div className="flex mb-[10px] gap-4">
-                        {false && <h2 className="text-base text-[#999] line-through">${data.price} USD</h2>}
-                        <h2 className="text-base text-main">${data.price} USD</h2>
+                        {false && <h2 className="text-base text-[#999] line-through">${data?.price} USD</h2>}
+                        <h2 className="text-base text-main">${data?.price} USD</h2>
                     </div>
                 </div>
             </div>

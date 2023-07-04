@@ -43,7 +43,11 @@
 }
 
 .react-tabs__tab--selected {
-    @apply text-main outline-none border;
+    @apply text-main outline-none;
+}
+
+.react-tabs__tab-list {
+    @apply mb-0;
 }
 
 button.slick-next {

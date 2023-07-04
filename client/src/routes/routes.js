@@ -1,12 +1,15 @@
-const routes = {
-    default: '/',
+export const routes = {
     home: '',
     product: '/products',
-    product_item: '/product/:type/:slug',
     category: '/categories',
     blog: '/posts',
     signup: '/signup',
     login: '/login',
+
+    notfound: '*',
 }
 
-export default routes
+export const childRoutes = {
+    product_detail: ':type/:slug',
+    notfound: '*',
+}

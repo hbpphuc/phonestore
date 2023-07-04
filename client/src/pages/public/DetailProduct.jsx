@@ -1,62 +1,83 @@
 import React, { memo, useEffect, useState } from 'react'
-import { redirect, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
 import * as apis from '../../apis'
-import { InfoProduct } from '../../components'
-import NotFound from './NotFound'
-import { detailProductTabs } from '../../utils/menu'
+import { Breadcrumb, InfoProduct } from '../../components'
+import { detailProductTabs, productExtrainInfo } from '../../utils/menu'
 
 const DetailProduct = () => {
     const [product, setProduct] = useState(null)
+    const { slug } = useParams()
 
-    const { type, id } = useParams()
-
-    console.log({ type, id })
+    const getProductSlug = async () => {
+        const res = await apis.getProductBySlug({ slug })
+        console.log(!res)
+        if (res) setProduct(res?.data?.data)
+    }
 
     useEffect(() => {
-        const getProduct = async () => {
-            const res = await apis.getProduct({ id: '648ae3a9224ab004d716afd2' })
-            setProduct(res?.data?.data)
-        }
-        getProduct()
+        getProductSlug()
     }, [])
 
     return (
-        <div className="w-full h-auto flex justify-center items-center flex-col">
-            {product ? (
-                <div className="">
-                    <div className="w-full h-20 py-[15px] mb-5 bg-[#f7f7f7] flex justify-center items-center">
-                        <div className="w-main h-full">BREADCRUM</div>
+        <div className="w-full h-auto">
+            <div className="w-full h-auto flex justify-center items-center flex-col">
+                <div className="w-full h-auto py-5 mb-5 bg-[#f7f7f7] flex justify-center items-center">
+                    <Breadcrumb name={product?.name} />
+                </div>
+                <div className="w-main h-auto mb-20 flex justify-center">
+                    <div className="w-[80%]">
+                        <InfoProduct data={product} detail />
                     </div>
-                    <div className="w-main h-auto mb-20 flex justify-center items-center">
-                        <div className="w-[80%]">
-                            <InfoProduct data={product} detail />
-                        </div>
-                        <div className="flex-1 bg-slate-500">a</div>
-                    </div>
-                    <div className="w-main mb-20">
-                        <Tabs>
-                            <TabList>
-                                {detailProductTabs.map((item) => (
-                                    <Tab key={item.id}>{item.title}</Tab>
-                                ))}
-                            </TabList>
-
-                            {detailProductTabs.map((item) => (
-                                <TabPanel key={item.id} className="">
-                                    <h2 className="text-xl text-[#505050] font-semibold uppercase mb-5">
-                                        {item.subTitle}
-                                    </h2>
-                                    <p>{item.content}</p>
-                                </TabPanel>
+                    <div className="flex-1">
+                        <ul className="w-full h-full">
+                            {productExtrainInfo.map((item) => (
+                                <li
+                                    key={item.id}
+                                    className="w-full h-[60px] flex gap-2 p-[10px] mb-[10px] text-sm font-normal leading-[6px] border border-[#ebebeb]"
+                                >
+                                    <span className="w-10 h-10 flex justify-center items-center rounded-full text-xl text-white bg-[#505050]">
+                                        {item.icon}
+                                    </span>
+                                    <span className="flex-1 h-full flex flex-col justify-center gap-1">
+                                        <h3 className="flex-1 h-[50%] flex items-center capitalize text-base  text-primary">
+                                            {item.title}
+                                        </h3>
+                                        <h3 className="flex-1 h-[50%] flex items-center capitalize text-xs text-[#999]">
+                                            {item.subTitle}
+                                        </h3>
+                                    </span>
+                                </li>
                             ))}
-                        </Tabs>
+                        </ul>
                     </div>
                 </div>
-            ) : (
-                <NotFound />
-            )}
+                <div className="w-main mb-20">
+                    <Tabs>
+                        <TabList>
+                            {detailProductTabs.map((item) => (
+                                <Tab key={item.id}>
+                                    <span className="uppercase">{item.title}</span>
+                                </Tab>
+                            ))}
+                        </TabList>
+
+                        {detailProductTabs.map((item) => (
+                            <TabPanel key={item.id}>
+                                <div className="border border-[#aaa] border-t-0 p-5 ">
+                                    {item.subTitle !== '' && (
+                                        <h2 className="text-xl text-[#505050] font-semibold uppercase mb-5">
+                                            {item.subTitle}
+                                        </h2>
+                                    )}
+                                    <p className="whitespace-pre-line">{item.content}</p>
+                                </div>
+                            </TabPanel>
+                        ))}
+                    </Tabs>
+                </div>
+            </div>
         </div>
     )
 }

@@ -50,6 +50,25 @@ exports.getOne = (Model, popOptions) =>
         });
     });
 
+exports.getOneSlug = (Model, popOptions) =>
+    asyncHandler(async (req, res, next) => {
+        let query = Model.findOne({ slug: req.params.slug });
+        if (popOptions) query = query.populate(popOptions);
+
+        const doc = await query;
+
+        if (!doc) {
+            return next(new AppError('No document found', 404));
+        }
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                data: doc,
+            },
+        });
+    });
+
 exports.createOne = (Model) =>
     asyncHandler(async (req, res, next) => {
         const newDoc = await Model.create(req.body);
