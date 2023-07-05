@@ -1,5 +1,5 @@
 import { Home, AllProduct, DetailProduct, Post, Login, NotFound } from '../pages/public'
-import { routes, childRoutes } from './routes'
+import { routes } from './routes'
 
 export const publicRoutes = [
     {
@@ -9,14 +9,11 @@ export const publicRoutes = [
     {
         path: routes.product,
         component: AllProduct,
-        child: [
-            {
-                path: childRoutes.product_detail,
-                component: DetailProduct,
-            },
-        ],
     },
-
+    {
+        path: routes.product_detail,
+        component: DetailProduct,
+    },
     {
         path: routes.blog,
         component: Post,

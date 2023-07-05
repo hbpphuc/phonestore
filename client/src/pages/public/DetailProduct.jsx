@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
 import * as apis from '../../apis'
@@ -7,13 +7,14 @@ import { Breadcrumb, InfoProduct } from '../../components'
 import { detailProductTabs, productExtrainInfo } from '../../utils/menu'
 
 const DetailProduct = () => {
+    const navigate = useNavigate()
     const [product, setProduct] = useState(null)
     const { slug } = useParams()
 
     const getProductSlug = async () => {
         const res = await apis.getProductBySlug({ slug })
-        console.log(!res)
-        if (res) setProduct(res?.data?.data)
+        if (!res) return navigate('/not-found', { replace: true })
+        setProduct(res?.data?.data)
     }
 
     useEffect(() => {

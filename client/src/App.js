@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { Default } from './pages/public'
+import { Default, NotFound } from './pages/public'
 import { publicRoutes } from './routes'
 
 function App() {
@@ -10,16 +10,9 @@ function App() {
                 <Route path="/" element={<Default />}>
                     {publicRoutes.map((route, index) => {
                         const Page = route.component
-                        return (
-                            <Route key={index} path={route.path} element={<Page />}>
-                                {route.child &&
-                                    route.child.map((el, index) => {
-                                        const ChildPage = el.component
-                                        return <Route key={index} path={el.path} element={<ChildPage />} />
-                                    })}
-                            </Route>
-                        )
+                        return <Route key={index} path={route.path} element={<Page />} />
                     })}
+                    <Route path="*" element={<NotFound />} />
                 </Route>
             </Routes>
         </div>

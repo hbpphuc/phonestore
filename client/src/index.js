@@ -5,6 +5,7 @@ import { store } from './redux/store'
 import App from './App'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
+import ScrollToTop from './hooks/ScrollToTop'
 
 const container = document.getElementById('root')
 const root = createRoot(container)
@@ -13,6 +14,7 @@ root.render(
     // <React.StrictMode>
     <Provider store={store}>
         <BrowserRouter>
+            <ScrollToTop />
             <App />
         </BrowserRouter>
     </Provider>
