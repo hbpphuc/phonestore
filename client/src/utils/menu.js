@@ -1,5 +1,5 @@
 import { Icon } from '../components'
-import { routes } from '../routes/routes'
+import { routes } from '../routes/paths'
 
 export const navigatorMenu = [
     {

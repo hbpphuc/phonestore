@@ -1,14 +1,35 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import { login } from '../redux/user/userSlice'
+import Swal from 'sweetalert2'
+import * as apis from '../apis'
 
-const LoginForm = ({ setIsRegisterForm }) => {
+const LoginForm = ({ onSetForm }) => {
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm()
 
-    const onSubmit = (data) => console.log('login form: ', data)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const onSubmit = async (data) => {
+        const res = await apis.login(data)
+        console.log(res)
+        if (res.status === 'success') {
+            Swal.fire('Congratulation!', 'User login successfully!', 'success')
+            dispatch(login({ isLoggedIn: true, curUser: res.data.user, token: res.token }))
+            setTimeout(() => {
+                navigate(0)
+            }, 700)
+        } else {
+            Swal.fire('Oops!', res.message, 'error')
+        }
+        return res
+    }
 
     return (
         <div className="min-w-[500px] w-full h-full flex flex-col items-center">
@@ -43,10 +64,7 @@ const LoginForm = ({ setIsRegisterForm }) => {
                 <a href="/" className="hover:text-main transition-colors">
                     Forgot Your Password?
                 </a>
-                <button
-                    onClick={() => setIsRegisterForm((prev) => !prev)}
-                    className="hover:text-main transition-colors"
-                >
+                <button onClick={() => onSetForm((prev) => !prev)} className="hover:text-main transition-colors">
                     Create Account
                 </button>
             </div>

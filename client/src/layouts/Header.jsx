@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import logo from '../assets/images/logo.png'
 import { Icon, Navigation } from '../components'
 import useModal from '../hooks/useModal'
@@ -9,6 +10,10 @@ const Header = () => {
     const { isShowing, toggle } = useModal()
     const [isRegisterForm, setIsRegisterForm] = useState(false)
 
+    const { isLoggedIn, token } = useSelector((state) => state.user)
+
+    console.log({ isLoggedIn, token })
+
     const user = 'Phuc'
 
     return (
@@ -17,13 +22,22 @@ const Header = () => {
                 <div className="w-full flex justify-center items-center border-b border-[#0000000d] py-[10px]">
                     <div className="w-main flex justify-between ">
                         <div className="flex">
-                            {user && <p className="text-sm font-normal text-[#848484] mr-1">Hello {user},</p>}
+                            {isLoggedIn && <p className="text-sm font-normal text-[#848484] mr-1">Hello {user},</p>}
                             <p className="text-sm font-normal text-[#848484]">Welcome to our Store!</p>
                         </div>
                         <div className="flex">
-                            <button onClick={toggle} className="text-sm font-normal px-[10px] text-[#848484]">
-                                My Account
-                            </button>
+                            {!isLoggedIn ? (
+                                <button
+                                    onClick={toggle}
+                                    className="text-sm font-normal px-[10px] text-[#848484] hover:text-main"
+                                >
+                                    Sign In | Sign Up
+                                </button>
+                            ) : (
+                                <button className="text-sm font-normal px-[10px] text-[#848484] hover:text-main">
+                                    My Account
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -77,9 +91,9 @@ const Header = () => {
                             </button>
                         </div>
                         {isRegisterForm ? (
-                            <RegisterForm setIsRegisterForm={setIsRegisterForm} />
+                            <RegisterForm onSetForm={setIsRegisterForm} />
                         ) : (
-                            <LoginForm setIsRegisterForm={setIsRegisterForm} />
+                            <LoginForm onSetForm={setIsRegisterForm} />
                         )}
                     </div>
                 </Popup>

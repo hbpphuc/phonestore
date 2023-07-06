@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react'
+import React, { memo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Select from 'react-select'
-import { routes } from '../routes/routes'
+import { routes } from '../routes/paths'
 
 const InfoProduct = ({ data, detail }) => {
     const quantityRef = useRef()
@@ -128,4 +128,4 @@ const InfoProduct = ({ data, detail }) => {
     )
 }
 
-export default InfoProduct
+export default memo(InfoProduct)

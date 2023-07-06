@@ -1,5 +1,5 @@
 import { Home, AllProduct, DetailProduct, Post, Login, NotFound } from '../pages/public'
-import { routes } from './routes'
+import { routes } from './paths'
 
 export const publicRoutes = [
     {

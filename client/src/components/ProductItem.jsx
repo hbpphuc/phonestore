@@ -5,7 +5,7 @@ import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import useModal from '../hooks/useModal'
 
-import { routes } from '../routes/routes'
+import { routes } from '../routes/paths'
 import { productAction } from '../utils/menu'
 import InfoProduct from './InfoProduct'
 import Popup from './Popup'

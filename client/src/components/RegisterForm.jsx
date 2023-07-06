@@ -1,14 +1,15 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import * as apis from '../apis'
 
-const RegisterForm = ({ setIsRegisterForm }) => {
+const RegisterForm = ({ onSetForm }) => {
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm()
 
-    const onSubmit = (data) => console.log('register form: ', data)
+    const onSubmit = async (data) => await apis.signup(data)
 
     return (
         <div className="min-w-[500px] w-full h-full flex flex-col items-center">
@@ -58,7 +59,7 @@ const RegisterForm = ({ setIsRegisterForm }) => {
                     Create Account
                 </button>
             </form>
-            <button onClick={() => setIsRegisterForm((prev) => !prev)} className="hover:text-main transition-colors">
+            <button onClick={() => onSetForm((prev) => !prev)} className="hover:text-main transition-colors">
                 Cancel
             </button>
         </div>
