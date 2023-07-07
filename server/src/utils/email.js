@@ -1,10 +1,11 @@
 const nodemailer = require('nodemailer');
+const pug = require('pug');
 const htmlToText = require('html-to-text');
 
 class Email {
-    constructor(user, url) {
-        this.to = user.email;
-        this.firstName = user.name.split(' ')[0];
+    constructor({ email, name }, url) {
+        this.to = email;
+        this.firstName = name.split(' ')[0];
         this.url = url;
         this.from = `Cửa hàng điện tử <${process.env.EMAIL_FROM}>`;
     }
@@ -27,7 +28,14 @@ class Email {
 
     async send(template, subject) {
         // 1. Render HTML template
-        const html = `<p>Forgot your password? <a href='${this.url}'>Click here</a></p>`;
+        const html = pug.renderFile(
+            `${__dirname}/../views/email/${template}.pug`,
+            {
+                filename: this.firstName,
+                url: this.url,
+                subject,
+            }
+        );
 
         // 2. Define email options
         const mailOptions = {
@@ -42,13 +50,20 @@ class Email {
         await this.newTransport().sendMail(mailOptions);
     }
 
+    async sendRegister() {
+        await this.send(
+            'registerEmail',
+            'Complete Register (15 minutes remaining)'
+        );
+    }
+
     async sendWelcome() {
-        await this.send('welcome', 'Welcome to the Phonestore!');
+        await this.send('welcome', 'Welcome to the Digital World!');
     }
 
     async sendResetPassword() {
         await this.send(
-            'resetPassword',
+            'passwordReset',
             'Reset your password! Valid in 15 minutes'
         );
     }

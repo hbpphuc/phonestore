@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const uniqid = require('uniqid');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
 const { createAccessToken, createRefreshToken } = require('../middlewares/jwt');
@@ -27,13 +28,58 @@ const sendToken = asyncHandler(async (user, statusCode, req, res) => {
     });
 });
 
+exports.registerMail = asyncHandler(async (req, res, next) => {
+    const { name, email, password, passwordConfirm } = req.body;
+
+    if (password !== passwordConfirm)
+        return next(new AppError('Password does not match.', 400));
+
+    if (password.length < 8 && passwordConfirm.length < 8)
+        return next(
+            new AppError(
+                'Password must be more than or equal 8 characters.',
+                400
+            )
+        );
+
+    const userChecked = await User.findOne({ email });
+
+    if (userChecked)
+        return next(new AppError('This email is already exist.', 400));
+
+    const tempToken = uniqid();
+
+    res.cookie(
+        'userInfo',
+        { ...req.body, token: tempToken },
+        { httpOnly: true, maxAge: 15 * 60 * 1000 }
+    );
+
+    const url = `${req.protocol}://${req.get(
+        'host'
+    )}/api/v1/signup/${tempToken}`;
+    await new Email({ email, name }, url).sendRegister();
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            message: 'Send register email successfilly!',
+        },
+    });
+});
+
 exports.signup = asyncHandler(async (req, res, next) => {
-    const newUser = await User.create(req.body);
+    const cookie = req.cookies;
+    const { token } = req.params;
+
+    console.log(cookie?.userInfo?.token !== token);
+
+    if (!cookie || cookie?.userInfo?.token !== token)
+        return next(new AppError('Can not sign up. Please try again!', 400));
+
+    const newUser = await User.create(cookie?.userInfo);
 
     sendToken(newUser, 201, req, res);
-
-    // const url = `${req.protocol}://${req.get('host')}`;
-    // await new Email(newUser, url).sendWelcome();
 });
 
 exports.login = asyncHandler(async (req, res, next) => {
@@ -91,8 +137,8 @@ exports.protect = asyncHandler(async (req, res, next) => {
             )
         );
 
-    res.locals.user = currentUser;
     req.user = currentUser;
+    res.locals.user = currentUser;
     next();
 });
 
@@ -121,12 +167,14 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     const resetToken = user.createResetPasswordToken();
     await user.save({ validateBeforeSave: false });
 
+    const { email, name } = user;
+
     // send Email
     try {
         const url = `${req.protocol}://${req.get(
             'host'
         )}/api/v1/users/resetPassword/${resetToken}`;
-        await new Email(user, url).sendResetPassword();
+        await new Email({ email, name }, url).sendResetPassword();
 
         res.status(200).json({
             status: 'success',

@@ -1,6 +1,9 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
+import Swal from 'sweetalert2'
 import * as apis from '../apis'
+import { login } from '../redux/user/userSlice'
 
 const RegisterForm = ({ onSetForm }) => {
     const {
@@ -9,7 +12,26 @@ const RegisterForm = ({ onSetForm }) => {
         formState: { errors },
     } = useForm()
 
-    const onSubmit = async (data) => await apis.signup(data)
+    const dispatch = useDispatch()
+
+    const onSubmit = async (data) => {
+        const res = await apis.registerMail(data)
+        if (res.status === 'success') {
+            Swal.fire(
+                'Congratulation!',
+                'An email confirm was send into your mail. Please check it and confirm to final sign up!',
+                'success'
+            )
+            // onSetForm((prev) => !prev)
+            // dispatch(login({ isLoggedIn: true, curUser: res.data.user, token: res.token }))
+        } else {
+            if (res.status === 'fail') {
+                Swal.fire('Oops!', res.message, 'error')
+            } else {
+                Object.values(res?.error).map((item) => Swal.fire('Oops!', item.message, 'error'))
+            }
+        }
+    }
 
     return (
         <div className="min-w-[500px] w-full h-full flex flex-col items-center">
