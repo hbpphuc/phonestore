@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import Swal from 'sweetalert2'
@@ -15,20 +15,18 @@ const RegisterForm = ({ onSetForm }) => {
     const dispatch = useDispatch()
 
     const onSubmit = async (data) => {
-        const res = await apis.registerMail(data)
+        const res = await apis.requestSignup(data)
         if (res.status === 'success') {
             Swal.fire(
                 'Congratulation!',
                 'An email confirm was send into your mail. Please check it and confirm to final sign up!',
                 'success'
-            )
-            // onSetForm((prev) => !prev)
-            // dispatch(login({ isLoggedIn: true, curUser: res.data.user, token: res.token }))
+            ).then(onSetForm((prev) => !prev))
         } else {
             if (res.status === 'fail') {
                 Swal.fire('Oops!', res.message, 'error')
             } else {
-                Object.values(res?.error).map((item) => Swal.fire('Oops!', item.message, 'error'))
+                res?.error && Object.values(res?.error).map((item) => Swal.fire('Oops!', item.message, 'error'))
             }
         }
     }

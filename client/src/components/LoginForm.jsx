@@ -19,14 +19,12 @@ const LoginForm = ({ onSetForm }) => {
     const onSubmit = async (data) => {
         const res = await apis.login(data)
 
-        console.log(res)
-
         if (res.status === 'success') {
             Swal.fire('Congratulation!', 'User login successfully!', 'success')
             dispatch(login({ isLoggedIn: true, curUser: res.data, token: res.token }))
-            // setTimeout(() => {
-            //     navigate(0)
-            // }, 700)
+            setTimeout(() => {
+                navigate(0)
+            }, 700)
         } else {
             Swal.fire('Oops!', res.message, 'error')
         }

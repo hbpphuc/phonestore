@@ -10,9 +10,9 @@ const Header = () => {
     const { isShowing, toggle } = useModal()
     const [isRegisterForm, setIsRegisterForm] = useState(false)
 
-    const { isLoggedIn, token } = useSelector((state) => state.user)
+    const { isLoggedIn, token, curUser } = useSelector((state) => state.user)
 
-    console.log({ isLoggedIn, token })
+    console.log({ isLoggedIn, token, curUser })
 
     const user = 'Phuc'
 

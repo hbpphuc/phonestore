@@ -28,7 +28,7 @@ const sendToken = asyncHandler(async (user, statusCode, req, res) => {
     });
 });
 
-exports.registerMail = asyncHandler(async (req, res, next) => {
+exports.requestSignup = asyncHandler(async (req, res, next) => {
     const { name, email, password, passwordConfirm } = req.body;
 
     if (password !== passwordConfirm)
@@ -50,20 +50,20 @@ exports.registerMail = asyncHandler(async (req, res, next) => {
     const tempToken = uniqid();
 
     res.cookie(
-        'userInfo',
+        'registerInfo',
         { ...req.body, token: tempToken },
         { httpOnly: true, maxAge: 15 * 60 * 1000 }
     );
 
     const url = `${req.protocol}://${req.get(
         'host'
-    )}/api/v1/signup/${tempToken}`;
+    )}/api/v1/users/signup/${tempToken}`;
     await new Email({ email, name }, url).sendRegister();
 
     res.status(200).json({
         status: 'success',
         data: {
-            message: 'Send register email successfilly!',
+            message: 'Send register email successfully!',
         },
     });
 });
@@ -72,14 +72,22 @@ exports.signup = asyncHandler(async (req, res, next) => {
     const cookie = req.cookies;
     const { token } = req.params;
 
-    console.log(cookie?.userInfo?.token !== token);
+    if (!cookie || cookie?.registerInfo?.token !== token) {
+        res.clearCookie('registerInfo');
+        return res.redirect(`${process.env.CLIENT_URL}/signup/fail`);
+    }
 
-    if (!cookie || cookie?.userInfo?.token !== token)
-        return next(new AppError('Can not sign up. Please try again!', 400));
+    await User.create({
+        name: cookie?.registerInfo?.name,
+        email: cookie?.registerInfo?.email,
+        password: cookie?.registerInfo?.password,
+        passwordConfirm: cookie?.registerInfo?.passwordConfirm,
+    });
 
-    const newUser = await User.create(cookie?.userInfo);
+    res.clearCookie('registerInfo');
+    res.redirect(`${process.env.CLIENT_URL}/signup/success`);
 
-    sendToken(newUser, 201, req, res);
+    // sendToken(newUser, 201, req, res);
 });
 
 exports.login = asyncHandler(async (req, res, next) => {

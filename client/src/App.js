@@ -1,7 +1,8 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { Default, NotFound } from './pages/public'
+import { Default, NotFound, Signup } from './pages/public'
 import { publicRoutes } from './routes'
+import { routes } from './routes/paths'
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                     })}
                     <Route path="*" element={<NotFound />} />
                 </Route>
+                <Route path={routes.signup} element={<Signup />} />
             </Routes>
         </div>
     )

@@ -4,7 +4,7 @@ export const routes = {
     product_detail: '/products/:type/:slug',
     category: '/categories',
     blog: '/posts',
-    signup: '/signup',
+    signup: '/signup/:status',
     login: '/login',
     notfound: '/not-found',
 }
