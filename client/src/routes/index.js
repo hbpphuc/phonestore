@@ -1,4 +1,4 @@
-import { Home, AllProduct, DetailProduct, Post, NotFound } from '../pages/public'
+import { Home, AllProduct, DetailProduct, Post, ResetPassword, NotFound } from '../pages/public'
 import { routes } from './paths'
 
 export const publicRoutes = [
@@ -17,6 +17,10 @@ export const publicRoutes = [
     {
         path: routes.blog,
         component: Post,
+    },
+    {
+        path: routes.reset_password,
+        component: ResetPassword,
     },
     {
         path: routes.notfound,

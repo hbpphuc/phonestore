@@ -12,4 +12,14 @@ export const post = async (path, data = {}, config) => {
     return response.data
 }
 
+export const put = async (path, data = {}, config) => {
+    const response = await httpRequest.put(path, data, config)
+    return response.data
+}
+
+export const destroy = async (path, data = {}) => {
+    const response = await httpRequest.delete(path, data)
+    return response.data
+}
+
 export default httpRequest

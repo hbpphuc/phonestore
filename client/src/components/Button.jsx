@@ -1,9 +1,10 @@
-import React, { memo } from 'react'
+import React, { forwardRef } from 'react'
 import { Link } from 'react-router-dom'
 
-const Button = ({ text, style = '', active, to, href, onClick, leftIcon, rightIcon, ...passProps }) => {
+const Button = ({ type, text, className, active, to, href, onClick, leftIcon, rightIcon, children, ...passProps }) => {
     let Compnt = 'button'
     const props = {
+        type,
         onClick,
         ...passProps,
     }
@@ -15,13 +16,20 @@ const Button = ({ text, style = '', active, to, href, onClick, leftIcon, rightIc
         props.href = href
         Compnt = 'a'
     }
+
     return (
-        <Compnt className={`btn ${style}`} {...props}>
-            {leftIcon && <span className="icon">{leftIcon}</span>}
-            <span className="title">{text}</span>
-            {rightIcon && <span className="icon">{rightIcon}</span>}
+        <Compnt className={className} {...props}>
+            {!children ? (
+                <>
+                    {leftIcon && <span className="icon">{leftIcon}</span>}
+                    <span className="title">{text}</span>
+                    {rightIcon && <span className="icon">{rightIcon}</span>}
+                </>
+            ) : (
+                children
+            )}
         </Compnt>
     )
 }
 
-export default memo(Button)
+export default forwardRef(Button)

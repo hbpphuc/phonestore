@@ -2,9 +2,10 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { login } from '../redux/user/userSlice'
 import Swal from 'sweetalert2'
+import { login } from '../redux/user/userSlice'
 import * as apis from '../apis'
+import Button from './Button'
 
 const LoginForm = ({ onSetForm }) => {
     const {
@@ -20,11 +21,8 @@ const LoginForm = ({ onSetForm }) => {
         const res = await apis.login(data)
 
         if (res.status === 'success') {
-            Swal.fire('Congratulation!', 'User login successfully!', 'success')
             dispatch(login({ isLoggedIn: true, curUser: res.data, token: res.token }))
-            setTimeout(() => {
-                navigate(0)
-            }, 700)
+            Swal.fire('Congratulation!', 'User login successfully!', 'success').then(() => navigate(0))
         } else {
             Swal.fire('Oops!', res.message, 'error')
         }
@@ -52,20 +50,23 @@ const LoginForm = ({ onSetForm }) => {
                     />
                     {errors.password && <p className="text-sm text-red-500">Password is required.</p>}
                 </div>
-                <button
+                <Button
+                    text="Sign In"
                     type="submit"
                     className="w-full mb-5 p-[12px_10px] bg-main text-white hover:bg-[#333] transition-colors"
-                >
-                    Sign In
-                </button>
+                />
             </form>
             <div className="w-full mb-5 flex justify-between">
-                <a href="/" className="hover:text-main transition-colors">
-                    Forgot Your Password?
-                </a>
-                <button onClick={() => onSetForm((prev) => !prev)} className="hover:text-main transition-colors">
-                    Create Account
-                </button>
+                <Button
+                    text="Forgot Your Password?"
+                    onClick={() => onSetForm(2)}
+                    className="hover:text-main transition-colors"
+                />
+                <Button
+                    text="Create Account"
+                    onClick={() => onSetForm(1)}
+                    className="hover:text-main transition-colors"
+                />
             </div>
         </div>
     )

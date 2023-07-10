@@ -2,17 +2,15 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import logo from '../assets/images/logo.png'
-import { Icon, Navigation } from '../components'
+import { Button, Icon, Navigation } from '../components'
 import useModal from '../hooks/useModal'
-import { Popup, LoginForm, RegisterForm } from '../components'
+import { Popup, LoginForm, RegisterForm, ForgotForm } from '../components'
 
 const Header = () => {
     const { isShowing, toggle } = useModal()
-    const [isRegisterForm, setIsRegisterForm] = useState(false)
+    const [form, setForm] = useState(0)
 
     const { isLoggedIn, token, curUser } = useSelector((state) => state.user)
-
-    console.log({ isLoggedIn, token, curUser })
 
     const user = 'Phuc'
 
@@ -27,16 +25,16 @@ const Header = () => {
                         </div>
                         <div className="flex">
                             {!isLoggedIn ? (
-                                <button
+                                <Button
+                                    text="Sign In | Sign Up"
                                     onClick={toggle}
                                     className="text-sm font-normal px-[10px] text-[#848484] hover:text-main"
-                                >
-                                    Sign In | Sign Up
-                                </button>
+                                />
                             ) : (
-                                <button className="text-sm font-normal px-[10px] text-[#848484] hover:text-main">
-                                    My Account
-                                </button>
+                                <Button
+                                    text="My Account"
+                                    className="text-sm font-normal px-[10px] text-[#848484] hover:text-main"
+                                />
                             )}
                         </div>
                     </div>
@@ -52,17 +50,15 @@ const Header = () => {
                             <div className="w-full flex justify-center items-center">
                                 <input
                                     type="text"
-                                    name=""
-                                    id=""
                                     placeholder="Search something"
                                     className="flex-1 max-w-[80%] h-[42px] text-sm font-light p-[8px_10px] border-2 border-main outline-[#101010]"
                                 />
-                                <button
+                                <Button
                                     type="submit"
                                     className="w-[42px] h-[42px] flex justify-center items-center text-white bg-main hover:brightness-95 transition-all"
                                 >
                                     <Icon.TbSearch size={24} />
-                                </button>
+                                </Button>
                             </div>
                         </div>
                         <div className="flex-1 flex justify-end">
@@ -86,14 +82,16 @@ const Header = () => {
                 <Popup modalIsOpen={isShowing} closeModal={toggle}>
                     <div className="max-w-[700px] h-auto flex flex-col p-5 bg-white overflow-hidden relative">
                         <div className="w-10 h-10 absolute top-0 right-0">
-                            <button onClick={toggle} className="w-full h-full flex justify-center items-center">
+                            <Button onClick={toggle} className="w-full h-full flex justify-center items-center">
                                 <Icon.GrClose size={26} />
-                            </button>
+                            </Button>
                         </div>
-                        {isRegisterForm ? (
-                            <RegisterForm onSetForm={setIsRegisterForm} />
+                        {form === 0 ? (
+                            <LoginForm onSetForm={setForm} />
+                        ) : form === 1 ? (
+                            <RegisterForm onSetForm={setForm} />
                         ) : (
-                            <LoginForm onSetForm={setIsRegisterForm} />
+                            <ForgotForm onSetForm={setForm} />
                         )}
                     </div>
                 </Popup>

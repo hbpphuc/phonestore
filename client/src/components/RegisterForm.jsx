@@ -1,21 +1,32 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import Swal from 'sweetalert2'
 import * as apis from '../apis'
 import { login } from '../redux/user/userSlice'
+import Button from './Button'
+import Icon from './Icons'
+import Loading from './Loading'
 
 const RegisterForm = ({ onSetForm }) => {
+    const [isLoading, setIsLoading] = useState(false)
+
+    const [pw, setPw] = useState(false)
+    const changeIconPw = pw === true ? false : true
+
+    const [pwc, setPwc] = useState(false)
+    const changeIconPwc = pwc === true ? false : true
+
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm()
 
-    const dispatch = useDispatch()
-
     const onSubmit = async (data) => {
+        setIsLoading(true)
         const res = await apis.requestSignup(data)
+        setIsLoading(false)
         if (res.status === 'success') {
             Swal.fire(
                 'Congratulation!',
@@ -53,35 +64,48 @@ const RegisterForm = ({ onSetForm }) => {
                     />
                     {errors.email && <p className="text-sm text-red-500">Email is required.</p>}
                 </div>
-                <div className="w-full">
+                <div className="w-full relative">
                     <input
-                        type="password"
+                        type={changeIconPw ? 'password' : 'text'}
                         placeholder="Password"
                         {...register('password', { required: true, min: 8 })}
                         className="w-full p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d]"
                     />
+                    <span
+                        className="absolute right-5 top-[50%] -translate-y-1/2 cursor-pointer text-[#aaaaaa] hover:text-main"
+                        onClick={() => {
+                            setPw(changeIconPw)
+                        }}
+                    >
+                        {changeIconPw ? <Icon.RiEyeCloseLine size={20} /> : <Icon.RiEyeFill size={20} />}
+                    </span>
                     {errors.password && <p className="text-sm text-red-500">Password is required.</p>}
                 </div>
-                <div className="w-full">
+                <div className="w-full relative">
                     <input
-                        type="password"
+                        type={changeIconPwc ? 'password' : 'text'}
                         placeholder="Password confirm"
                         {...register('passwordConfirm', { required: true, min: 8 })}
                         className="w-full p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d]"
                     />
+                    <span
+                        className="absolute right-5 top-[50%] -translate-y-1/2 cursor-pointer text-[#aaaaaa] hover:text-main"
+                        onClick={() => {
+                            setPwc(changeIconPwc)
+                        }}
+                    >
+                        {changeIconPwc ? <Icon.RiEyeCloseLine size={20} /> : <Icon.RiEyeFill size={20} />}
+                    </span>
                     {errors.passwordConfirm && <p className="text-sm text-red-500">Password confirm is required.</p>}
                 </div>
-
-                <button
+                <Button
                     type="submit"
-                    className="w-full mb-5 p-[12px_10px] bg-main text-white hover:bg-[#333] transition-colors"
+                    className="min-w-[140px] p-[12px_10px] bg-main text-white hover:bg-[#333] transition-colors"
                 >
-                    Create Account
-                </button>
+                    {isLoading ? <Loading size={8} color="white" /> : 'Create Account'}
+                </Button>
             </form>
-            <button onClick={() => onSetForm((prev) => !prev)} className="hover:text-main transition-colors">
-                Cancel
-            </button>
+            <Button text="Cancel" onClick={() => onSetForm(0)} className="mt-5 hover:text-main transition-colors" />
         </div>
     )
 }

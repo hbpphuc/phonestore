@@ -53,7 +53,7 @@ class Email {
     async sendRegister() {
         await this.send(
             'registerEmail',
-            'Complete Register (15 minutes remaining)'
+            'Customer sign up account! Valid in 15 minutes'
         );
     }
 
@@ -64,7 +64,7 @@ class Email {
     async sendResetPassword() {
         await this.send(
             'passwordReset',
-            'Reset your password! Valid in 15 minutes'
+            'Customer account password reset! Valid in 15 minutes'
         );
     }
 }

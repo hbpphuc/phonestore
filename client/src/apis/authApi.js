@@ -17,3 +17,21 @@ export const login = async (data) => {
         return error.response.data
     }
 }
+
+export const forgotPassword = async (data) => {
+    try {
+        const res = await httpRequest.post('users/forgotPassword', data)
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export const resetPassword = async (data, token) => {
+    try {
+        const res = await httpRequest.put(`users/resetPassword/${token}`, data)
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}

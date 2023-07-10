@@ -5,6 +5,6 @@ export const routes = {
     category: '/categories',
     blog: '/posts',
     signup: '/signup/:status',
-    login: '/login',
+    reset_password: '/reset-password/:token',
     notfound: '/not-found',
 }

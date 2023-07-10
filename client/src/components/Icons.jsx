@@ -9,6 +9,7 @@ import { BiDetail, BiSolidTruck } from 'react-icons/bi'
 import { GiReturnArrow } from 'react-icons/gi'
 import { TiPhone } from 'react-icons/ti'
 import { MdNavigateNext } from 'react-icons/md'
+import { RiEyeCloseLine, RiEyeFill } from 'react-icons/ri'
 
 const Icon = {
     RiShoppingBasketFill,
@@ -26,6 +27,8 @@ const Icon = {
     FaGift,
     TiPhone,
     MdNavigateNext,
+    RiEyeCloseLine,
+    RiEyeFill,
 }
 
 export default Icon

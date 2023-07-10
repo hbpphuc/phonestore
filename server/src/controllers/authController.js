@@ -165,12 +165,12 @@ exports.restrictTo = (...roles) => {
 };
 
 exports.forgotPassword = asyncHandler(async (req, res, next) => {
+    console.log(req.body);
+
     const user = await User.findOne({ email: req.body.email });
 
     if (!user)
-        return next(
-            new AppError('There is no user with this email address.', 404)
-        );
+        return next(new AppError('No account found with that email.', 404));
 
     const resetToken = user.createResetPasswordToken();
     await user.save({ validateBeforeSave: false });
@@ -179,14 +179,12 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 
     // send Email
     try {
-        const url = `${req.protocol}://${req.get(
-            'host'
-        )}/api/v1/users/resetPassword/${resetToken}`;
+        const url = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
         await new Email({ email, name }, url).sendResetPassword();
 
         res.status(200).json({
             status: 'success',
-            message: 'Request sent to email!',
+            message: 'Request sent to your email!',
         });
     } catch (error) {
         user.passwordResetToken = undefined;
@@ -202,6 +200,19 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 });
 
 exports.resetPassword = asyncHandler(async (req, res, next) => {
+    const { password, passwordConfirm } = req.body;
+
+    if (password !== passwordConfirm)
+        return next(new AppError('Password does not match.', 400));
+
+    if (password.length < 8 && passwordConfirm.length < 8)
+        return next(
+            new AppError(
+                'Password must be more than or equal 8 characters.',
+                400
+            )
+        );
+
     const hashedToken = crypto
         .createHash('sha256')
         .update(req.params.token)
