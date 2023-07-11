@@ -14,11 +14,10 @@ router.route('/resetPassword/:token').put(authController.resetPassword);
 
 router.use(authController.protect);
 
-router.route('/me').get(userController.getMe, userController.getUser);
+router.route('/me').get(userController.getMe, userController.getCurrent);
 router
     .route('/updateMe')
     .put(userController.populatedImages, userController.updateMe);
-
 router.route('/deleteMe', userController.deleteMe);
 router.route('/updatePassword').put(authController.updatePassword);
 router.route('/updateCart').put(userController.updateCart);

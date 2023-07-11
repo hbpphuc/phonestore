@@ -5,11 +5,6 @@ const { AppError } = require('../utils');
 const User = require('../models/userModel');
 const Product = require('../models/productModel');
 
-exports.getMe = (req, res, next) => {
-    req.params.id = req.user.id;
-    next();
-};
-
 const filterObj = (obj, ...fields) => {
     const newObj = {};
     Object.keys(obj).forEach((item) => {
@@ -19,6 +14,26 @@ const filterObj = (obj, ...fields) => {
 };
 
 exports.populatedImages = uploadCloud.single('photo');
+
+exports.getMe = (req, res, next) => {
+    req.params.id = req.user.id;
+    next();
+};
+
+exports.getCurrent = asyncHandler(async (req, res, next) => {
+    const curUser = await User.findById(req.user.id).select('-role');
+
+    if (!curUser) {
+        return next(new AppError('No document found with this id', 404));
+    }
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            data: curUser,
+        },
+    });
+});
 
 exports.updateMe = asyncHandler(async (req, res, next) => {
     if (req.body.password || req.body.passwordConfirm)
@@ -96,7 +111,7 @@ exports.updateCart = asyncHandler(async (req, res, next) => {
 });
 
 exports.getAllUser = crud.getAll(User);
-exports.getUser = crud.getOne(User);
+exports.getUser = crud.getOneSlug(User);
 // DO NOT UPDATE PASSWORD WITH THIS
 exports.updateUser = crud.updateOne(User);
 exports.deleteUser = crud.deleteOne(User);

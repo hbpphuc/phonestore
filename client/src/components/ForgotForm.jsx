@@ -43,7 +43,7 @@ const ForgotForm = ({ onSetForm }) => {
                         className="w-[70%] p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d]"
                         {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
                     />
-                    {errors.email && <p className="text-sm text-red-500">Email is required.</p>}
+                    {errors.email && <i className="text-sm text-red-500">Email is required.</i>}
                 </div>
                 <div className="w-full flex justify-center">
                     <Button

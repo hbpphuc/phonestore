@@ -11,22 +11,36 @@ const Breadcrumb = ({ name }) => {
             <h3 className="mb-[10px] text-xl text-secondary font-semibold uppercase">{name}</h3>
             <div className="flex">
                 {breadcrumbs.map(({ match, breadcrumb }, index, self) => (
-                    <Link key={match.pathname} to={match.pathname} className="flex items-center">
-                        <span
-                            className={`text-primary ${
-                                index !== self.length - 1
-                                    ? 'text-[#1d1d1d] hover:text-main transition-colors cursor-pointer'
-                                    : 'cursor-text'
-                            }`}
-                        >
-                            {breadcrumb}
-                        </span>
+                    <div className="flex justify-center items-center">
+                        {index !== self.length - 1 ? (
+                            <Link key={match.pathname} to={match.pathname} className="flex items-center">
+                                <span
+                                    className={`text-primary ${
+                                        index !== self.length - 1
+                                            ? 'text-[#1d1d1d] hover:text-main transition-colors cursor-pointer'
+                                            : 'cursor-text'
+                                    }`}
+                                >
+                                    {breadcrumb}
+                                </span>
+                            </Link>
+                        ) : (
+                            <span
+                                className={`text-primary ${
+                                    index !== self.length - 1
+                                        ? 'text-[#1d1d1d] hover:text-main transition-colors cursor-pointer'
+                                        : 'cursor-text'
+                                }`}
+                            >
+                                {breadcrumb}
+                            </span>
+                        )}
                         {index !== self.length - 1 && (
                             <span>
                                 <Icon.MdNavigateNext />
                             </span>
                         )}
-                    </Link>
+                    </div>
                 ))}
             </div>
         </div>

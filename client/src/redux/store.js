@@ -6,13 +6,13 @@ import appSlice from './app/appSlice'
 import userSlice from './user/userSlice'
 
 const persistConfig = {
-    key: 'root',
+    key: 'DIGITALWORLD',
     storage,
 }
 
 const userConfig = {
     ...persistConfig,
-    whitelist: ['isLoggedIn', 'token'],
+    whitelist: ['isLoggedIn'],
 }
 
 const reducer = combineReducers({

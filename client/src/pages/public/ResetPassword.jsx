@@ -54,7 +54,7 @@ const ResetPassword = () => {
                         >
                             {changeIconPw ? <Icon.RiEyeCloseLine size={20} /> : <Icon.RiEyeFill size={20} />}
                         </span>
-                        {errors.password && <p className="text-sm text-red-500">Password is required.</p>}
+                        {errors.password && <i className="text-sm text-red-500">Password is required.</i>}
                     </div>
                     <div className="w-full relative">
                         <input
@@ -72,7 +72,7 @@ const ResetPassword = () => {
                             {changeIconPwc ? <Icon.RiEyeCloseLine size={20} /> : <Icon.RiEyeFill size={20} />}
                         </span>
                         {errors.passwordConfirm && (
-                            <p className="text-sm text-red-500">Password confirm is required.</p>
+                            <i className="text-sm text-red-500">Password confirm is required.</i>
                         )}
                     </div>
                     <Button

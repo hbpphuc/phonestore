@@ -1,36 +1,37 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { getCurrentUser } from './userAction'
 
 const userSlice = createSlice({
     name: 'user',
     initialState: {
         isLoggedIn: false,
         curUser: null,
-        token: null,
+        isLoading: false,
     },
     reducers: {
         login(state, action) {
             state.isLoggedIn = action.payload.isLoggedIn
-            state.curUser = action.payload.userData
-            state.token = action.payload.token
+        },
+        logout(state, action) {
+            state.isLoggedIn = action.payload.isLoggedIn
         },
     },
-    // extraReducers: (builder) => {
-    //     // categories
-    //     builder.addCase(actions.getAllCategories.pending, (state, action) => {
-    //         state.isLoading = true
-    //     })
+    extraReducers: (builder) => {
+        builder.addCase(getCurrentUser.pending, (state) => {
+            state.isLoading = true
+        })
 
-    //     builder.addCase(actions.getAllCategories.fulfilled, (state, action) => {
-    //         state.isLoading = false
-    //         state.categories = action.payload
-    //     })
+        builder.addCase(getCurrentUser.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.curUser = action.payload
+        })
 
-    //     builder.addCase(actions.getAllCategories.rejected, (state, action) => {
-    //         state.isLoading = false
-    //     })
-    // },
+        builder.addCase(getCurrentUser.rejected, (state) => {
+            state.isLoading = false
+        })
+    },
 })
 
-export const { login } = userSlice.actions
+export const { login, logout } = userSlice.actions
 
 export default userSlice.reducer

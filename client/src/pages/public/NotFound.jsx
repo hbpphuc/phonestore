@@ -12,7 +12,7 @@ const NotFound = () => {
                 <div className="mt-[-50px]">
                     <h3 className="text-[80px]">Look like you're lost</h3>
 
-                    <p>the page you are looking for not avaible!</p>
+                    <p>The page you are looking for not avaible!</p>
 
                     <Link to="/" className="inline-block my-5 text-white p-[10px_20px] bg-main hover:brightness-95">
                         Go to Home

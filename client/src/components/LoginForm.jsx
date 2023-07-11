@@ -21,7 +21,7 @@ const LoginForm = ({ onSetForm }) => {
         const res = await apis.login(data)
 
         if (res.status === 'success') {
-            dispatch(login({ isLoggedIn: true, curUser: res.data, token: res.token }))
+            dispatch(login({ isLoggedIn: true }))
             Swal.fire('Congratulation!', 'User login successfully!', 'success').then(() => navigate(0))
         } else {
             Swal.fire('Oops!', res.message, 'error')
@@ -39,7 +39,7 @@ const LoginForm = ({ onSetForm }) => {
                         {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
                         className="w-full p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d]"
                     />
-                    {errors.email && <p className="text-sm text-red-500">Email is required.</p>}
+                    {errors.email && <i className="text-sm text-red-500">Email is required.</i>}
                 </div>
                 <div className="w-full">
                     <input
@@ -48,7 +48,7 @@ const LoginForm = ({ onSetForm }) => {
                         {...register('password', { required: true, min: 8 })}
                         className="w-full p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d]"
                     />
-                    {errors.password && <p className="text-sm text-red-500">Password is required.</p>}
+                    {errors.password && <i className="text-sm text-red-500">Password is required.</i>}
                 </div>
                 <Button
                     text="Sign In"

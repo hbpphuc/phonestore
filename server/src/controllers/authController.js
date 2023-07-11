@@ -5,6 +5,7 @@ const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
 const { createAccessToken, createRefreshToken } = require('../middlewares/jwt');
 const { AppError, Email } = require('../utils');
+const { promisify } = require('util');
 
 const sendToken = asyncHandler(async (user, statusCode, req, res) => {
     const token = createAccessToken(user._id, user.email);
@@ -191,10 +192,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
         user.passwordResetExpires = undefined;
         await user.save({ validateBeforeSave: false });
         return next(
-            new AppError(
-                'There was an error sending the email! Please try later!',
-                500
-            )
+            new AppError('Sending the email failure! Please try later!', 500)
         );
     }
 });

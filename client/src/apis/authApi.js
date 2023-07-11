@@ -11,7 +11,7 @@ export const requestSignup = async (data) => {
 
 export const login = async (data) => {
     try {
-        const res = await httpRequest.post('users/login', data)
+        const res = await httpRequest.post('users/login', data, { withCredentials: true })
         return res.data
     } catch (error) {
         return error.response.data
@@ -30,6 +30,15 @@ export const forgotPassword = async (data) => {
 export const resetPassword = async (data, token) => {
     try {
         const res = await httpRequest.put(`users/resetPassword/${token}`, data)
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export const getCurrentUser = async () => {
+    try {
+        const res = await httpRequest.get('users/me', { withCredentials: true })
         return res.data
     } catch (error) {
         return error.response.data

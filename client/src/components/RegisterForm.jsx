@@ -53,7 +53,7 @@ const RegisterForm = ({ onSetForm }) => {
                         {...register('name', { required: true })}
                         className="w-full p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d]"
                     />
-                    {errors.name && <p className="text-sm text-red-500">Name is required.</p>}
+                    {errors.name && <i className="text-sm text-red-500">Name is required.</i>}
                 </div>
                 <div className="w-full">
                     <input
@@ -62,7 +62,7 @@ const RegisterForm = ({ onSetForm }) => {
                         {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
                         className="w-full p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d]"
                     />
-                    {errors.email && <p className="text-sm text-red-500">Email is required.</p>}
+                    {errors.email && <i className="text-sm text-red-500">Email is required.</i>}
                 </div>
                 <div className="w-full relative">
                     <input
@@ -79,7 +79,7 @@ const RegisterForm = ({ onSetForm }) => {
                     >
                         {changeIconPw ? <Icon.RiEyeCloseLine size={20} /> : <Icon.RiEyeFill size={20} />}
                     </span>
-                    {errors.password && <p className="text-sm text-red-500">Password is required.</p>}
+                    {errors.password && <i className="text-sm text-red-500">Password is required.</i>}
                 </div>
                 <div className="w-full relative">
                     <input
@@ -96,7 +96,7 @@ const RegisterForm = ({ onSetForm }) => {
                     >
                         {changeIconPwc ? <Icon.RiEyeCloseLine size={20} /> : <Icon.RiEyeFill size={20} />}
                     </span>
-                    {errors.passwordConfirm && <p className="text-sm text-red-500">Password confirm is required.</p>}
+                    {errors.passwordConfirm && <i className="text-sm text-red-500">Password confirm is required.</i>}
                 </div>
                 <Button
                     type="submit"

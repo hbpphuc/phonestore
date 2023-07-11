@@ -1,18 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import logo from '../assets/images/logo.png'
-import { Button, Icon, Navigation } from '../components'
+import { useDispatch, useSelector } from 'react-redux'
+import { Popup, LoginForm, RegisterForm, ForgotForm, Button, Icon, Navigation } from '../components'
 import useModal from '../hooks/useModal'
-import { Popup, LoginForm, RegisterForm, ForgotForm } from '../components'
+import logo from '../assets/images/logo.png'
+import { getCurrentUser } from '../redux/user/userAction'
 
 const Header = () => {
     const { isShowing, toggle } = useModal()
     const [form, setForm] = useState(0)
+    const dispatch = useDispatch()
+    const { isLoggedIn, curUser } = useSelector((state) => state.user)
+    const userName = curUser?.data?.name.split(' ')[0]
 
-    const { isLoggedIn, token, curUser } = useSelector((state) => state.user)
-
-    const user = 'Phuc'
+    useEffect(() => {
+        if (isLoggedIn) dispatch(getCurrentUser())
+    }, [dispatch, isLoggedIn])
 
     return (
         <>
@@ -20,8 +23,14 @@ const Header = () => {
                 <div className="w-full flex justify-center items-center border-b border-[#0000000d] py-[10px]">
                     <div className="w-main flex justify-between ">
                         <div className="flex">
-                            {isLoggedIn && <p className="text-sm font-normal text-[#848484] mr-1">Hello {user},</p>}
-                            <p className="text-sm font-normal text-[#848484]">Welcome to our Store!</p>
+                            {curUser && (
+                                <>
+                                    <p className="text-sm font-normal text-[#848484] mr-1">
+                                        Hello <i className="text-main font-semibold">{userName}</i>,
+                                    </p>
+                                    <p className="text-sm font-normal text-[#848484]">welcome to our Store!</p>
+                                </>
+                            )}
                         </div>
                         <div className="flex">
                             {!isLoggedIn ? (
@@ -32,6 +41,7 @@ const Header = () => {
                                 />
                             ) : (
                                 <Button
+                                    to="/me"
                                     text="My Account"
                                     className="text-sm font-normal px-[10px] text-[#848484] hover:text-main"
                                 />
