@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Popup, LoginForm, RegisterForm, ForgotForm, Button, Icon, Navigation } from '../components'
 import useModal from '../hooks/useModal'
 import logo from '../assets/images/logo.png'
 import { getCurrentUser } from '../redux/user/userAction'
+import * as apis from '../apis'
+import { logoutt } from '../redux/user/userSlice'
+import Swal from 'sweetalert2'
 
 const Header = () => {
     const { isShowing, toggle } = useModal()
@@ -12,10 +15,19 @@ const Header = () => {
     const dispatch = useDispatch()
     const { isLoggedIn, curUser } = useSelector((state) => state.user)
     const userName = curUser?.data?.name.split(' ')[0]
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (isLoggedIn) dispatch(getCurrentUser())
     }, [dispatch, isLoggedIn])
+
+    const logout = async () => {
+        const res = await apis.logout()
+        if (res.status === 'success') {
+            dispatch(logoutt({ isLoggedIn: false }))
+            Swal.fire('Congratulation!', 'User logout successfully!', 'success').then(() => navigate(0))
+        }
+    }
 
     return (
         <>
@@ -41,7 +53,7 @@ const Header = () => {
                                 />
                             ) : (
                                 <Button
-                                    to="/me"
+                                    onClick={logout}
                                     text="My Account"
                                     className="text-sm font-normal px-[10px] text-[#848484] hover:text-main"
                                 />

@@ -18,6 +18,15 @@ export const login = async (data) => {
     }
 }
 
+export const logout = async () => {
+    try {
+        const res = await httpRequest.get('users/logout', { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
 export const forgotPassword = async (data) => {
     try {
         const res = await httpRequest.post('users/forgotPassword', data)

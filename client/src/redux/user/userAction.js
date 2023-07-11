@@ -8,3 +8,11 @@ export const getCurrentUser = createAsyncThunk('user', async (data, { rejectWith
 
     return res.data
 })
+
+export const logout = createAsyncThunk('user', async (data, { rejectWithValue }) => {
+    const res = await apis.getCurrentUser()
+
+    if (res.status !== 'success') return rejectWithValue(res)
+
+    return res.data
+})
