@@ -11,9 +11,9 @@ const Breadcrumb = ({ name }) => {
             <h3 className="mb-[10px] text-xl text-secondary font-semibold uppercase">{name}</h3>
             <div className="flex">
                 {breadcrumbs.map(({ match, breadcrumb }, index, self) => (
-                    <div className="flex justify-center items-center">
+                    <div key={match.pathname} className="flex justify-center items-center">
                         {index !== self.length - 1 ? (
-                            <Link key={match.pathname} to={match.pathname} className="flex items-center">
+                            <Link to={match.pathname} className="flex items-center">
                                 <span
                                     className={`text-primary ${
                                         index !== self.length - 1

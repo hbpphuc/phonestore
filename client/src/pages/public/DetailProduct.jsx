@@ -1,25 +1,39 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import Slider from 'react-slick'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
 import * as apis from '../../apis'
-import { Breadcrumb, InfoProduct } from '../../components'
+import { Breadcrumb, InfoProduct, ProductItem, Review } from '../../components'
 import { detailProductTabs, productExtrainInfo } from '../../utils/menu'
 
 const DetailProduct = () => {
     const navigate = useNavigate()
     const [product, setProduct] = useState(null)
+    const [productList, setProductList] = useState(null)
     const { slug } = useParams()
 
-    const getProductSlug = async () => {
-        const res = await apis.getProductBySlug({ slug })
-        if (!res) return navigate('/not-found', { replace: true })
-        setProduct(res?.data?.data)
+    const settingsProducts = {
+        dots: false,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 1,
     }
 
     useEffect(() => {
-        getProductSlug()
-    }, [])
+        const getAllProduct = async () => {
+            const res = await apis.getAllProduct()
+            console.log(res.data)
+            if (res.status === 'success') {
+                setProductList(res?.data?.data.filter((item) => item.slug !== slug))
+                const prod = res?.data?.data.find((item) => item.slug === slug)
+                if (!prod) return navigate('/not-found', { replace: true })
+                setProduct(prod)
+            }
+        }
+        if (slug) getAllProduct()
+    }, [slug])
 
     return (
         <div className="w-full h-auto">
@@ -27,7 +41,7 @@ const DetailProduct = () => {
                 <div className="w-full h-auto py-5 mb-5 bg-[#f7f7f7] flex justify-center items-center">
                     <Breadcrumb name={product?.name} />
                 </div>
-                <div className="w-main h-auto mb-20 flex justify-center">
+                <div className="w-main h-auto mb-10 flex justify-center">
                     <div className="w-[80%]">
                         <InfoProduct data={product} detail />
                     </div>
@@ -54,17 +68,17 @@ const DetailProduct = () => {
                         </ul>
                     </div>
                 </div>
-                <div className="w-main mb-20">
+                <div className="w-main mb-10">
                     <Tabs>
                         <TabList>
-                            {detailProductTabs.map((item) => (
+                            {detailProductTabs[0].map((item) => (
                                 <Tab key={item.id}>
                                     <span className="uppercase">{item.title}</span>
                                 </Tab>
                             ))}
                         </TabList>
 
-                        {detailProductTabs.map((item) => (
+                        {detailProductTabs[1].map((item) => (
                             <TabPanel key={item.id}>
                                 <div className="border border-[#aaa] border-t-0 p-5 ">
                                     {item.subTitle !== '' && (
@@ -76,7 +90,27 @@ const DetailProduct = () => {
                                 </div>
                             </TabPanel>
                         ))}
+                        <TabPanel>
+                            <div className="border border-[#aaa] border-t-0 p-5">
+                                <Review id={product?._id} />
+                            </div>
+                        </TabPanel>
                     </Tabs>
+                </div>
+                <div className="w-main h-auto mb-20">
+                    <div className="w-full mb-5 flex justify-center items-center relative">
+                        <h2 className="pb-[15px] text-xl text-secondary uppercase font-normal">other products</h2>
+                        <span className="w-10 h-[3px] bg-[#ccc] absolute bottom-0"></span>
+                    </div>
+                    {productList?.length > 0 ? (
+                        <Slider {...settingsProducts}>
+                            {productList?.map((item, index) => (
+                                <ProductItem key={index} data={item} />
+                            ))}
+                        </Slider>
+                    ) : (
+                        <div className="w-full flex justify-center items-cente text-[#8b8b8b] text-xl">No products</div>
+                    )}
                 </div>
             </div>
         </div>

@@ -58,7 +58,7 @@ exports.getOneSlug = (Model, popOptions) =>
         const doc = await query;
 
         if (!doc) {
-            return next(new AppError('No document found', 404));
+            return next(new AppError('No document found with that name', 404));
         }
 
         res.status(200).json({

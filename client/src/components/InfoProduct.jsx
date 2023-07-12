@@ -11,6 +11,8 @@ const InfoProduct = ({ data, detail }) => {
 
     const props = { width: 400, height: 250, zoomWidth: 500, img: data?.imageCover }
 
+    const IsLink = detail ? 'p' : Link
+
     const internal = [
         { value: '32gb', label: '32GB' },
         { value: '64gb', label: '64GB' },
@@ -58,12 +60,14 @@ const InfoProduct = ({ data, detail }) => {
             </div>
             <div className="flex-1 h-full">
                 <div className="w-full mb-5 ">
-                    <Link
+                    <IsLink
                         to={`${routes.product}/${data?.category?.slug}/${data?.slug}`}
-                        className="text-[#1c1c1c] text-xl font-semibold hover:text-main transition-colors"
+                        className={`text-[#1c1c1c] text-xl font-semibold ${
+                            detail ? '' : 'hover:text-main'
+                        } transition-colors`}
                     >
                         {data?.name}
-                    </Link>
+                    </IsLink>
                 </div>
                 <ul className="w-full ml-4 mb-[15px] list-disc">
                     <li>Technology: GSM / HSPA / LTE</li>

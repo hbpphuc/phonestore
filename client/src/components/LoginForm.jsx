@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
@@ -6,8 +6,12 @@ import Swal from 'sweetalert2'
 import { login } from '../redux/user/userSlice'
 import * as apis from '../apis'
 import Button from './Button'
+import Icon from './Icons'
 
 const LoginForm = ({ onSetForm }) => {
+    const [pw, setPw] = useState(false)
+    const changeIconPw = pw === true ? false : true
+
     const {
         register,
         handleSubmit,
@@ -41,13 +45,21 @@ const LoginForm = ({ onSetForm }) => {
                     />
                     {errors.email && <i className="text-sm text-red-500">Email is required.</i>}
                 </div>
-                <div className="w-full">
+                <div className="w-full relative">
                     <input
-                        type="password"
+                        type={changeIconPw ? 'password' : 'text'}
                         placeholder="Password"
                         {...register('password', { required: true, min: 8 })}
                         className="w-full p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d]"
                     />
+                    <span
+                        className="absolute right-5 top-[50%] -translate-y-1/2 cursor-pointer text-[#aaaaaa] hover:text-main"
+                        onClick={() => {
+                            setPw(changeIconPw)
+                        }}
+                    >
+                        {changeIconPw ? <Icon.RiEyeCloseLine size={20} /> : <Icon.RiEyeFill size={20} />}
+                    </span>
                     {errors.password && <i className="text-sm text-red-500">Password is required.</i>}
                 </div>
                 <Button
