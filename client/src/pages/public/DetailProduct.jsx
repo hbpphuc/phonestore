@@ -11,7 +11,7 @@ const DetailProduct = () => {
     const navigate = useNavigate()
     const [product, setProduct] = useState(null)
     const [productList, setProductList] = useState(null)
-    const { slug } = useParams()
+    const { type, slug } = useParams()
 
     const settingsProducts = {
         dots: false,
@@ -24,22 +24,21 @@ const DetailProduct = () => {
     useEffect(() => {
         const getAllProduct = async () => {
             const res = await apis.getAllProduct()
-            console.log(res.data)
             if (res.status === 'success') {
-                setProductList(res?.data?.data.filter((item) => item.slug !== slug))
-                const prod = res?.data?.data.find((item) => item.slug === slug)
+                setProductList(res?.data?.data.filter((item) => item?.slug !== slug && item?.category?.slug === type))
+                const prod = res?.data?.data.find((item) => item?.slug === slug)
                 if (!prod) return navigate('/not-found', { replace: true })
                 setProduct(prod)
             }
         }
         if (slug) getAllProduct()
-    }, [slug])
+    }, [type, slug])
 
     return (
         <div className="w-full h-auto">
             <div className="w-full h-auto flex justify-center items-center flex-col">
                 <div className="w-full h-auto py-5 mb-5 bg-[#f7f7f7] flex justify-center items-center">
-                    <Breadcrumb name={product?.name} />
+                    <Breadcrumb />
                 </div>
                 <div className="w-main h-auto mb-10 flex justify-center">
                     <div className="w-[80%]">
@@ -105,7 +104,7 @@ const DetailProduct = () => {
                     {productList?.length > 0 ? (
                         <Slider {...settingsProducts}>
                             {productList?.map((item, index) => (
-                                <ProductItem key={index} data={item} />
+                                <ProductItem key={index} data={item} detail />
                             ))}
                         </Slider>
                     ) : (

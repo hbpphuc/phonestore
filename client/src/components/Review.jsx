@@ -37,7 +37,7 @@ const Review = ({ id }) => {
                 ))
             ) : (
                 <div className="w-full h-auto flex justify-center items-center">
-                    <p className="text-base text-primary">This product not have any review.</p>
+                    <p className="text-base text-primary">This product have no review.</p>
                 </div>
             )}
         </div>

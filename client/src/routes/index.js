@@ -7,7 +7,11 @@ export const publicRoutes = [
         component: Home,
     },
     {
-        path: routes.product,
+        path: routes.products,
+        component: AllProduct,
+    },
+    {
+        path: routes.product_category,
         component: AllProduct,
     },
     {

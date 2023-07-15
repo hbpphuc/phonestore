@@ -1,6 +1,6 @@
 /* eslint-disable react/style-prop-object */
 import React, { memo } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import useModal from '../hooks/useModal'
@@ -11,11 +11,15 @@ import InfoProduct from './InfoProduct'
 import Popup from './Popup'
 import Icon from './Icons'
 
-const ProductItem = ({ data }) => {
+const ProductItem = ({ data, detail }) => {
     const { isShowing, toggle } = useModal()
     const isNew = true
+    const navigate = useNavigate()
 
     const handleClickActionBtn = (item) => {
+        if (item.id === 2) {
+            navigate(`${routes.products}/${data?.category?.slug}/${data?.slug}`)
+        }
         if (item.id === 3) {
             toggle()
         }
@@ -26,16 +30,18 @@ const ProductItem = ({ data }) => {
             <div className="w-full flex justify-center items-center">
                 <div className="w-full h-auto mx-2 flex flex-col items-center product-item border">
                     <div className="w-full h-[300px] mb-5 p-[15px] overflow-hidden relative flex flex-col items-center">
-                        <div
-                            className={`product-item-favourite ${
-                                isNew ? 'bg-[#00d5d5] border-t-[#00d5d5]' : 'bg-[#ffb400] border-t-[#ffb400]'
-                            }`}
-                        >
-                            <span className="absolute rounded-full left-1 top-[50%] translate-y-[-50%] w-[6px] h-[6px] bg-[white]"></span>
-                            <span>New</span>
-                        </div>
+                        {!detail && (
+                            <div
+                                className={`product-item-favourite ${
+                                    isNew ? 'bg-[#00d5d5] border-t-[#00d5d5]' : 'bg-[#ffb400] border-t-[#ffb400]'
+                                }`}
+                            >
+                                <span className="absolute rounded-full left-1 top-[50%] translate-y-[-50%] w-[6px] h-[6px] bg-[white]"></span>
+                                <span>New</span>
+                            </div>
+                        )}
                         <div className="w-full h-full flex justify-center items-start">
-                            <Link to={`${routes.product}/${data?.category?.slug}/${data?.slug}`}>
+                            <Link to={`${routes.products}/${data?.category?.slug}/${data?.slug}`}>
                                 <img
                                     src={data?.imageCover || 'https://app.advaiet.com/item_dfile/default_product.png'}
                                     alt={data?.name}
@@ -57,7 +63,7 @@ const ProductItem = ({ data }) => {
                         </div>
                     </div>
                     <Link
-                        to={`${routes.product}/${data?.category?.slug}/${data?.slug}`}
+                        to={`${routes.products}/${data?.category?.slug}/${data?.slug}`}
                         className="mb-[6px] hover:text-main transition-colors line-clamp-1"
                     >
                         {data?.name}

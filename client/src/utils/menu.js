@@ -1,4 +1,4 @@
-import { Icon, Review } from '../components'
+import { Icon } from '../components'
 import { routes } from '../routes/paths'
 
 export const navigatorMenu = [
@@ -9,7 +9,7 @@ export const navigatorMenu = [
     },
     {
         id: 2,
-        path: routes.product,
+        path: routes.products,
         title: 'product',
     },
     {

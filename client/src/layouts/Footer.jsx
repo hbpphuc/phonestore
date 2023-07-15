@@ -4,7 +4,7 @@ import { footerMenu } from '../utils/menu'
 
 const Footer = () => {
     return (
-        <div className="w-full h-[400px] flex flex-col justify-between items-center bg-[#333333] text-[#808080]">
+        <div className="w-full h-[400px] mt-5 flex flex-col justify-between items-center bg-[#333333] text-[#808080]">
             <div className="flex-1 w-full flex justify-center items-center py-[50px]">
                 <div className="w-main h-auto flex gap-4">
                     {footerMenu.map((el) => (
