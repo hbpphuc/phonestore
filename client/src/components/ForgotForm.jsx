@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Swal from 'sweetalert2'
 import Button from './Button'
-import * as apis from '../apis'
+import * as apis from 'apis'
 import Loading from './Loading'
 
 const ForgotForm = ({ onSetForm }) => {

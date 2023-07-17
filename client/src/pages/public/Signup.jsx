@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import { routes } from '../../routes/paths'
+import { routes } from 'routes/paths'
 
 const Signup = () => {
     const { status } = useParams()

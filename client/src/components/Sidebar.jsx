@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import * as apis from '../apis'
-import { routes } from '../routes/paths'
+import * as apis from 'apis'
+import { routes } from 'routes/paths'
 
 const Sidebar = () => {
     const [categories, setCategories] = useState(null)

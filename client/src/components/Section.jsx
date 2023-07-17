@@ -1,7 +1,7 @@
 import React, { memo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Slider from 'react-slick'
-import { getCateId } from '../redux/app/appSlice'
+import { getCateId } from 'redux/app/appSlice'
 import ProductItem from './ProductItem'
 import Blog from './Blog'
 

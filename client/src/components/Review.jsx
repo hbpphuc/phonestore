@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import * as apis from '../apis'
+import * as apis from 'apis'
 
 const Review = ({ id }) => {
     const [reviews, setReviews] = useState(null)

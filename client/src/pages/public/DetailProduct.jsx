@@ -3,9 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Slider from 'react-slick'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
-import * as apis from '../../apis'
-import { Breadcrumb, InfoProduct, ProductItem, Review } from '../../components'
-import { detailProductTabs, productExtrainInfo } from '../../utils/menu'
+import * as apis from 'apis'
+import { Breadcrumb, InfoProduct, ProductItem, Review } from 'components'
+import { detailProductTabs, productExtrainInfo } from 'utils/menu'
 
 const DetailProduct = () => {
     const navigate = useNavigate()

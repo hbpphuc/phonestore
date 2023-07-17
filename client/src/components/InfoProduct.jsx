@@ -1,7 +1,7 @@
 import React, { memo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Select from 'react-select'
-import { routes } from '../routes/paths'
+import { routes } from 'routes/paths'
 
 const InfoProduct = ({ data, detail }) => {
     const quantityRef = useRef()

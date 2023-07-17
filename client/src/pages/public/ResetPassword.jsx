@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Button, Icon, Loading } from '../../components'
-import * as apis from '../../apis'
+import { Button, Icon, Loading } from 'components'
+import * as apis from 'apis'
 import Swal from 'sweetalert2'
 
 const ResetPassword = () => {
