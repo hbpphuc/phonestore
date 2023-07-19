@@ -1,13 +1,13 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-const Section2 = () => {
+const Section2 = ({ title }) => {
     const { categories } = useSelector((state) => state.app)
 
     return (
         <div className="w-main h-auto flex flex-col justify-center items-center mb-[50px]">
             <div className="w-full mb-5 flex justify-center items-center relative">
-                <h2 className="pb-[15px] text-xl text-secondary uppercase font-normal">hot collections</h2>
+                <h2 className="pb-[15px] text-xl text-secondary uppercase font-normal">{title}</h2>
                 <span className="w-10 h-[3px] bg-[#ccc] absolute bottom-0"></span>
             </div>
             <div className="w-full h-auto flex flex-wrap justify-between items-center">

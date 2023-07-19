@@ -17,7 +17,16 @@ class APIFeatures {
             (match) => `$${match}`
         );
 
-        this.query = this.query.find(JSON.parse(queryStr));
+        const formatQ = JSON.parse(queryStr);
+
+        console.log({ queryObj, formatQ });
+
+        if (queryObj.name)
+            formatQ.name = { $regex: queryObj.name, $options: 'i' };
+        // if (queryObj.brand)
+        //     formatQ.brand = { $regex: queryObj.brand, $options: 'i' };
+
+        this.query = this.query.find(formatQ);
 
         return this;
     }

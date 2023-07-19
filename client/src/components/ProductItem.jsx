@@ -11,14 +11,14 @@ import InfoProduct from './InfoProduct'
 import Popup from './Popup'
 import Icon from './Icons'
 
-const ProductItem = ({ data, detail }) => {
+const ProductItem = ({ data, cateType, detail }) => {
     const { isShowing, toggle } = useModal()
     const isNew = true
     const navigate = useNavigate()
 
     const handleClickActionBtn = (item) => {
         if (item.id === 2) {
-            navigate(`${routes.products}/${data?.category?.slug}/${data?.slug}`)
+            navigate(`${routes.products}/${cateType}/${data?.slug}`)
         }
         if (item.id === 3) {
             toggle()
@@ -41,7 +41,7 @@ const ProductItem = ({ data, detail }) => {
                             </div>
                         )}
                         <div className="w-full h-full flex justify-center items-start">
-                            <Link to={`${routes.products}/${data?.category?.slug}/${data?.slug}`}>
+                            <Link to={`${routes.products}/${cateType}/${data?.slug}`}>
                                 <img
                                     src={data?.imageCover || 'https://app.advaiet.com/item_dfile/default_product.png'}
                                     alt={data?.name}
@@ -63,7 +63,7 @@ const ProductItem = ({ data, detail }) => {
                         </div>
                     </div>
                     <Link
-                        to={`${routes.products}/${data?.category?.slug}/${data?.slug}`}
+                        to={`${routes.products}/${cateType}/${data?.slug}`}
                         className="mb-[6px] hover:text-main transition-colors line-clamp-1"
                     >
                         {data?.name}

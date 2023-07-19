@@ -1,28 +1,29 @@
-import React, { memo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { memo, useEffect, useState } from 'react'
 import Slider from 'react-slick'
-import { getCateId } from 'redux/app/appSlice'
+import * as apis from 'apis'
 import ProductItem from './ProductItem'
-import Blog from './Blog'
 
-const Section = ({ prodData, cateData, type, title }) => {
-    const { cateId } = useSelector((state) => state.app)
+const Section = ({ cateData, title }) => {
+    const [cateId, setCateId] = useState('648d84dbc23688213c792cac')
+    const [cateType, setCateType] = useState(null)
+    const [prodCate, setProdCate] = useState(null)
 
-    const dispatch = useDispatch()
+    useEffect(() => {
+        const getCategory = async () => {
+            const res = await apis.getCategory({ cateId })
+            if (res?.status === 'success') {
+                setProdCate(res?.data?.data?.products)
+                setCateType(res?.data?.data?.slug)
+            }
+        }
+        getCategory()
+    }, [cateId])
 
     const settingsProducts = {
         dots: false,
         infinite: false,
         speed: 500,
         slidesToShow: 4,
-        slidesToScroll: 1,
-    }
-
-    const settingsBlogs = {
-        dots: false,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 3,
         slidesToScroll: 1,
     }
 
@@ -40,7 +41,7 @@ const Section = ({ prodData, cateData, type, title }) => {
                             className={`mx-[15px] text-[#8b8b8b] text-base uppercase cursor-pointer hover:text-main transition-colors ${
                                 cateId === item._id && 'text-main'
                             }`}
-                            onClick={() => dispatch(getCateId(item._id))}
+                            onClick={() => setCateId(item._id)}
                         >
                             {item.name}
                         </li>
@@ -48,22 +49,14 @@ const Section = ({ prodData, cateData, type, title }) => {
                 </ul>
             )}
             <div className="w-full h-auto">
-                {type === 'product' ? (
-                    prodData?.length > 0 ? (
-                        <Slider {...settingsProducts}>
-                            {prodData?.map((item, index) => (
-                                <ProductItem key={index} data={item} />
-                            ))}
-                        </Slider>
-                    ) : (
-                        <div className="w-full flex justify-center items-cente text-[#8b8b8b] text-xl">No products</div>
-                    )
-                ) : (
-                    <Slider {...settingsBlogs}>
-                        {[1, 2, 3, 4].map((item, index) => (
-                            <Blog key={index} data={item} />
+                {prodCate?.length > 0 ? (
+                    <Slider {...settingsProducts}>
+                        {prodCate?.map((item) => (
+                            <ProductItem key={item._id} data={item} cateType={cateType} />
                         ))}
                     </Slider>
+                ) : (
+                    <div className="w-full flex justify-center items-cente text-[#8b8b8b] text-xl">No products</div>
                 )}
             </div>
         </div>

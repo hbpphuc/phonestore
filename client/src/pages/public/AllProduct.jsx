@@ -1,22 +1,56 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import * as apis from '../../apis'
-import { Breadcrumb, ProductItem, Sidebar } from '../../components'
+import Select from 'react-select'
+import * as apis from 'apis'
+import { Breadcrumb, ProductItem, Navbar } from 'components'
 
 const AllProduct = () => {
     const { type } = useParams()
 
+    const optSort = [
+        {
+            value: 'best',
+            label: 'Best selling',
+            query: 'best',
+        },
+        {
+            value: 'low',
+            label: 'Price low',
+            query: 'price',
+        },
+        {
+            value: 'high',
+            label: 'Price high',
+            query: '-price',
+        },
+    ]
+
     const [products, setProducts] = useState(null)
+    const [brandOpt, setBrandOpt] = useState(null)
+
+    const [brandS, setBrandS] = useState(null)
+    const [sortS, setSortS] = useState(null)
 
     useEffect(() => {
-        const getAllProduct = async () => {
-            const res = await apis.getAllProduct()
-            const data = res?.data?.data
-            type ? setProducts(data?.filter((item) => item.category.slug === type)) : setProducts(data)
+        console.log({})
+        const fetchApi = async () => {
+            const resProd = await apis.getAllProduct(sortS?.query)
+            const resCate = await apis.getAllCategory()
+
+            const prodList = resProd?.data?.data
+
+            if (type) {
+                const cateItem = resCate?.data?.data.find((item) => item.slug === type)
+                const brandObj = cateItem?.brands.map((el) => ({ value: el.slug, label: el.name }))
+                setProducts(prodList?.filter((item) => item.category === cateItem._id))
+                setBrandOpt(brandObj)
+            } else {
+                setProducts(prodList)
+            }
         }
 
-        getAllProduct()
-    }, [type])
+        fetchApi()
+    }, [type, brandS, sortS])
 
     return (
         <div className="w-full h-auto">
@@ -26,19 +60,33 @@ const AllProduct = () => {
                 </div>
                 <div className="w-main flex gap-5">
                     <div className="w-1/4 h-auto">
-                        <Sidebar />
+                        <Navbar />
                     </div>
                     <div className="w-3/4 h-auto flex flex-col">
-                        {type && products.length > 0 && (
-                            <div className="w-full h-[100px] p-[0_8px] mb-2">
-                                <div className="w-full h-full flex justify-between p-2 border">
-                                    <div className="w-[70%] h-full">
-                                        <h2 className="text-base font-semibold text-primary">Filter by</h2>
-                                        <h2>ajdjaskldjals</h2>
+                        {type && products?.length > 0 && (
+                            <div className="w-full h-auto p-[0_8px] mb-2">
+                                <div className="w-full h-auto flex justify-between p-2 border">
+                                    <div className="w-[80%] h-full flex flex-col">
+                                        <h2 className="text-base font-semibold text-primary mb-2">Filter by</h2>
+                                        <div className="w-full h-auto flex flex-wrap gap-2">
+                                            <Select
+                                                defaultValue="No Brand"
+                                                onChange={setBrandS}
+                                                options={brandOpt}
+                                                placeholder="Brand"
+                                                isSearchable={false}
+                                                isMulti={true}
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="w-[30%] h-full">
-                                        <h2 className="text-base font-semibold text-primary">Sort by</h2>
-                                        <h2>ajdjaskldjals</h2>
+                                    <div className="w-[20%] h-full">
+                                        <h2 className="text-base font-semibold text-primary mb-2">Sort by</h2>
+                                        <Select
+                                            onChange={setSortS}
+                                            options={optSort}
+                                            placeholder="Sort"
+                                            isSearchable={false}
+                                        />
                                     </div>
                                 </div>
                             </div>

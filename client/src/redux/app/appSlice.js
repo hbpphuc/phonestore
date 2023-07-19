@@ -8,7 +8,7 @@ const appSlice = createSlice({
         isShowModal: false,
         categories: null,
         products: null,
-        cateId: '6492a18d3670201250b67d32',
+        cateId: null,
     },
     reducers: {
         getCateId(state, action) {

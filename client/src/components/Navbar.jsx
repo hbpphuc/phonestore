@@ -1,26 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import * as apis from 'apis'
+import { getAllCategories } from 'redux/app/action'
 import { routes } from 'routes/paths'
+import { useDispatch, useSelector } from 'react-redux'
 
-const Sidebar = () => {
-    const [categories, setCategories] = useState(null)
+const Navbar = () => {
+    const { categories } = useSelector((state) => state.app)
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        const getAllCategory = async () => {
-            const res = await apis.getAllCategory()
-            if (res.status === 'success') {
-                setCategories(res?.data?.data)
-            }
-        }
-        getAllCategory()
+        dispatch(getAllCategories())
     }, [])
 
     return (
         <div className="w-full">
             <h2 className="bg-main text-white text-lg font-semibold uppercase p-[14px_15px] mb-0">ALL CATEGORIES</h2>
             <ul className="border">
-                {categories?.map((item) => (
+                {categories?.data?.map((item) => (
                     <li key={item.slug} className="p-5">
                         <NavLink
                             to={`${routes.products}/${item.slug}`}
@@ -35,4 +31,4 @@ const Sidebar = () => {
     )
 }
 
-export default Sidebar
+export default Navbar

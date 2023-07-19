@@ -10,12 +10,22 @@ const brandSchema = new mongoose.Schema(
         },
         slug: String,
     },
-    { timestamps: true }
+    {
+        timestamps: true,
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true },
+    }
 );
 
 brandSchema.pre('save', function (next) {
     this.slug = slugify(this.name, { lower: true, locale: 'vi' });
     next();
+});
+
+brandSchema.virtual('products', {
+    ref: 'Product',
+    foreignField: 'brand',
+    localField: '_id',
 });
 
 const Brand = mongoose.model('Brand', brandSchema);
