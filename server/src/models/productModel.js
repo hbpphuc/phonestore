@@ -44,8 +44,7 @@ const productSchema = new mongoose.Schema(
         images: [String],
         color: {
             type: String,
-            default: 'Black',
-            enum: ['Black', 'White', 'Red'],
+            required: [true, 'A product must have a color'],
         },
         ratings_average: {
             type: Number,

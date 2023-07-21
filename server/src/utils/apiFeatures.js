@@ -1,3 +1,5 @@
+const e = require('express');
+
 class APIFeatures {
     constructor(query, queryString) {
         this.query = query;
@@ -19,14 +21,31 @@ class APIFeatures {
 
         const formatQ = JSON.parse(queryStr);
 
-        console.log({ queryObj, formatQ });
+        let colorObj = {};
+        console.log(formatQ);
 
-        if (queryObj.name)
+        if (queryObj?.name)
             formatQ.name = { $regex: queryObj.name, $options: 'i' };
-        // if (queryObj.brand)
-        //     formatQ.brand = { $regex: queryObj.brand, $options: 'i' };
 
-        this.query = this.query.find(formatQ);
+        if (queryObj?.color) {
+            delete formatQ.color;
+
+            let colorArr;
+
+            Array.isArray(queryObj.color)
+                ? (colorArr = queryObj?.color)
+                : (colorArr = queryObj?.color.split(','));
+
+            const colorQuery = colorArr?.map((item) => ({
+                color: { $regex: item, $options: 'i' },
+            }));
+
+            colorObj = { $or: colorQuery };
+        }
+
+        const q = { ...colorObj, ...formatQ };
+
+        this.query = this.query.find(q);
 
         return this;
     }
