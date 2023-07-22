@@ -3,13 +3,17 @@ import { useParams } from 'react-router-dom'
 import { useDebounce } from 'use-debounce'
 import Select from 'react-select'
 import * as apis from 'apis'
-import { Breadcrumb, ProductItem, Navbar } from 'components'
+import { Breadcrumb, ProductItem, Navbar, Button } from 'components'
 import { optSort, optColor } from 'utils/constant'
+import ReactPaginate from 'react-paginate'
+
+const LIMIT = 3
 
 const AllProduct = () => {
     const { type } = useParams()
 
-    const [products, setProducts] = useState(null)
+    const [page, setPage] = useState(1)
+    const [products, setProducts] = useState([])
     const [brandOpt, setBrandOpt] = useState(null)
 
     const [brandS, setBrandS] = useState(null)
@@ -19,19 +23,26 @@ const AllProduct = () => {
     const [valueBrand] = useDebounce(brandS, 1000)
     const [valueColor] = useDebounce(colorS, 1000)
 
+    // const handleSeeMoreAccount = () => {
+    //     setPage((prev) => prev + 1)
+    // }
+
     useEffect(() => {
         const fetchApi = async () => {
             const resProd = await apis.getAllProduct({
                 sort: sortS?.query,
                 color: valueColor?.map((item) => item.value),
-            }) //brand: value?.map((item) => item.value)
+                brand: valueBrand?.map((item) => item.id),
+                page,
+                limit: LIMIT,
+            })
             const resCate = await apis.getAllCategory()
 
             const prodList = resProd?.data?.data
 
             if (type) {
                 const cateItem = resCate?.data?.data.find((item) => item.slug === type)
-                const brandObj = cateItem?.brands.map((el) => ({ value: el.slug, label: el.name }))
+                const brandObj = cateItem?.brands.map((el) => ({ value: el.slug, label: el.name, id: el._id }))
                 setProducts(prodList?.filter((item) => item.category === cateItem._id))
                 setBrandOpt(brandObj)
             } else {
@@ -40,7 +51,7 @@ const AllProduct = () => {
         }
 
         fetchApi()
-    }, [type, sortS, valueBrand, valueColor])
+    }, [type, sortS, valueBrand, valueColor, page])
 
     return (
         <div className="w-full h-auto">
@@ -100,6 +111,14 @@ const AllProduct = () => {
                                 </div>
                             ))}
                         </div>
+                        <ReactPaginate
+                            pageRangeDisplayed={5}
+                            pageCount={Math.ceil(products?.length / LIMIT) + 1}
+                            breakLabel="..."
+                            previousLabel="PREV"
+                            nextLabel="NEXT"
+                            className="w-full flex justify-center items-center gap-6"
+                        />
                     </div>
                 </div>
             </div>

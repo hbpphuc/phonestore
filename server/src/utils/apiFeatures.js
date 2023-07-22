@@ -21,12 +21,10 @@ class APIFeatures {
 
         const formatQ = JSON.parse(queryStr);
 
-        let colorObj = {};
-        console.log(formatQ);
-
         if (queryObj?.name)
             formatQ.name = { $regex: queryObj.name, $options: 'i' };
 
+        let colorObj = {};
         if (queryObj?.color) {
             delete formatQ.color;
 
@@ -43,7 +41,16 @@ class APIFeatures {
             colorObj = { $or: colorQuery };
         }
 
-        const q = { ...colorObj, ...formatQ };
+        let brandObj = {};
+        if (queryObj?.brand) {
+            const brandQuery = queryObj?.brand?.map((item) => ({
+                brand: item,
+            }));
+
+            brandObj = { $or: brandQuery };
+        }
+
+        const q = { ...colorObj, ...brandObj, ...formatQ };
 
         this.query = this.query.find(q);
 
