@@ -21,9 +21,6 @@ class APIFeatures {
 
         const formatQ = JSON.parse(queryStr);
 
-        if (queryObj?.name)
-            formatQ.name = { $regex: queryObj.name, $options: 'i' };
-
         let colorObj = {};
         if (queryObj?.color) {
             delete formatQ.color;

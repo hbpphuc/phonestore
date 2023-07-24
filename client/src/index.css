@@ -117,3 +117,11 @@ button.slick-prev::before {
     top: -30px;
     left: -30px;
 }
+
+.page-item {
+    @apply px-3 text-primary text-lg font-semibold hover:text-main cursor-pointer;
+}
+
+.page-item.active {
+    @apply text-main;
+}

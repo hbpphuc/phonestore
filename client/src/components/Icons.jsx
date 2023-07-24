@@ -2,7 +2,7 @@ import { RiShoppingBasketFill } from 'react-icons/ri'
 import { TbSearch } from 'react-icons/tb'
 import { FaHeart, FaEye, FaRegComments, FaGift, FaMobileAlt } from 'react-icons/fa'
 import { FaShieldHalved } from 'react-icons/fa6'
-import { HiMenu } from 'react-icons/hi'
+import { HiMenu, HiOutlineArrowNarrowLeft, HiOutlineArrowNarrowRight } from 'react-icons/hi'
 import { BsCalendar3, BsDisplay, BsSpeaker } from 'react-icons/bs'
 import { GrClose } from 'react-icons/gr'
 import { BiDetail, BiSolidTruck } from 'react-icons/bi'
@@ -38,6 +38,8 @@ const Icon = {
     BsDisplay,
     BsSpeaker,
     MdDevicesOther,
+    HiOutlineArrowNarrowLeft,
+    HiOutlineArrowNarrowRight,
 }
 
 export default Icon

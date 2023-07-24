@@ -1,6 +1,15 @@
 import httpRequest from '../utils/httpRequest'
 
-export const getAllProduct = async ({ sort, color, brand, page = 1, limit = 3 }) => {
+export const getAllProduct = async () => {
+    try {
+        const res = await httpRequest.get('products')
+        return res.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getAllProductWithQuery = async ({ sort, color, brand, page, limit }) => {
     try {
         const res = await httpRequest.get('products', {
             params: { sort, color, brand, page, limit },
