@@ -8,10 +8,10 @@ import { Breadcrumb, InfoProduct, ProductItem, Review } from 'components'
 import { detailProductTabs, productExtrainInfo } from 'utils/menu'
 
 const DetailProduct = () => {
+    const { type, slug } = useParams()
     const navigate = useNavigate()
     const [product, setProduct] = useState(null)
-    const [productList, setProductList] = useState(null)
-    const { type, slug } = useParams()
+    const [others, setOthers] = useState(null)
 
     const settingsProducts = {
         dots: false,
@@ -24,14 +24,17 @@ const DetailProduct = () => {
     useEffect(() => {
         const getAllProduct = async () => {
             const res = await apis.getAllProduct()
+            const resCate = await apis.getAllCategory()
+
+            const cate = resCate?.data?.data.find((item) => item.slug === type)
+
             if (res.status === 'success') {
-                setProductList(res?.data?.data.filter((item) => item?.slug !== slug && item?.category?.slug === type))
                 const prod = res?.data?.data.find((item) => item?.slug === slug)
-                if (!prod) return navigate('/not-found', { replace: true })
-                setProduct(prod)
+                prod ? setProduct(prod) : navigate('/not-found', { replace: true })
+                setOthers(res?.data?.data.filter((item) => item?.slug !== slug && item.category === cate?.id))
             }
         }
-        if (slug) getAllProduct()
+        getAllProduct()
     }, [type, slug])
 
     return (
@@ -101,14 +104,14 @@ const DetailProduct = () => {
                         <h2 className="pb-[15px] text-xl text-secondary uppercase font-normal">other products</h2>
                         <span className="w-10 h-[3px] bg-[#ccc] absolute bottom-0"></span>
                     </div>
-                    {productList?.length > 0 ? (
+                    {others?.length > 0 ? (
                         <Slider {...settingsProducts}>
-                            {productList?.map((item, index) => (
+                            {others?.map((item, index) => (
                                 <ProductItem key={index} data={item} detail />
                             ))}
                         </Slider>
                     ) : (
-                        <div className="w-full flex justify-center items-cente text-[#8b8b8b] text-xl">No products</div>
+                        <div className="w-full flex justify-center items-cente text-[#8b8b8b] text-xl">No product</div>
                     )}
                 </div>
             </div>

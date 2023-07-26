@@ -7,10 +7,10 @@ const Paginate = ({ itemCount, itemsPerPage, onSetPage }) => {
 
     useEffect(() => {
         setPageCount(Math.ceil(itemCount / itemsPerPage))
-    }, [itemsPerPage, itemCount, pageCount])
+    }, [itemsPerPage, itemCount])
 
-    const handlePageClick = (event) => {
-        onSetPage(event.selected + 1)
+    const handlePageClick = (e) => {
+        onSetPage(e.selected + 1)
     }
 
     return (

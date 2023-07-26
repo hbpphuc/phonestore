@@ -12,6 +12,7 @@ import Popup from './Popup'
 import Icon from './Icons'
 
 const ProductItem = ({ data, cateType, detail }) => {
+    console.log(data)
     const { isShowing, toggle } = useModal()
     const isNew = true
     const navigate = useNavigate()

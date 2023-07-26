@@ -84,11 +84,23 @@ const InfoProduct = ({ data, detail }) => {
                 <div className="w-full mb-[15px]">
                     <div className="w-full mb-[15px] flex items-center">
                         <h2 className="min-w-[80px] mr-[10px] text-sm font-semibold text-[#151515]">Internal</h2>
-                        <Select value={selectedOption} options={internal} className="w-[200px]" />
+                        <Select
+                            placeholder="Internal"
+                            isSearchable={false}
+                            value={selectedOption}
+                            options={internal}
+                            className="w-[200px]"
+                        />
                     </div>
                     <div className="w-full mb-[15px] flex items-center">
                         <h2 className="min-w-[80px] mr-[10px] text-sm font-semibold text-[#151515]">Color</h2>
-                        <Select value={selectedOption} options={colors} className="w-[200px]" />
+                        <Select
+                            placeholder="Color"
+                            isSearchable={false}
+                            value={selectedOption}
+                            options={colors}
+                            className="w-[200px]"
+                        />
                     </div>
                     <div className="w-full mb-[15px] flex items-center">
                         <h2 className="min-w-[80px] mr-[10px] text-sm font-semibold text-[#151515]">Quantity</h2>

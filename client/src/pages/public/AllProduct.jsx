@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import { useDebounce } from 'use-debounce'
 import Select from 'react-select'
 import * as apis from 'apis'
 import { Breadcrumb, ProductItem, Navbar, Paginate } from 'components'
 import { optSort, optColor } from 'utils/constant'
+import { useSelector } from 'react-redux'
+import useNavigateSearch from 'hooks/useNavigateSearch'
+import queryString from 'query-string'
 
 const LIMIT = 4
 
 const AllProduct = () => {
     const { type } = useParams()
+    const navigateSearch = useNavigateSearch()
 
+    const { categories } = useSelector((state) => state.app)
+
+    const [totalProds, setTotalProds] = useState(0)
+    const [allProds, setAllProds] = useState(null)
+    const [prods, setProds] = useState(null)
     const [page, setPage] = useState(1)
-    const [prodCount, setProdCount] = useState(0)
-    const [products, setProducts] = useState([])
-    const [brandOpt, setBrandOpt] = useState(null)
 
+    const [brandOpt, setBrandOpt] = useState(null)
     const [brandS, setBrandS] = useState(null)
     const [sortS, setSortS] = useState(null)
     const [colorS, setColorS] = useState(null)
@@ -24,49 +31,62 @@ const AllProduct = () => {
     const [valueColor] = useDebounce(colorS, 1000)
 
     useEffect(() => {
-        const fetchApi = async () => {
+        const getAllProd = async () => {
             const resProd = await apis.getAllProduct()
-            // const resProdQuery = await apis.getAllProductWithQuery({
-            //     sort: sortS?.query,
-            //     color: valueColor?.map((item) => item.value),
-            //     brand: valueBrand?.map((item) => item.id),
-            //     page,
-            //     limit: LIMIT,
-            // })
-            const resCate = await apis.getAllCategory()
+            // console.log(resProd)
+            if (resProd?.status === 'success') {
+                setAllProds(resProd?.data?.data)
+                setTotalProds(resProd?.results)
+            }
+        }
+        getAllProd()
+    }, [type])
 
-            const prodList = resProd?.data?.data
-            const cateList = resCate?.data?.data
+    const getParams = () => {
+        const q = {
+            sort: sortS?.query,
+            color: valueColor?.map((item) => item.value),
+            brand: valueBrand?.map((item) => item.value),
+            page,
+            limit: LIMIT,
+        }
+        for (let i in q)
+            if (q[i] === undefined || q[i].length < 1) {
+                delete q[i]
+            }
+        navigateSearch('', q)
+    }
+
+    useEffect(() => {
+        if (sortS || valueBrand || valueColor || page) getParams()
+
+        const fetchApi = async () => {
+            const resFilter = await apis.getAllProductWithQuery({
+                sort: sortS?.query,
+                color: valueColor?.map((item) => item.value),
+                brand: valueBrand?.map((item) => item.id),
+                page: page || 1,
+                limit: LIMIT,
+            })
+            const prodFilter = resFilter?.data?.data
+
+            prodFilter.length < 1 && setPage(1)
 
             if (type) {
-                const cateItem = cateList.find((item) => item.slug === type)
+                const cateItem = categories?.data?.find((item) => item.slug === type)
+                const prodCate = prodFilter?.filter((item) => item.category === cateItem?._id)
+                setProds(prodCate)
                 const brandObj = cateItem?.brands.map((item) => ({ value: item.slug, label: item.name, id: item._id }))
-                const prodCate = prodList?.filter((item) => item.category === cateItem._id)
-                setProducts(prodCate)
                 setBrandOpt(brandObj)
-                setProdCount(prodCate.length)
+                setTotalProds(prodCate?.length)
             } else {
-                setProducts(prodList)
-                setProdCount(prodList.length)
+                setProds(prodFilter)
+                setTotalProds(allProds?.length)
             }
         }
 
         fetchApi()
-    }, [type, sortS, valueBrand, valueColor, page, prodCount])
-
-    // useEffect(() => {
-    //     const getProductCount = async () => {
-    //         const resProd = await apis.getAllProduct()
-
-    //         if (type) {
-    //             setProdCount(products.length)
-    //         } else {
-    //             setProdCount(resProd?.data?.data.length)
-    //         }
-    //     }
-
-    //     getProductCount()
-    // }, [type])
+    }, [type, sortS, valueBrand, valueColor, page])
 
     return (
         <div className="w-full h-auto">
@@ -86,7 +106,7 @@ const AllProduct = () => {
                                 <div className="w-[80%] h-full flex flex-col">
                                     <h2 className="text-base font-semibold text-primary mb-2">Filter by</h2>
                                     <div className="w-full h-auto flex flex-wrap gap-2">
-                                        {type && products?.length > 0 && (
+                                        {type && prods?.length > 0 && (
                                             <div className="w-auto h-auto ">
                                                 <Select
                                                     defaultValue="No Brand"
@@ -122,16 +142,14 @@ const AllProduct = () => {
                             </div>
                         </div>
                         <div className="w-full h-auto flex flex-wrap">
-                            {products?.map((item, index) => (
-                                <div key={index} className="w-1/3 h-auto mb-3">
-                                    <ProductItem data={item} />
+                            {prods?.map((item) => (
+                                <div key={item.id} className="w-1/3 h-auto mb-3">
+                                    <ProductItem data={item} cateType={type} />
                                 </div>
                             ))}
                         </div>
                         <div className="w-full h-auto mt-5 flex justify-center items-end">
-                            {prodCount > LIMIT && (
-                                <Paginate itemCount={prodCount} itemsPerPage={LIMIT} onSetPage={setPage} />
-                            )}
+                            <Paginate itemCount={totalProds} itemsPerPage={LIMIT} onSetPage={setPage} />
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,3 @@
-const e = require('express');
-
 class APIFeatures {
     constructor(query, queryString) {
         this.query = query;
@@ -20,6 +18,8 @@ class APIFeatures {
         );
 
         const formatQ = JSON.parse(queryStr);
+
+        console.log(queryObj);
 
         let colorObj = {};
         if (queryObj?.color) {
