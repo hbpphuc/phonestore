@@ -1,6 +1,6 @@
 import React from 'react'
 import Slider from 'react-slick'
-import Blog from './Blog'
+import Blog from 'components/blog/Blog'
 
 const Section3 = () => {
     const settingsBlogs = {

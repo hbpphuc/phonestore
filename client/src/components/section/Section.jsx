@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react'
 import Slider from 'react-slick'
 import * as apis from 'apis'
-import ProductItem from './ProductItem'
+import ProductItem from 'components/product/ProductItem'
 
 const Section = ({ cateData, title }) => {
     const [cateId, setCateId] = useState('648d84dbc23688213c792cac')

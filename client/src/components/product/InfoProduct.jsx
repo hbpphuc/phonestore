@@ -1,7 +1,7 @@
 import React, { memo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Select from 'react-select'
-import { routes } from 'routes/paths'
+import { publicRoutes } from 'routes/paths'
 
 const InfoProduct = ({ data, detail }) => {
     const quantityRef = useRef()
@@ -61,7 +61,7 @@ const InfoProduct = ({ data, detail }) => {
             <div className="flex-1 h-full">
                 <div className="w-full mb-5 ">
                     <IsLink
-                        to={`${routes.product}/${data?.category?.slug}/${data?.slug}`}
+                        to={`${publicRoutes.product}/${data?.category?.slug}/${data?.slug}`}
                         className={`text-[#1c1c1c] text-xl font-semibold ${
                             detail ? '' : 'hover:text-main'
                         } transition-colors`}

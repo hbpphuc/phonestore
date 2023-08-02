@@ -21,7 +21,7 @@ exports.getMe = (req, res, next) => {
 };
 
 exports.getCurrent = asyncHandler(async (req, res, next) => {
-    const curUser = await User.findById(req.user.id).select('-role');
+    const curUser = await User.findById(req.user.id);
 
     if (!curUser) {
         return next(new AppError('No document found with this id', 404));

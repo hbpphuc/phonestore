@@ -1,6 +1,6 @@
 import { RiShoppingBasketFill } from 'react-icons/ri'
 import { TbSearch } from 'react-icons/tb'
-import { FaHeart, FaEye, FaRegComments, FaGift, FaMobileAlt } from 'react-icons/fa'
+import { FaHeart, FaEye, FaRegComments, FaGift, FaMobileAlt, FaUserCircle } from 'react-icons/fa'
 import { FaShieldHalved } from 'react-icons/fa6'
 import { HiMenu, HiOutlineArrowNarrowLeft, HiOutlineArrowNarrowRight } from 'react-icons/hi'
 import { BsCalendar3, BsDisplay, BsSpeaker } from 'react-icons/bs'
@@ -11,7 +11,7 @@ import { TiPhone } from 'react-icons/ti'
 import { MdNavigateNext, MdLaptop, MdDevicesOther } from 'react-icons/md'
 import { RiEyeCloseLine, RiEyeFill } from 'react-icons/ri'
 import { IoMdTabletPortrait } from 'react-icons/io'
-import { BiSolidCameraHome } from 'react-icons/bi'
+import { BiSolidCameraHome, BiLogOut } from 'react-icons/bi'
 
 const Icon = {
     RiShoppingBasketFill,
@@ -40,6 +40,8 @@ const Icon = {
     MdDevicesOther,
     HiOutlineArrowNarrowLeft,
     HiOutlineArrowNarrowRight,
+    FaUserCircle,
+    BiLogOut,
 }
 
 export default Icon

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { getAllCategories } from 'redux/app/action'
-import { routes } from 'routes/paths'
+import { publicRoutes } from 'routes/paths'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Navbar = () => {
@@ -19,7 +19,7 @@ const Navbar = () => {
                 {categories?.data?.map((item) => (
                     <li key={item.slug} className="p-5">
                         <NavLink
-                            to={`${routes.products}/${item.slug}`}
+                            to={`${publicRoutes.products}/${item.slug}`}
                             className={({ isActive }) => `${isActive ? 'text-main' : ''}`}
                         >
                             {item.name}

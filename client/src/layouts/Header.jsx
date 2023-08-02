@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
 import { useDispatch, useSelector } from 'react-redux'
 import { Popup, LoginForm, RegisterForm, ForgotForm, Button, Icon, Navigation } from '../components'
 import useModal from '../hooks/useModal'
+import { adminRoutes } from 'routes/paths'
 import logo from '../assets/images/logo.png'
 import { getCurrentUser } from '../redux/user/userAction'
 import * as apis from '../apis'
@@ -12,10 +14,9 @@ import Swal from 'sweetalert2'
 const Header = () => {
     const { isShowing, toggle } = useModal()
     const [form, setForm] = useState(0)
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const { isLoggedIn, curUser } = useSelector((state) => state.user)
-    const userName = curUser?.data?.name.split(' ')[0]
-    const navigate = useNavigate()
 
     useEffect(() => {
         if (isLoggedIn) dispatch(getCurrentUser())
@@ -38,25 +39,52 @@ const Header = () => {
                             {curUser && (
                                 <>
                                     <p className="text-sm font-normal text-[#848484] mr-1">
-                                        Hello <i className="text-main font-semibold">{userName}</i>,
+                                        Hello{' '}
+                                        <i className="text-main font-semibold">{curUser?.data?.name.split(' ')[0]}</i>,
                                     </p>
                                     <p className="text-sm font-normal text-[#848484]">welcome to our Store!</p>
                                 </>
                             )}
                         </div>
                         <div className="flex">
-                            {!isLoggedIn ? (
+                            {!curUser ? (
                                 <Button
                                     text="Sign In | Sign Up"
                                     onClick={toggle}
                                     className="text-sm font-normal px-[10px] text-[#848484] hover:text-main"
                                 />
                             ) : (
-                                <Button
-                                    onClick={logout}
-                                    text="My Account"
-                                    className="text-sm font-normal px-[10px] text-[#848484] hover:text-main"
-                                />
+                                <Menu
+                                    menuButton={
+                                        <MenuButton className="text-[#848484] hover:text-main">
+                                            {curUser?.data?.name}
+                                        </MenuButton>
+                                    }
+                                    menuClassName="border rounded-[4px] bg-white z-10"
+                                >
+                                    <MenuItem className="header-menu-item">
+                                        <Link
+                                            className="flex items-center"
+                                            to={
+                                                curUser?.data?.role === 'admin'
+                                                    ? `/${adminRoutes.admin}/${adminRoutes.adminDashboard}`
+                                                    : '/me'
+                                            }
+                                        >
+                                            <span className="mr-2">
+                                                <Icon.FaUserCircle size={20} />
+                                            </span>
+                                            Profile
+                                        </Link>
+                                    </MenuItem>
+                                    <hr />
+                                    <MenuItem onClick={logout} className="header-menu-item">
+                                        <span className="mr-2">
+                                            <Icon.BiLogOut size={20} />
+                                        </span>
+                                        Logout
+                                    </MenuItem>
+                                </Menu>
                             )}
                         </div>
                     </div>

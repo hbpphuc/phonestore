@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Swal from 'sweetalert2'
 import * as apis from 'apis'
-import Button from './Button'
-import Icon from './Icons'
-import Loading from './Loading'
+import Button from 'components/general/Button'
+import Icon from 'components/general/Icons'
+import Loading from 'components/general/Loading'
 
 const RegisterForm = ({ onSetForm }) => {
     const [isLoading, setIsLoading] = useState(false)

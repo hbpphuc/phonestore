@@ -5,21 +5,20 @@ import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import useModal from 'hooks/useModal'
 
-import { routes } from 'routes/paths'
+import { publicRoutes } from 'routes/paths'
 import { productAction } from 'utils/menu'
 import InfoProduct from './InfoProduct'
-import Popup from './Popup'
-import Icon from './Icons'
+import Popup from 'components/general/Popup'
+import Icon from 'components/general/Icons'
 
 const ProductItem = ({ data, cateType, detail }) => {
-    console.log(data)
     const { isShowing, toggle } = useModal()
     const isNew = true
     const navigate = useNavigate()
 
     const handleClickActionBtn = (item) => {
         if (item.id === 2) {
-            navigate(`${routes.products}/${cateType}/${data?.slug}`)
+            navigate(`${publicRoutes.products}/${cateType}/${data?.slug}`)
         }
         if (item.id === 3) {
             toggle()
@@ -42,7 +41,7 @@ const ProductItem = ({ data, cateType, detail }) => {
                             </div>
                         )}
                         <div className="w-full h-full flex justify-center items-start">
-                            <Link to={`${routes.products}/${cateType}/${data?.slug}`}>
+                            <Link to={`${publicRoutes.products}/${cateType}/${data?.slug}`}>
                                 <img
                                     src={data?.imageCover || 'https://app.advaiet.com/item_dfile/default_product.png'}
                                     alt={data?.name}
@@ -64,7 +63,7 @@ const ProductItem = ({ data, cateType, detail }) => {
                         </div>
                     </div>
                     <Link
-                        to={`${routes.products}/${cateType}/${data?.slug}`}
+                        to={`${publicRoutes.products}/${cateType}/${data?.slug}`}
                         className="mb-[6px] hover:text-main transition-colors line-clamp-1"
                     >
                         {data?.name}

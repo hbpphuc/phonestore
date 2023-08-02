@@ -1,35 +1,51 @@
+import { publicRoutes, adminRoutes } from './paths'
 import { Home, AllProduct, DetailProduct, Post, ResetPassword, NotFound } from '../pages/public'
-import { routes } from './paths'
+import { Admin, AdminLogin, Dashboard } from 'pages/admin'
 
-export const publicRoutes = [
+export const publicR = [
     {
-        path: routes.home,
+        path: publicRoutes.home,
         component: Home,
     },
     {
-        path: routes.products,
+        path: publicRoutes.products,
         component: AllProduct,
     },
     {
-        path: routes.product_category,
+        path: publicRoutes.product_category,
         component: AllProduct,
     },
     {
-        path: routes.product_detail,
+        path: publicRoutes.product_detail,
         component: DetailProduct,
     },
     {
-        path: routes.blog,
+        path: publicRoutes.blog,
         component: Post,
     },
     {
-        path: routes.reset_password,
+        path: publicRoutes.reset_password,
         component: ResetPassword,
     },
     {
-        path: routes.notfound,
+        path: publicRoutes.notfound,
         component: NotFound,
     },
 ]
 
-export const privateRoutes = []
+export const privateR = []
+
+export const adminR = [
+    {
+        path: adminRoutes.admin,
+        component: Admin,
+    },
+    {
+        path: adminRoutes.adminLogin,
+        component: AdminLogin,
+    },
+    {
+        path: adminRoutes.adminDashboard,
+        component: Dashboard,
+    },
+]

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import useBreadcrumbs from 'use-react-router-breadcrumbs'
-import Icon from './Icons'
+import Icon from '../general/Icons'
 
 const Breadcrumb = () => {
     const breadcrumbs = useBreadcrumbs()

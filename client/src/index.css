@@ -32,6 +32,10 @@
     }
 }
 
+.header-menu-item {
+    @apply flex items-center text-base font-normal p-[10px] text-[#848484] hover:text-main cursor-pointer transition-all;
+}
+
 .product-item:hover .product-item-options {
     position: absolute;
     bottom: 10px;

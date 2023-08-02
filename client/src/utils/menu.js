@@ -1,25 +1,25 @@
-import { Icon } from '../components'
-import { routes } from '../routes/paths'
+import { Icon } from 'components'
+import { publicRoutes } from 'routes/paths'
 
 export const navigatorMenu = [
     {
         id: 1,
-        path: routes.home,
+        path: publicRoutes.home,
         title: 'home',
     },
     {
         id: 2,
-        path: routes.products,
+        path: publicRoutes.products,
         title: 'product',
     },
     {
         id: 3,
-        path: routes.category,
+        path: publicRoutes.category,
         title: 'collection',
     },
     {
         id: 4,
-        path: routes.blog,
+        path: publicRoutes.blog,
         title: 'blog',
     },
 ]

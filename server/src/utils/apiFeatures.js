@@ -19,8 +19,6 @@ class APIFeatures {
 
         const formatQ = JSON.parse(queryStr);
 
-        console.log(queryObj);
-
         let colorObj = {};
         if (queryObj?.color) {
             delete formatQ.color;

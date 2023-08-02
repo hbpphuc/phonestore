@@ -1,4 +1,4 @@
-export const routes = {
+export const publicRoutes = {
     home: '',
     products: '/products',
     product_category: '/products/:type',
@@ -8,4 +8,13 @@ export const routes = {
     signup: '/signup/:status',
     reset_password: '/reset-password/:token',
     notfound: '/not-found',
+}
+
+export const adminRoutes = {
+    admin: 'admin',
+    adminLogin: 'login',
+    adminDashboard: 'dashboard',
+    adminProducts: 'products',
+    adminUsers: 'users',
+    adminOrders: 'orders',
 }

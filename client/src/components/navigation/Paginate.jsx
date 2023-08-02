@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate'
-import Icon from './Icons'
+import Icon from '../general/Icons'
 
 const Paginate = ({ itemCount, itemsPerPage, onSetPage }) => {
     const [pageCount, setPageCount] = useState(1)
