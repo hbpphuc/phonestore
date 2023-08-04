@@ -129,3 +129,12 @@ button.slick-prev::before {
 .page-item.active {
     @apply text-main;
 }
+
+.ps-menu-button:hover {
+    background-color: #0eb1f2 !important;
+    color: white !important;
+}
+
+.ps-submenu-content {
+    background-color: inherit !important;
+}

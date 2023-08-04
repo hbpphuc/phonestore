@@ -9,6 +9,8 @@ module.exports = {
             },
             backgroundColor: {
                 main: '#0eb1f2',
+                adminMain: '#343a40',
+                adminPrimary: '#454d55',
             },
             backgroundImage: {
                 404: 'url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif)',
@@ -21,6 +23,7 @@ module.exports = {
             borderColor: {
                 main: '#0eb1f2',
                 primary: '#101010',
+                admin: '#4b545c',
             },
         },
     },

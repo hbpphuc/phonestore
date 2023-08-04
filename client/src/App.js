@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import { publicR, adminR } from './routes'
 import { publicRoutes } from './routes/paths'
 import { Default, NotFound, Signup } from './pages/public'
+import { NotFoundAdmin } from './pages/admin'
 import { Admin } from 'pages/admin'
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
                         const Page = route.component
                         return <Route key={index} path={route.path} element={<Page />} />
                     })}
-                    <Route path="*" element={<NotFound />} />
+                    <Route path="*" element={<NotFoundAdmin />} />
                 </Route>
             </Routes>
         </div>

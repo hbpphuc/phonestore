@@ -24,6 +24,9 @@ export { default as LoginForm } from './form/LoginForm'
 export { default as RegisterForm } from './form/RegisterForm'
 export { default as ForgotForm } from './form/ForgotForm'
 
+// Sidebar
+export { default as AdminSidebar } from './sidebar/AdminSidebar'
+
 // Review
 export { default as Review } from './review/Review'
 

@@ -1,5 +1,5 @@
 import { Icon } from 'components'
-import { publicRoutes } from 'routes/paths'
+import { publicRoutes, adminRoutes } from 'routes/paths'
 
 export const navigatorMenu = [
     {
@@ -139,5 +139,47 @@ export const productExtrainInfo = [
         title: 'Consultancy',
         subTitle: 'Lifetime 24/7/356',
         icon: <Icon.TiPhone />,
+    },
+]
+
+export const adminSidebarMenu = [
+    {
+        id: 1,
+        title: 'Dashboard',
+        type: 'link',
+        icon: <Icon.RiDashboard2Line size={24} />,
+        path: `/${adminRoutes.admin}/${adminRoutes.adminDashboard}`,
+    },
+    {
+        id: 2,
+        title: 'Manage Products',
+        type: 'button',
+        icon: <Icon.BiSolidDashboard size={24} />,
+        subMenu: [
+            {
+                id: 2.1,
+                title: 'List Product',
+                path: `/${adminRoutes.admin}/${adminRoutes.adminProducts}`,
+            },
+            {
+                id: 2.2,
+                title: 'Create Product',
+                path: `/${adminRoutes.admin}/${adminRoutes.adminProducts}`,
+            },
+        ],
+    },
+    {
+        id: 3,
+        title: 'Manage Users',
+        type: 'link',
+        icon: <Icon.HiUserGroup size={24} />,
+        path: `/${adminRoutes.admin}/${adminRoutes.adminUsers}`,
+    },
+    {
+        id: 4,
+        title: 'Manage Orders',
+        type: 'link',
+        icon: <Icon.FaLayerGroup size={24} />,
+        path: `/${adminRoutes.admin}/${adminRoutes.adminOrders}`,
     },
 ]

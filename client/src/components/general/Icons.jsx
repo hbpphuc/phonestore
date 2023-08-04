@@ -1,15 +1,24 @@
 import { RiShoppingBasketFill } from 'react-icons/ri'
 import { TbSearch } from 'react-icons/tb'
-import { FaHeart, FaEye, FaRegComments, FaGift, FaMobileAlt, FaUserCircle } from 'react-icons/fa'
+import {
+    FaHeart,
+    FaEye,
+    FaRegComments,
+    FaGift,
+    FaMobileAlt,
+    FaUserCircle,
+    FaChartPie,
+    FaLayerGroup,
+} from 'react-icons/fa'
 import { FaShieldHalved } from 'react-icons/fa6'
-import { HiMenu, HiOutlineArrowNarrowLeft, HiOutlineArrowNarrowRight } from 'react-icons/hi'
+import { HiMenu, HiOutlineArrowNarrowLeft, HiOutlineArrowNarrowRight, HiUserGroup } from 'react-icons/hi'
 import { BsCalendar3, BsDisplay, BsSpeaker } from 'react-icons/bs'
 import { GrClose } from 'react-icons/gr'
-import { BiDetail, BiSolidTruck } from 'react-icons/bi'
+import { BiDetail, BiSolidTruck, BiSolidDashboard } from 'react-icons/bi'
 import { GiReturnArrow } from 'react-icons/gi'
 import { TiPhone } from 'react-icons/ti'
 import { MdNavigateNext, MdLaptop, MdDevicesOther } from 'react-icons/md'
-import { RiEyeCloseLine, RiEyeFill } from 'react-icons/ri'
+import { RiEyeCloseLine, RiEyeFill, RiDashboard2Line } from 'react-icons/ri'
 import { IoMdTabletPortrait } from 'react-icons/io'
 import { BiSolidCameraHome, BiLogOut } from 'react-icons/bi'
 
@@ -42,6 +51,11 @@ const Icon = {
     HiOutlineArrowNarrowRight,
     FaUserCircle,
     BiLogOut,
+    RiDashboard2Line,
+    FaChartPie,
+    HiUserGroup,
+    FaLayerGroup,
+    BiSolidDashboard,
 }
 
 export default Icon
