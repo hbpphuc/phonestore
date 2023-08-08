@@ -123,11 +123,15 @@ button.slick-prev::before {
 }
 
 .page-item {
-    @apply px-3 text-primary text-lg font-semibold hover:text-main cursor-pointer;
+    @apply px-3 text-black text-lg font-semibold hover:text-main cursor-pointer;
 }
 
 .page-item.active {
     @apply text-main;
+}
+
+.sidebar-admin {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22) !important;
 }
 
 .ps-menu-button:hover {

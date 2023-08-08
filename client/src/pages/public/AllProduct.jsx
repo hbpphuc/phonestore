@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, useLocation } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useDebounce } from 'use-debounce'
 import Select from 'react-select'
 import * as apis from 'apis'
@@ -7,7 +7,6 @@ import { Breadcrumb, ProductItem, Navbar, Paginate } from 'components'
 import { optSort, optColor } from 'utils/constant'
 import { useSelector } from 'react-redux'
 import useNavigateSearch from 'hooks/useNavigateSearch'
-import queryString from 'query-string'
 
 const LIMIT = 4
 

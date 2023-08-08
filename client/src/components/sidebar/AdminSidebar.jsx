@@ -8,9 +8,9 @@ const activeStyle = 'flex text-main border-l-4 border-main'
 
 const AdminSidebar = () => {
     return (
-        <div className="w-full h-full flex flex-col">
-            <div className="w-full h-auto p-[13px_8px] bg-adminMain flex justify-center items-center gap-3 border-b border-admin sticky top-0 z-10">
-                <img src={adminlogo} alt="admin-logo" className="w-9 h-9 object-contain" />
+        <div className="fixed left-0 w-[280px] h-full flex flex-col">
+            <div className="w-full h-auto p-[13px_8px] bg-adminMain flex justify-center items-center gap-3 border-b border-admin">
+                <img src={adminlogo} alt="admin-logo" className="w-8 h-8 object-contain" />
                 <Link to="/admin/dashboard" className="uppercase font-normal text-lg hover:underline">
                     administrator
                 </Link>

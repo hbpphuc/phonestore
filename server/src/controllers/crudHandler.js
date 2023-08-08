@@ -19,6 +19,8 @@ exports.getAll = (Model, popOptions) =>
 
         if (popOptions) docs = features.query.populate(popOptions);
 
+        const total = await Model.find().count();
+
         docs = await features.query;
 
         // SEND RESPONSE
@@ -27,6 +29,9 @@ exports.getAll = (Model, popOptions) =>
             results: docs.length,
             data: {
                 data: docs,
+            },
+            pagination: {
+                total,
             },
         });
     });

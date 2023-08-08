@@ -32,7 +32,7 @@ const Paginate = ({ itemCount, itemsPerPage, onSetPage }) => {
                 breakClassName="page-item"
                 activeClassName="active"
                 renderOnZeroPageCount={null}
-                className="flex justify-center items-center gap-1"
+                className="flex justify-center items-center gap-1 text-white"
             />
         </>
     )

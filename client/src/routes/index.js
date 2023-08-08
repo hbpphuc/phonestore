@@ -1,6 +1,6 @@
 import { publicRoutes, adminRoutes } from './paths'
 import { Home, AllProduct, DetailProduct, Post, ResetPassword, NotFound } from '../pages/public'
-import { Admin, AdminLogin, Dashboard } from 'pages/admin'
+import { Admin, Dashboard, ManageUsers, ManageProducts, ManageOrders } from 'pages/admin'
 
 export const publicR = [
     {
@@ -41,11 +41,19 @@ export const adminR = [
         component: Admin,
     },
     {
-        path: adminRoutes.adminLogin,
-        component: AdminLogin,
-    },
-    {
         path: adminRoutes.adminDashboard,
         component: Dashboard,
+    },
+    {
+        path: adminRoutes.adminProducts,
+        component: ManageProducts,
+    },
+    {
+        path: adminRoutes.adminUsers,
+        component: ManageUsers,
+    },
+    {
+        path: adminRoutes.adminOrders,
+        component: ManageOrders,
     },
 ]

@@ -19,6 +19,17 @@ class APIFeatures {
 
         const formatQ = JSON.parse(queryStr);
 
+        if (queryObj.name)
+            formatQ.name = { $regex: queryObj.name, $options: 'i' };
+
+        if (queryObj.q) {
+            delete formatQ.q;
+            formatQ['$or'] = [
+                { name: { $regex: queryObj.q, $options: 'i' } },
+                { email: { $regex: queryObj.q, $options: 'i' } },
+            ];
+        }
+
         let colorObj = {};
         if (queryObj?.color) {
             delete formatQ.color;
@@ -76,7 +87,7 @@ class APIFeatures {
 
     pagination() {
         const page = this.queryString.page * 1 || 1;
-        const limit = this.queryString.limit * 1 || 100;
+        const limit = this.queryString.limit * 1 || 10;
         const skip = (page - 1) * limit;
 
         this.query = this.query.skip(skip).limit(limit);

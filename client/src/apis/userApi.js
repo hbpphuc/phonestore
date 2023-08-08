@@ -53,3 +53,21 @@ export const getCurrentUser = async () => {
         return error.response.data
     }
 }
+
+export const getAllUser = async (q, page, limit) => {
+    try {
+        const res = await httpRequest.get('users', { params: { q, page, limit }, withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export const deleteUser = async (id) => {
+    try {
+        const res = await httpRequest.delete(`users/${id}`, { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
