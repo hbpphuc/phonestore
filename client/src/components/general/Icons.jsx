@@ -17,7 +17,7 @@ import { GrClose } from 'react-icons/gr'
 import { BiDetail, BiSolidTruck, BiSolidDashboard } from 'react-icons/bi'
 import { GiReturnArrow } from 'react-icons/gi'
 import { TiPhone } from 'react-icons/ti'
-import { MdNavigateNext, MdLaptop, MdDevicesOther } from 'react-icons/md'
+import { MdNavigateNext, MdLaptop, MdDevicesOther, MdDownloadDone } from 'react-icons/md'
 import { RiEyeCloseLine, RiEyeFill, RiDashboard2Line } from 'react-icons/ri'
 import { IoMdTabletPortrait } from 'react-icons/io'
 import { BiSolidCameraHome, BiLogOut, BiSolidEditAlt, BiTrash } from 'react-icons/bi'
@@ -58,6 +58,7 @@ const Icon = {
     BiSolidDashboard,
     BiSolidEditAlt,
     BiTrash,
+    MdDownloadDone,
 }
 
 export default Icon

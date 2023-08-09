@@ -7,6 +7,7 @@ import { Breadcrumb, ProductItem, Navbar, Paginate } from 'components'
 import { optSort, optColor } from 'utils/constant'
 import { useSelector } from 'react-redux'
 import useNavigateSearch from 'hooks/useNavigateSearch'
+import { HiSelector } from 'react-icons/hi'
 
 const LIMIT = 4
 
@@ -107,8 +108,7 @@ const AllProduct = () => {
                                     <div className="w-full h-auto flex flex-wrap gap-2">
                                         {type && prods?.length > 0 && (
                                             <div className="w-auto h-auto ">
-                                                <Select
-                                                    defaultValue="No Brand"
+                                                <HiSelector
                                                     onChange={setBrandS}
                                                     options={brandOpt}
                                                     placeholder="Brand"
@@ -119,7 +119,6 @@ const AllProduct = () => {
                                         )}
                                         <div className="w-auto h-auto">
                                             <Select
-                                                defaultValue="No Color"
                                                 onChange={setColorS}
                                                 options={optColor}
                                                 placeholder="Color"

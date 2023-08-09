@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import moment from 'moment/moment'
 import Tippy from '@tippyjs/react'
 import { useForm } from 'react-hook-form'
+import Select from 'react-select'
 import Swal from 'sweetalert2'
 import { toast } from 'react-toastify'
 import * as apis from 'apis'
@@ -15,6 +16,15 @@ const ManageUsers = () => {
     const [totalCount, setTotalCount] = useState(0)
     const [page, setPage] = useState(1)
     const [isNew, setIsNew] = useState(false)
+    const [isUpdate, setIsUpdate] = useState(false)
+    const [editItem, setEditItem] = useState(null)
+    const [role, setRole] = useState(null)
+
+    const roleOpt = [
+        { label: 'User', value: 'user' },
+        { label: 'Manager', value: 'manager' },
+        { label: 'Admin', value: 'admin' },
+    ]
 
     const { register, handleSubmit } = useForm()
 
@@ -28,9 +38,29 @@ const ManageUsers = () => {
         data.q !== '' ? getAllUser(data.q) : getAllUser()
     }
 
+    console.log({ isNew })
+
     useEffect(() => {
         getAllUser()
     }, [page, isNew])
+
+    const handleEdit = (id, role) => {
+        setIsUpdate(true)
+        setEditItem(id)
+        setRole(roleOpt.find((item) => item.value === role))
+    }
+
+    const handleUpdate = async () => {
+        setEditItem(null)
+        setIsUpdate(false)
+        const res = await apis.updateUser(editItem, { role: role.value })
+        if (res.status === 'success') {
+            setIsNew(!isNew)
+            toast.success('Update user successfully!')
+        } else {
+            toast.error('Oops! Something went wrong')
+        }
+    }
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -101,16 +131,38 @@ const ManageUsers = () => {
                                 </td>
                                 <td className="p-2">{item.name}</td>
                                 <td className="p-2">{item.email}</td>
-                                <td className="p-2">{item.role}</td>
+                                <td className="p-2">
+                                    {editItem && item._id === editItem ? (
+                                        <Select
+                                            value={role}
+                                            onChange={setRole}
+                                            options={roleOpt}
+                                            placeholder="Role"
+                                            isSearchable={false}
+                                            className="font-semibold text-sm text-primary "
+                                        />
+                                    ) : (
+                                        item.role
+                                    )}
+                                </td>
                                 <td className="p-2">{moment(item.createdAt).format('DD/MM/YYYY')}</td>
                                 <td className="flex items-center gap-2  p-2">
                                     <Tippy content="Edit" className="text-base">
-                                        <Button
-                                            onClick={() => toast.warning('edit button')}
-                                            className="p-2 bg-yellow-600 rounded-md hover:brightness-125 transition-all"
-                                        >
-                                            <Icon.BiSolidEditAlt size={20} />
-                                        </Button>
+                                        {isUpdate && item._id === editItem ? (
+                                            <Button
+                                                onClick={() => handleUpdate()}
+                                                className="p-2 bg-yellow-600 rounded-md hover:brightness-125 transition-all"
+                                            >
+                                                <Icon.MdDownloadDone size={20} />
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                onClick={() => handleEdit(item._id, item.role)}
+                                                className="p-2 bg-yellow-600 rounded-md hover:brightness-125 transition-all"
+                                            >
+                                                <Icon.BiSolidEditAlt size={20} />
+                                            </Button>
+                                        )}
                                     </Tippy>
                                     <Tippy content="Delete" className="text-base">
                                         <Button

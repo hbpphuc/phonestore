@@ -38,7 +38,7 @@ export const forgotPassword = async (data) => {
 
 export const resetPassword = async (data, token) => {
     try {
-        const res = await httpRequest.put(`users/resetPassword/${token}`, data)
+        const res = await httpRequest.update(`users/resetPassword/${token}`, data)
         return res.data
     } catch (error) {
         return error.response.data
@@ -57,6 +57,15 @@ export const getCurrentUser = async () => {
 export const getAllUser = async (q, page, limit) => {
     try {
         const res = await httpRequest.get('users', { params: { q, page, limit }, withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export const updateUser = async (id, data) => {
+    try {
+        const res = await httpRequest.put(`users/${id}`, data, { withCredentials: true })
         return res.data
     } catch (error) {
         return error.response.data
