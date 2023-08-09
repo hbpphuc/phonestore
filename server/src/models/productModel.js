@@ -77,7 +77,7 @@ productSchema.virtual('reviews', {
 
 productSchema.pre(/^find/, function (next) {
     this.populate({
-        path: 'brand',
+        path: 'category brand',
         select: 'name slug _id',
     });
     next();

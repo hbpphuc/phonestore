@@ -5,21 +5,14 @@ import Select from 'react-select'
 import * as apis from 'apis'
 import { Breadcrumb, ProductItem, Navbar, Paginate } from 'components'
 import { optSort, optColor } from 'utils/constant'
-import { useSelector } from 'react-redux'
-import useNavigateSearch from 'hooks/useNavigateSearch'
-import { HiSelector } from 'react-icons/hi'
 
-const LIMIT = 4
+const limit = 3
 
 const AllProduct = () => {
     const { type } = useParams()
-    const navigateSearch = useNavigateSearch()
 
-    const { categories } = useSelector((state) => state.app)
-
-    const [totalProds, setTotalProds] = useState(0)
     const [allProds, setAllProds] = useState(null)
-    const [prods, setProds] = useState(null)
+    const [totalProds, setTotalProds] = useState(0)
     const [page, setPage] = useState(1)
 
     const [brandOpt, setBrandOpt] = useState(null)
@@ -31,57 +24,29 @@ const AllProduct = () => {
     const [valueColor] = useDebounce(colorS, 1000)
 
     useEffect(() => {
-        const getAllProd = async () => {
-            const resProd = await apis.getAllProduct()
-            // console.log(resProd)
-            if (resProd?.status === 'success') {
-                setAllProds(resProd?.data?.data)
-                setTotalProds(resProd?.results)
-            }
-        }
-        getAllProd()
-    }, [type])
-
-    const getParams = () => {
-        const q = {
-            sort: sortS?.query,
-            color: valueColor?.map((item) => item.value),
-            brand: valueBrand?.map((item) => item.value),
-            page,
-            limit: LIMIT,
-        }
-        for (let i in q)
-            if (q[i] === undefined || q[i].length < 1) {
-                delete q[i]
-            }
-        navigateSearch('', q)
-    }
-
-    useEffect(() => {
-        if (sortS || valueBrand || valueColor || page) getParams()
-
         const fetchApi = async () => {
-            const resFilter = await apis.getAllProductWithQuery({
+            const res = await apis.getAllProduct({
                 sort: sortS?.query,
                 color: valueColor?.map((item) => item.value),
                 brand: valueBrand?.map((item) => item.id),
-                page: page || 1,
-                limit: LIMIT,
+                page: page,
+                limit: limit,
             })
-            const prodFilter = resFilter?.data?.data
 
-            prodFilter.length < 1 && setPage(1)
+            res?.data?.data.length < 1 && setPage(1)
 
             if (type) {
-                const cateItem = categories?.data?.find((item) => item.slug === type)
-                const prodCate = prodFilter?.filter((item) => item.category === cateItem?._id)
-                setProds(prodCate)
+                const res2 = await apis.getAllCategory()
+                const cateItem = res2?.data?.data?.find((item) => item.slug === type)
+                const resCate = await apis.getCategory(cateItem?._id)
+                setAllProds(resCate?.data?.data?.products)
+                setTotalProds(resCate?.data?.data?.products.length)
+
                 const brandObj = cateItem?.brands.map((item) => ({ value: item.slug, label: item.name, id: item._id }))
                 setBrandOpt(brandObj)
-                setTotalProds(prodCate?.length)
             } else {
-                setProds(prodFilter)
-                setTotalProds(allProds?.length)
+                setAllProds(res?.data?.data)
+                setTotalProds(res?.pagination?.total)
             }
         }
 
@@ -106,9 +71,9 @@ const AllProduct = () => {
                                 <div className="w-[80%] h-full flex flex-col">
                                     <h2 className="text-base font-semibold text-primary mb-2">Filter by</h2>
                                     <div className="w-full h-auto flex flex-wrap gap-2">
-                                        {type && prods?.length > 0 && (
+                                        {type && allProds?.length > 0 && (
                                             <div className="w-auto h-auto ">
-                                                <HiSelector
+                                                <Select
                                                     onChange={setBrandS}
                                                     options={brandOpt}
                                                     placeholder="Brand"
@@ -140,14 +105,14 @@ const AllProduct = () => {
                             </div>
                         </div>
                         <div className="w-full h-auto flex flex-wrap">
-                            {prods?.map((item) => (
+                            {allProds?.map((item) => (
                                 <div key={item.id} className="w-1/3 h-auto mb-3">
                                     <ProductItem data={item} cateType={type} />
                                 </div>
                             ))}
                         </div>
                         <div className="w-full h-auto mt-5 flex justify-center items-end">
-                            <Paginate itemCount={totalProds} itemsPerPage={LIMIT} onSetPage={setPage} />
+                            <Paginate itemCount={totalProds} itemsPerPage={limit} onSetPage={setPage} />
                         </div>
                     </div>
                 </div>

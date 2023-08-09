@@ -9,7 +9,7 @@ export const getAllCategory = async () => {
     }
 }
 
-export const getCategory = async ({ cateId }) => {
+export const getCategory = async (cateId) => {
     try {
         const res = await httpRequest.get(`categories/${cateId}`)
         return res.data

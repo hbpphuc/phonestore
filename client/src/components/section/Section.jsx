@@ -10,7 +10,7 @@ const Section = ({ cateData, title }) => {
 
     useEffect(() => {
         const getCategory = async () => {
-            const res = await apis.getCategory({ cateId })
+            const res = await apis.getCategory(cateId)
             if (res?.status === 'success') {
                 setProdCate(res?.data?.data?.products)
                 setCateType(res?.data?.data?.slug)

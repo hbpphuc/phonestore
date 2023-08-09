@@ -38,11 +38,11 @@ const Header = () => {
                         <div className="flex">
                             {curUser && (
                                 <>
-                                    <p className="text-sm font-normal text-[#848484] mr-1">
-                                        Hello{' '}
-                                        <i className="text-main font-semibold">{curUser?.data?.name.split(' ')[0]}</i>,
+                                    <p className="flex gap-1 text-sm font-normal text-[#848484]">
+                                        <span>Hello</span>
+                                        <i className="text-main font-semibold">{curUser?.data?.name.split(' ')[0]}</i>
                                     </p>
-                                    <p className="text-sm font-normal text-[#848484]">welcome to our Store!</p>
+                                    <p className="text-sm font-normal text-[#848484]">, welcome to our Store!</p>
                                 </>
                             )}
                         </div>

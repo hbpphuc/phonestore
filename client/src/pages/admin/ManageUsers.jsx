@@ -38,8 +38,6 @@ const ManageUsers = () => {
         data.q !== '' ? getAllUser(data.q) : getAllUser()
     }
 
-    console.log({ isNew })
-
     useEffect(() => {
         getAllUser()
     }, [page, isNew])
