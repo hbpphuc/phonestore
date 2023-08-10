@@ -85,9 +85,7 @@ const ManageUsers = () => {
                     manage user
                 </h1>
                 <div>
-                    <Link className="p-3 bg-red-600 font-medium rounded-md" href="/news/create">
-                        Delete User
-                    </Link>
+                    <Link className="p-3 bg-red-600 font-medium rounded-md">Delete User</Link>
                 </div>
             </div>
 

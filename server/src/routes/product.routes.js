@@ -10,6 +10,8 @@ router.use('/:prodId/reviews', reviewRouter);
 router
     .route('/uploads/:id')
     .put(
+        authController.protect,
+        authController.restrictTo('admin'),
         productController.populatedImages,
         productController.uploadProductImages
     );
@@ -20,12 +22,24 @@ router.route('/:slug').get(productController.getProductSlug);
 router
     .route('/')
     .get(productController.getAllProduct)
-    .post(productController.createProduct);
+    .post(
+        authController.protect,
+        authController.restrictTo('admin'),
+        productController.createProduct
+    );
 
 router
     .route('/:id')
     .get(productController.getProduct)
-    .put(productController.updateProduct)
-    .delete(productController.deleteProduct);
+    .put(
+        authController.protect,
+        authController.restrictTo('admin'),
+        productController.updateProduct
+    )
+    .delete(
+        authController.protect,
+        authController.restrictTo('admin'),
+        productController.deleteProduct
+    );
 
 module.exports = router;

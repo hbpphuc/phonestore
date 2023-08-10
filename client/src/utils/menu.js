@@ -164,7 +164,7 @@ export const adminSidebarMenu = [
             {
                 id: 2.2,
                 title: 'Create Product',
-                path: `/${adminRoutes.admin}/${adminRoutes.adminProducts}`,
+                path: `/`,
             },
         ],
     },
