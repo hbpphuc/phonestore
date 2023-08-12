@@ -1,6 +1,9 @@
 // General
 export { default as Icon } from './general/Icons'
 export { default as Button } from './general/Button'
+export { default as Input } from './general/Input'
+export { default as Selection } from './general/Selection'
+export { default as EditorZone } from './general/EditorZone'
 export { default as Popup } from './general/Popup'
 export { default as Loading } from './general/Loading'
 

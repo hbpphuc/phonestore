@@ -5,8 +5,9 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
 import useModal from 'hooks/useModal'
-import { Button, Icon, Paginate, Popup } from 'components'
 import * as apis from 'apis'
+import { Button, Icon, Paginate, Popup } from 'components'
+import { CreateProduct } from 'pages/admin'
 
 const limit = 10
 
@@ -169,18 +170,18 @@ const ManageProducts = () => {
                 )}
             </div>
             {isShowing && (
-                <div className="w-full">
-                    <Popup modalIsOpen={isShowing} closeModal={toggle} style>
-                        <div className="w-[1200px] h-[400px] flex flex-col p-5 bg-white overflow-hidden relative">
-                            <div className="w-10 h-10 absolute top-0 right-0">
-                                <Button onClick={toggle} className="w-full h-full flex justify-center items-center">
-                                    <Icon.GrClose size={26} />
-                                </Button>
-                            </div>
-                            <h1>CREATE PRODUCT</h1>
+                <Popup modalIsOpen={isShowing} closeModal={toggle} style>
+                    <div className="w-[1200px] h-[680px] flex flex-col bg-white overflow-hidden relative">
+                        <div className="w-10 h-10 absolute top-0 right-0">
+                            <Button onClick={toggle} className="w-full h-full flex justify-center items-center">
+                                <Icon.GrClose size={26} />
+                            </Button>
                         </div>
-                    </Popup>
-                </div>
+                        <div className="w-full h-full p-5 overflow-y-auto ">
+                            <CreateProduct />
+                        </div>
+                    </div>
+                </Popup>
             )}
         </div>
     )
