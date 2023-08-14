@@ -21,6 +21,8 @@ import { MdNavigateNext, MdLaptop, MdDevicesOther, MdDownloadDone } from 'react-
 import { RiEyeCloseLine, RiEyeFill, RiDashboard2Line } from 'react-icons/ri'
 import { IoMdTabletPortrait } from 'react-icons/io'
 import { BiSolidCameraHome, BiLogOut, BiSolidEditAlt, BiTrash } from 'react-icons/bi'
+import { RxUpdate } from 'react-icons/rx'
+import { CgRemove } from 'react-icons/cg'
 
 const Icon = {
     RiShoppingBasketFill,
@@ -59,6 +61,8 @@ const Icon = {
     BiSolidEditAlt,
     BiTrash,
     MdDownloadDone,
+    RxUpdate,
+    CgRemove,
 }
 
 export default Icon

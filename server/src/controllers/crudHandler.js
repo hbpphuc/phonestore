@@ -76,10 +76,12 @@ exports.getOneSlug = (Model, popOptions) =>
 
 exports.createOne = (Model) =>
     asyncHandler(async (req, res, next) => {
+        const { imageCover } = req.file;
         const newDoc = await Model.create(req.body);
 
         res.status(201).json({
             status: 'success',
+            imageCover,
             data: {
                 data: newDoc,
             },

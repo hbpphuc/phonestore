@@ -29,6 +29,15 @@ export const getProductBySlug = async ({ slug }) => {
     }
 }
 
+export const createProduct = async (data) => {
+    try {
+        const res = await httpRequest.post('products', data, { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
 export const updateProduct = async (id, data) => {
     try {
         const res = await httpRequest.put(`products/${id}`, data, { withCredentials: true })

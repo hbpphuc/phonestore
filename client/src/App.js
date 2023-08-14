@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { publicR, adminR } from './routes'
@@ -9,6 +10,8 @@ import { NotFoundAdmin } from './pages/admin'
 import { Admin } from 'pages/admin'
 
 function App() {
+    const { isLoggedIn, curUser } = useSelector((state) => state.user)
+
     return (
         <>
             <div className="w-full min-h-screen">
@@ -23,13 +26,15 @@ function App() {
 
                     <Route path={publicRoutes.signup} element={<Signup />} />
 
-                    <Route path="/admin" element={<Admin />}>
-                        {adminR.map((route, index) => {
-                            const Page = route.component
-                            return <Route key={index} path={route.path} element={<Page />} />
-                        })}
-                        <Route path="*" element={<NotFoundAdmin />} />
-                    </Route>
+                    {isLoggedIn && curUser?.data?.role === 'admin' && (
+                        <Route path="/admin" element={<Admin />}>
+                            {adminR.map((route, index) => {
+                                const Page = route.component
+                                return <Route key={index} path={route.path} element={<Page />} />
+                            })}
+                            <Route path="*" element={<NotFoundAdmin />} />
+                        </Route>
+                    )}
                 </Routes>
             </div>
 

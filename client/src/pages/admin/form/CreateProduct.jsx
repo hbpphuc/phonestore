@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import Select from 'react-select'
 import { toast } from 'react-toastify'
 import * as apis from 'apis'
-import { EditorZone, Input } from 'components'
+import { EditorZone, Input, ImageUpload } from 'components'
 import { useCallback } from 'react'
 
 const CreateProduct = () => {
@@ -20,6 +20,8 @@ const CreateProduct = () => {
 
     const [cate, setCate] = useState(null)
     const [brand, setBrand] = useState(null)
+    const [imageCover, setImageCover] = useState([])
+    const [images, setImages] = useState([])
 
     const changeValue = useCallback(
         (e) => {
@@ -41,21 +43,40 @@ const CreateProduct = () => {
         ?.find((item) => item.id === cate?.id)
         ?.brands.map((el) => ({ value: el.slug, label: el.name, id: el.id }))
 
-    const onSubmit = (data) => {
+    const onChangeImageCover = (imageList, addUpdateIndex) => {
+        setImageCover(imageList)
+    }
+
+    const onChangeImages = (imageList, addUpdateIndex) => {
+        setImages(imageList)
+    }
+
+    const onSubmit = async (data) => {
+        const formData = new FormData()
+
         const newData = {
             ...data,
             category: cate?.id || undefined,
             brand: brand?.id || undefined,
+            imageCover,
+            ...images,
             ...payload,
         }
 
         if (newData.category === undefined) {
             return toast.error('Category is required!')
-        } else if (newData.brand === undefined) {
+        }
+
+        if (newData.brand === undefined) {
             return toast.error('Brand is required!')
         }
 
-        console.log(newData)
+        for (let i of Object.entries(newData)) formData.append(i[0], i[1])
+
+        if (newData.imageCover) formData.append('imageCover', imageCover[0].file)
+
+        const res = await apis.createProduct(formData)
+        console.log(res)
     }
 
     return (
@@ -64,11 +85,11 @@ const CreateProduct = () => {
                 create new product
             </h1>
             <form className="w-full flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
-                <div className="w-full flex gap-2">
-                    <div className="w-[60%] flex-none flex flex-col gap-2">
+                <div className="w-full flex gap-6">
+                    <div className="flex-1 flex flex-col gap-2">
                         <div className="w-full flex items-center mb-3">
                             <Input
-                                id="productName"
+                                id="name"
                                 label="Name"
                                 placeHolder="Enter name..."
                                 register={register}
@@ -142,24 +163,20 @@ const CreateProduct = () => {
                             />
                         </div>
                     </div>
-                    <div className="w-[40%] flex-none flex">
+                    <div className="w-[35%] flex">
                         <div className="w-full flex flex-col items-center gap-2 mb-3">
-                            <Input
+                            <ImageUpload
                                 id="imageCover"
-                                label="Image Cover"
-                                type="file"
-                                register={register}
-                                validate={{ required: true }}
-                                errors={errors}
-                                errmsg="Image Cover is required."
+                                label="Upload Image Cover"
+                                images={imageCover}
+                                onChangeImages={onChangeImageCover}
                             />
-                            <Input
+                            <ImageUpload
                                 id="images"
-                                label="Images"
-                                type="file"
-                                register={register}
+                                label="Upload Images"
+                                images={images}
+                                onChangeImages={onChangeImages}
                                 multiple
-                                errors={errors}
                             />
                         </div>
                     </div>
