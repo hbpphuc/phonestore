@@ -171,7 +171,7 @@ const ManageProducts = () => {
             </div>
             {isShowing && (
                 <Popup modalIsOpen={isShowing} closeModal={toggle} style>
-                    <div className="w-[1200px] h-[680px] flex flex-col bg-white overflow-hidden relative">
+                    <div className="w-full h-[680px] flex flex-col bg-white overflow-hidden relative right-10">
                         <div className="w-10 h-10 absolute top-0 right-0">
                             <Button onClick={toggle} className="w-full h-full flex justify-center items-center">
                                 <Icon.GrClose size={26} />

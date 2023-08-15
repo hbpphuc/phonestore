@@ -107,7 +107,7 @@ const AllProduct = () => {
                         <div className="w-full h-auto flex flex-wrap">
                             {allProds?.map((item) => (
                                 <div key={item.id} className="w-1/3 h-auto mb-3">
-                                    <ProductItem data={item} cateType={type} />
+                                    <ProductItem data={item} cateType={item.category.slug} />
                                 </div>
                             ))}
                         </div>

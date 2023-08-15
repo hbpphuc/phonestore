@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Slider from 'react-slick'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
+import DOMPurify from 'dompurify'
 import 'react-tabs/style/react-tabs.css'
 import * as apis from 'apis'
 import { Breadcrumb, InfoProduct, ProductItem, Review } from 'components'
@@ -22,16 +23,19 @@ const DetailProduct = () => {
     }
 
     useEffect(() => {
+        const getProduct = async () => {
+            const res = await apis.getProductBySlug({ slug })
+            if (res?.status === 'success') setProduct(res?.data?.data)
+            else navigate('/not-found', { replace: true })
+        }
+        getProduct()
+    }, [slug])
+
+    useEffect(() => {
         const getAllProduct = async () => {
-            const res = await apis.getAllProduct()
-            const resCate = await apis.getAllCategory()
-
-            const cate = resCate?.data?.data.find((item) => item.slug === type)
-
+            const res = await apis.getAllProductNoQurey()
             if (res.status === 'success') {
-                const prod = res?.data?.data.find((item) => item?.slug === slug)
-                prod ? setProduct(prod) : navigate('/not-found', { replace: true })
-                setOthers(res?.data?.data.filter((item) => item?.slug !== slug && item.category === cate?.id))
+                setOthers(res?.data?.data.filter((item) => item?.slug !== slug && item.category.slug === type))
             }
         }
         getAllProduct()
@@ -80,6 +84,16 @@ const DetailProduct = () => {
                             ))}
                         </TabList>
 
+                        <TabPanel>
+                            <div className="border border-[#aaa] border-t-0 p-5">
+                                {product?.description?.length > 0 && (
+                                    <div
+                                        className="text-base"
+                                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product?.description) }}
+                                    ></div>
+                                )}
+                            </div>
+                        </TabPanel>
                         {detailProductTabs[1].map((item) => (
                             <TabPanel key={item.id}>
                                 <div className="border border-[#aaa] border-t-0 p-5 ">
@@ -107,7 +121,7 @@ const DetailProduct = () => {
                     {others?.length > 0 ? (
                         <Slider {...settingsProducts}>
                             {others?.map((item, index) => (
-                                <ProductItem key={index} data={item} detail />
+                                <ProductItem key={index} data={item} detail cateType={type} />
                             ))}
                         </Slider>
                     ) : (

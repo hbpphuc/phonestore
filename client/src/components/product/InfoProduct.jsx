@@ -35,7 +35,7 @@ const InfoProduct = ({ data, detail }) => {
 
     return (
         <div className="w-full h-full flex gap-5">
-            <div className="flex-1 h-full flex flex-col justify-around items-center">
+            <div className="flex-1 h-full flex flex-col items-center">
                 <div className={`${detail ? 'w-full border p-5' : 'w-[70%]'} max-h-[80%]`}>
                     <img
                         src={data?.imageCover || 'https://app.advaiet.com/item_dfile/default_product.png'}
@@ -48,10 +48,10 @@ const InfoProduct = ({ data, detail }) => {
                         detail ? 'border' : ''
                     } overflow-x-auto`}
                 >
-                    {[1, 2, 3, 4].map((item, index) => (
+                    {data?.images.map((item, index) => (
                         <img
                             key={index}
-                            src={'https://app.advaiet.com/item_dfile/default_product.png'}
+                            src={item ?? 'https://app.advaiet.com/item_dfile/default_product.png'}
                             alt={'item'}
                             className="w-full h-full object-contain"
                         />

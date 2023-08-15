@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar'
 import adminlogo from 'assets/images/AdminLogo.png'
 import { Link, NavLink } from 'react-router-dom'
@@ -6,18 +6,21 @@ import { adminSidebarMenu } from 'utils/menu'
 
 const activeStyle = 'flex text-main border-l-4 border-main'
 
-const AdminSidebar = () => {
+const AdminSidebar = ({ collapsed }) => {
     return (
-        <div className="fixed left-0 w-[280px] h-full flex flex-col">
-            <div className="w-full h-auto p-[13px_8px] bg-adminMain flex justify-center items-center gap-3 border-b border-admin">
-                <img src={adminlogo} alt="admin-logo" className="w-8 h-8 object-contain" />
-                <Link to="/admin/dashboard" className="uppercase font-normal text-lg hover:underline">
-                    administrator
+        <div className={`fixed left-0 ${collapsed ? 'w-20' : 'w-[280px]'} h-full flex flex-col`}>
+            <div className="w-full h-auto p-[13px_8px] bg-adminMain border-b border-admin">
+                <Link
+                    to="/admin/dashboard"
+                    className=" flex justify-center items-center gap-3 uppercase font-normal text-lg hover:underline"
+                >
+                    <img src={adminlogo} alt="admin-logo" className="w-8 h-8 object-contain" />
+                    {!collapsed && <span>administrator</span>}
                 </Link>
             </div>
             <div className="w-full h-auto">
                 <ul className="w-full">
-                    <Sidebar width="full" backgroundColor="#343a40" style={{ border: 'none' }}>
+                    <Sidebar width="full" backgroundColor="#343a40" style={{ border: 'none' }} collapsed={collapsed}>
                         <Menu>
                             {adminSidebarMenu.map((item) =>
                                 item.subMenu ? (

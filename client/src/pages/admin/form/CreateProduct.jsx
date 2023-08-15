@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import Select from 'react-select'
 import { toast } from 'react-toastify'
 import * as apis from 'apis'
-import { EditorZone, Input, ImageUpload } from 'components'
+import { EditorZone, Input, ImageUpload, Loading } from 'components'
 import { useCallback } from 'react'
 
 const CreateProduct = () => {
@@ -12,6 +12,9 @@ const CreateProduct = () => {
         handleSubmit,
         formState: { errors },
     } = useForm()
+
+    const [isLoading, setIsLoading] = useState(false)
+    const [isNew, setIsNew] = useState(false)
 
     const [categories, setCategories] = useState(null)
 
@@ -36,7 +39,7 @@ const CreateProduct = () => {
             setCategories(res?.data?.data)
         }
         getAllCategory()
-    }, [])
+    }, [isNew])
 
     const cateOpt = categories?.map((item) => ({ value: item.slug, label: item.name, id: item.id }))
     const brandOpt = categories
@@ -54,29 +57,44 @@ const CreateProduct = () => {
     const onSubmit = async (data) => {
         const formData = new FormData()
 
+        if (cate?.id === undefined) {
+            return toast.error('Category is require!')
+        }
+
+        if (brand?.id === undefined) {
+            return toast.error('Brand is require!')
+        }
+
+        if (imageCover.length === 0) {
+            return toast.error('Image Cover is require!')
+        }
+
         const newData = {
             ...data,
-            category: cate?.id || undefined,
-            brand: brand?.id || undefined,
-            imageCover,
-            ...images,
+            category: cate?.id,
+            brand: brand?.id,
+            imageCover: imageCover[0].file,
+            images: images.map((item) => item.file),
             ...payload,
         }
 
-        if (newData.category === undefined) {
-            return toast.error('Category is required!')
+        for (let i of Object.entries(newData)) {
+            formData.append(i[0], i[1])
         }
 
-        if (newData.brand === undefined) {
-            return toast.error('Brand is required!')
+        if (newData.images) {
+            for (let image of newData.images) {
+                formData.append('images', image)
+            }
         }
 
-        for (let i of Object.entries(newData)) formData.append(i[0], i[1])
-
-        if (newData.imageCover) formData.append('imageCover', imageCover[0].file)
-
+        setIsLoading(true)
         const res = await apis.createProduct(formData)
-        console.log(res)
+        if (res?.status === 'success') {
+            setIsLoading(false)
+            toast.success('Create product successfully!')
+            setIsNew(!isNew)
+        }
     }
 
     return (
@@ -182,7 +200,7 @@ const CreateProduct = () => {
                     </div>
                 </div>
                 <button className="w-[400px] mt-[30px] bg-main text-white py-2 hover:brightness-95" type="submit">
-                    Submit
+                    {isLoading ? <Loading size={8} color="white" /> : 'Submit'}
                 </button>
             </form>
         </div>

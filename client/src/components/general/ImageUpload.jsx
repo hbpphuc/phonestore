@@ -43,24 +43,26 @@ const ImageUpload = ({ id, label, multiple, images, onChangeImages }) => {
                                         />
                                         {isHover && (
                                             <div className="w-full flex justify-between items-center gap-4 absolute top-0">
-                                                <button
+                                                <span
                                                     className="p-2 bg-red-600 text-white"
                                                     onClick={() => onImageRemove(index)}
                                                 >
                                                     <Icon.CgRemove size={24} />
-                                                </button>
+                                                </span>
                                             </div>
                                         )}
                                     </div>
                                 ))}
-                                <button
+                                <span
                                     style={isDragging ? { color: 'red' } : null}
                                     onClick={onImageUpload}
                                     {...dragProps}
-                                    className="w-[120px] h-[160px] bg-[#f5f5f5] border-4 border-dashed border-gray-500"
+                                    className="w-[120px] h-[160px] flex justify-center items-center bg-[#f5f5f5] border-4 border-dashed border-gray-500 cursor-pointer"
                                 >
-                                    <span className="text-xl text-gray-500 font-semibold">Click or Drop</span>
-                                </button>
+                                    <span className="text-xl text-gray-500 font-semibold text-center">
+                                        Click or Drop
+                                    </span>
+                                </span>
                             </div>
                         ) : (
                             <div className="w-full h-auto">
@@ -69,30 +71,30 @@ const ImageUpload = ({ id, label, multiple, images, onChangeImages }) => {
                                         <div key={index} className="relative">
                                             <img src={image.data_url} alt="" className="w-full h-full object-contain" />
                                             <div className="w-full flex justify-between items-center gap-4 absolute top-0 right-0">
-                                                <button
+                                                <span
                                                     className="p-2 bg-slate-400 text-white"
                                                     onClick={() => onImageUpdate(index)}
                                                 >
                                                     <Icon.RxUpdate size={24} />
-                                                </button>
-                                                <button
+                                                </span>
+                                                <span
                                                     className="p-2 bg-red-600 text-white"
                                                     onClick={() => onImageRemove(index)}
                                                 >
                                                     <Icon.CgRemove size={24} />
-                                                </button>
+                                                </span>
                                             </div>
                                         </div>
                                     ))
                                 ) : (
-                                    <button
+                                    <span
                                         style={isDragging ? { color: 'red' } : null}
                                         onClick={onImageUpload}
                                         {...dragProps}
-                                        className="w-full h-[500px] bg-[#f5f5f5] border-4 border-dashed border-gray-500"
+                                        className="w-full h-[500px] flex justify-center items-center bg-[#f5f5f5] border-4 border-dashed border-gray-500 cursor-pointer"
                                     >
                                         <span className="text-3xl text-gray-500 font-semibold">Click or Drop</span>
-                                    </button>
+                                    </span>
                                 )}
                             </div>
                         )}
