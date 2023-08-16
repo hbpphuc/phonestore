@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Slider from 'react-slick'
+import Skeleton from 'react-loading-skeleton'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import DOMPurify from 'dompurify'
 import 'react-tabs/style/react-tabs.css'
@@ -11,8 +12,10 @@ import { detailProductTabs, productExtrainInfo } from 'utils/menu'
 const DetailProduct = () => {
     const { type, slug } = useParams()
     const navigate = useNavigate()
+
     const [product, setProduct] = useState(null)
     const [others, setOthers] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
 
     const settingsProducts = {
         dots: false,
@@ -24,7 +27,9 @@ const DetailProduct = () => {
 
     useEffect(() => {
         const getProduct = async () => {
+            setIsLoading(true)
             const res = await apis.getProductBySlug({ slug })
+            setIsLoading(false)
             if (res?.status === 'success') setProduct(res?.data?.data)
             else navigate('/not-found', { replace: true })
         }
@@ -33,13 +38,17 @@ const DetailProduct = () => {
 
     useEffect(() => {
         const getAllProduct = async () => {
+            setIsLoading(true)
             const res = await apis.getAllProductNoQurey()
+            setIsLoading(false)
             if (res.status === 'success') {
                 setOthers(res?.data?.data.filter((item) => item?.slug !== slug && item.category.slug === type))
             }
         }
         getAllProduct()
     }, [type, slug])
+
+    console.log(isLoading)
 
     return (
         <div className="w-full h-auto">
@@ -49,7 +58,7 @@ const DetailProduct = () => {
                 </div>
                 <div className="w-main h-auto mb-10 flex justify-center">
                     <div className="w-[80%]">
-                        <InfoProduct data={product} detail />
+                        <InfoProduct data={product} detail isLoading={isLoading} />
                     </div>
                     <div className="flex-1">
                         <ul className="w-full h-full">
@@ -84,16 +93,22 @@ const DetailProduct = () => {
                             ))}
                         </TabList>
 
-                        <TabPanel>
-                            <div className="border border-[#aaa] border-t-0 p-5">
-                                {product?.description?.length > 0 && (
-                                    <div
-                                        className="text-base"
-                                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(product?.description) }}
-                                    ></div>
-                                )}
-                            </div>
-                        </TabPanel>
+                        {!isLoading ? (
+                            <TabPanel>
+                                <div className="border border-[#aaa] border-t-0 p-5">
+                                    {product?.description?.length > 0 && (
+                                        <div
+                                            className="text-base"
+                                            dangerouslySetInnerHTML={{
+                                                __html: DOMPurify.sanitize(product?.description),
+                                            }}
+                                        ></div>
+                                    )}
+                                </div>
+                            </TabPanel>
+                        ) : (
+                            <Skeleton />
+                        )}
                         {detailProductTabs[1].map((item) => (
                             <TabPanel key={item.id}>
                                 <div className="border border-[#aaa] border-t-0 p-5 ">

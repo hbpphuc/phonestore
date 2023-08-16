@@ -1,15 +1,18 @@
 import React, { memo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Skeleton from 'react-loading-skeleton'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Pagination } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
 import Select from 'react-select'
 import { publicRoutes } from 'routes/paths'
 
-const InfoProduct = ({ data, detail }) => {
+const InfoProduct = ({ data, detail, isLoading }) => {
     const quantityRef = useRef()
     const internalRef = useRef()
     const [quantity, setQuantity] = useState(1)
     const [selectedOption, setSelectedOption] = useState(null)
-
-    const props = { width: 400, height: 250, zoomWidth: 500, img: data?.imageCover }
 
     const IsLink = detail ? 'p' : Link
 
@@ -25,62 +28,78 @@ const InfoProduct = ({ data, detail }) => {
         { value: 'black', label: 'BLACK' },
     ]
 
-    const settingImages = {
-        dots: false,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-    }
-
     return (
         <div className="w-full h-full flex gap-5">
-            <div className="flex-1 h-full flex flex-col items-center">
-                <div className={`${detail ? 'w-full border p-5' : 'w-[70%]'} max-h-[80%]`}>
-                    <img
-                        src={data?.imageCover || 'https://app.advaiet.com/item_dfile/default_product.png'}
-                        alt={data?.name}
-                        className="w-full h-full object-contain"
-                    />
-                </div>
-                <div
-                    className={`w-full max-h-[20%] flex justify-between items-center ${
-                        detail ? 'border' : ''
-                    } overflow-x-auto`}
-                >
-                    {data?.images.map((item, index) => (
+            <div className="flex-none w-1/2 h-full flex flex-col items-center">
+                <div className={`${detail ? 'w-full mb-3' : 'w-[70%]'} max-h-[80%]`}>
+                    {isLoading ? (
+                        <Skeleton className="w-full h-[300px]" />
+                    ) : (
                         <img
-                            key={index}
-                            src={item ?? 'https://app.advaiet.com/item_dfile/default_product.png'}
-                            alt={'item'}
+                            src={data?.imageCover ?? 'https://app.advaiet.com/item_dfile/default_product.png'}
+                            alt={'imageCover'}
                             className="w-full h-full object-contain"
                         />
-                    ))}
+                    )}
                 </div>
+                {data?.images.length > 0 && (
+                    <div className={`w-full max-h-[20%] ${detail ? 'border-t pt-2' : ''}`}>
+                        <Swiper
+                            slidesPerView={3}
+                            spaceBetween={30}
+                            pagination={{
+                                clickable: true,
+                            }}
+                            modules={[Pagination]}
+                            className="mySwiper"
+                        >
+                            {data?.images.map((item, index) => (
+                                <SwiperSlide key={index}>
+                                    <img
+                                        src={item ?? 'https://app.advaiet.com/item_dfile/default_product.png'}
+                                        alt={'item'}
+                                        className="w-full h-full object-contain"
+                                    />
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </div>
+                )}
             </div>
-            <div className="flex-1 h-full">
+            <div className="flex-none w-1/2 h-full flex flex-col">
                 <div className="w-full mb-5 ">
-                    <IsLink
-                        to={`${publicRoutes.product}/${data?.category?.slug}/${data?.slug}`}
-                        className={`text-[#1c1c1c] text-xl font-semibold ${
-                            detail ? '' : 'hover:text-main'
-                        } transition-colors`}
-                    >
-                        {data?.name}
-                    </IsLink>
+                    {isLoading ? (
+                        <Skeleton width="70%" />
+                    ) : (
+                        <IsLink
+                            to={`${publicRoutes.products}/${data?.category?.slug}/${data?.slug}`}
+                            className={`text-[#1c1c1c] text-xl font-semibold ${
+                                detail ? '' : 'hover:text-main'
+                            } transition-colors`}
+                        >
+                            {data?.name}
+                        </IsLink>
+                    )}
                 </div>
-                <ul className="w-full ml-4 mb-[15px] list-disc">
-                    <li>Technology: GSM / HSPA / LTE</li>
-                    <li>Dimensions: 146 x 72 x 8.1 mm</li>
-                    <li>Weight: 161 g</li>
-                    <li>Display: IPS LCD 5.2 inches</li>
-                    <li>Resolution: 1080 x 1920</li>
-                    <li>OS: Android OS, v6.0.1 (Marshmallow)</li>
-                    <li>Chipset: Snapdragon 820</li>
-                    <li>CPU: Quad-core</li>
-                    <li>Inter...</li>
-                </ul>
-                <h2 className="w-full mb-[15px] text-xl font-semibold text-main">${data?.price} USD</h2>
+                {isLoading ? (
+                    <Skeleton count={10} width="70%" />
+                ) : (
+                    <ul className="w-full ml-4 mb-[15px] list-disc">
+                        <li>Technology: GSM / HSPA / LTE</li>
+                        <li>Dimensions: 146 x 72 x 8.1 mm</li>
+                        <li>Weight: 161 g</li>
+                        <li>Display: IPS LCD 5.2 inches</li>
+                        <li>Resolution: 1080 x 1920</li>
+                        <li>OS: Android OS, v6.0.1 (Marshmallow)</li>
+                        <li>Chipset: Snapdragon 820</li>
+                        <li>CPU: Quad-core</li>
+                        <li>Inter...</li>
+                    </ul>
+                )}
+
+                <h2 className="w-full mb-[15px] text-xl font-semibold text-main">
+                    {isLoading ? <Skeleton width={100} /> : `$${data?.price} USD`}
+                </h2>
                 <div className="w-full mb-[15px]">
                     <div className="w-full mb-[15px] flex items-center">
                         <h2 className="min-w-[80px] mr-[10px] text-sm font-semibold text-[#151515]">Internal</h2>
