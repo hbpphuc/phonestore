@@ -76,12 +76,10 @@ exports.getOneSlug = (Model, popOptions) =>
 
 exports.createOne = (Model) =>
     asyncHandler(async (req, res, next) => {
-        console.log(req?.files);
-
         const imageCover = req?.files?.imageCover[0].path;
         if (imageCover) req.body.imageCover = imageCover;
 
-        const images = req?.files?.images.map((item) => item.path);
+        const images = req?.files?.images?.map((item) => item.path);
         if (images) req.body.images = images;
 
         const newDoc = await Model.create(req.body);

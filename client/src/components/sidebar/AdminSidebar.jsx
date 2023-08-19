@@ -8,7 +8,7 @@ const activeStyle = 'flex text-main border-l-4 border-main'
 
 const AdminSidebar = ({ collapsed }) => {
     return (
-        <div className={`fixed left-0 ${collapsed ? 'w-20' : 'w-[280px]'} h-full flex flex-col`}>
+        <div className={`fixed left-0 ${collapsed ? 'w-20' : 'w-[260px]'} h-full flex flex-col`}>
             <div className="w-full h-auto p-[13px_8px] bg-adminMain border-b border-admin">
                 <Link
                     to="/admin/dashboard"

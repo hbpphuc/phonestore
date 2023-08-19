@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import Select from 'react-select'
 import { toast } from 'react-toastify'
 import * as apis from 'apis'
 import { EditorZone, Input, ImageUpload, Loading } from 'components'
-import { useCallback } from 'react'
 
-const CreateProduct = () => {
+const CreateProduct = ({ id, pData }) => {
     const {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
     } = useForm()
 
+    const navigate = useNavigate()
+
     const [isLoading, setIsLoading] = useState(false)
-    const [isNew, setIsNew] = useState(false)
 
     const [categories, setCategories] = useState(null)
 
@@ -39,7 +41,7 @@ const CreateProduct = () => {
             setCategories(res?.data?.data)
         }
         getAllCategory()
-    }, [isNew])
+    }, [])
 
     const cateOpt = categories?.map((item) => ({ value: item.slug, label: item.name, id: item.id }))
     const brandOpt = categories
@@ -90,12 +92,29 @@ const CreateProduct = () => {
 
         setIsLoading(true)
         const res = await apis.createProduct(formData)
+        setIsLoading(false)
         if (res?.status === 'success') {
-            setIsLoading(false)
             toast.success('Create product successfully!')
-            setIsNew(!isNew)
+            navigate(0)
+        } else {
+            if (res.message.startsWith('E11000'))
+                toast.error('Product name has already exist. Please enter an other name!')
+            toast.error(res.message)
         }
     }
+
+    useEffect(() => {
+        console.log(categories, pData, cateOpt)
+
+        reset({
+            name: id ? pData?.name : '',
+            price: id ? pData?.price : '',
+            quantity: id ? pData?.quantity : '',
+            color: id ? pData?.color : '',
+            cateOpt: id ? { label: pData?.category?.name, value: pData?.category?.slug } : null,
+            brandOpt: id ? brand : null,
+        })
+    }, [id])
 
     return (
         <div className="w-full h-auto mt-5">
@@ -138,6 +157,7 @@ const CreateProduct = () => {
                             <Input
                                 id="color"
                                 label="Color"
+                                placeHolder="Enter color..."
                                 register={register}
                                 validate={{ required: true }}
                                 errors={errors}
@@ -149,7 +169,6 @@ const CreateProduct = () => {
                                 <label htmlFor="cateOpt">Category</label>
                                 <Select
                                     id="cateOpt"
-                                    value={cate}
                                     onChange={setCate}
                                     options={cateOpt}
                                     placeholder="Choose Category"
@@ -161,7 +180,6 @@ const CreateProduct = () => {
                                 <label htmlFor="brandOpt">Brand</label>
                                 <Select
                                     id="brandOpt"
-                                    value={brand}
                                     onChange={setBrand}
                                     options={brandOpt}
                                     placeholder="Choose Brand"
@@ -175,6 +193,7 @@ const CreateProduct = () => {
                                 label="Description"
                                 id="description"
                                 name="description"
+                                value={id ? pData?.description : ''}
                                 changeValue={changeValue}
                                 invalid={invalid}
                                 setInvalid={setInvalid}
@@ -186,13 +205,15 @@ const CreateProduct = () => {
                             <ImageUpload
                                 id="imageCover"
                                 label="Upload Image Cover"
-                                images={imageCover}
+                                images={!id ? imageCover : [pData?.imageCover]}
+                                isEdit={id ? true : false}
                                 onChangeImages={onChangeImageCover}
                             />
                             <ImageUpload
                                 id="images"
                                 label="Upload Images"
-                                images={images}
+                                images={!id ? images : pData?.images}
+                                isEdit={id ? true : false}
                                 onChangeImages={onChangeImages}
                                 multiple
                             />

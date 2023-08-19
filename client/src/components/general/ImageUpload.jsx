@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import ImageUploading from 'react-images-uploading'
 import Icon from './Icons'
 
-const ImageUpload = ({ id, label, multiple, images, onChangeImages }) => {
+const ImageUpload = ({ id, label, multiple, images, onChangeImages, isEdit }) => {
     const [isHover, setIsHover] = useState(false)
     const maxNumber = 69
 
@@ -25,7 +25,7 @@ const ImageUpload = ({ id, label, multiple, images, onChangeImages }) => {
                     <div className="w-full flex gap-2">
                         {multiple ? (
                             <div className="w-full flex flex-wrap gap-2 justify-around">
-                                {imageList.map((image, index) => (
+                                {imageList?.map((image, index) => (
                                     <div
                                         key={index}
                                         className="w-[120px] h-[160px] relative border"
@@ -37,14 +37,14 @@ const ImageUpload = ({ id, label, multiple, images, onChangeImages }) => {
                                         }}
                                     >
                                         <img
-                                            src={image.data_url}
+                                            src={isEdit ? image : image.data_url}
                                             alt=""
                                             className="w-[120px] h-[160px] object-contain cursor-pointer"
                                         />
                                         {isHover && (
                                             <div className="w-full flex justify-between items-center gap-4 absolute top-0">
                                                 <span
-                                                    className="p-2 bg-red-600 text-white"
+                                                    className="p-2 bg-red-600 text-white cursor-pointer"
                                                     onClick={() => onImageRemove(index)}
                                                 >
                                                     <Icon.CgRemove size={24} />
@@ -66,19 +66,23 @@ const ImageUpload = ({ id, label, multiple, images, onChangeImages }) => {
                             </div>
                         ) : (
                             <div className="w-full h-auto">
-                                {imageList.length > 0 ? (
-                                    imageList.map((image, index) => (
+                                {imageList?.length > 0 ? (
+                                    imageList?.map((image, index) => (
                                         <div key={index} className="relative">
-                                            <img src={image.data_url} alt="" className="w-full h-full object-contain" />
+                                            <img
+                                                src={isEdit ? image : image.data_url}
+                                                alt=""
+                                                className="w-full h-full object-contain"
+                                            />
                                             <div className="w-full flex justify-between items-center gap-4 absolute top-0 right-0">
                                                 <span
-                                                    className="p-2 bg-slate-400 text-white"
+                                                    className="p-2 bg-slate-400 text-white cursor-pointer"
                                                     onClick={() => onImageUpdate(index)}
                                                 >
                                                     <Icon.RxUpdate size={24} />
                                                 </span>
                                                 <span
-                                                    className="p-2 bg-red-600 text-white"
+                                                    className="p-2 bg-red-600 text-white cursor-pointer"
                                                     onClick={() => onImageRemove(index)}
                                                 >
                                                     <Icon.CgRemove size={24} />

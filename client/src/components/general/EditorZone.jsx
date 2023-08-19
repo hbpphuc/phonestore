@@ -3,11 +3,11 @@ import { Editor } from '@tinymce/tinymce-react'
 
 const EditorZone = ({ label, id, name, value, changeValue, invalid, setInvalid }) => {
     const editorRef = useRef(null)
-    const log = () => {
-        if (editorRef.current) {
-            console.log(editorRef.current.getContent())
-        }
-    }
+    // const log = () => {
+    //     if (editorRef.current) {
+    //         console.log(editorRef.current.getContent())
+    //     }
+    // }
 
     return (
         <div className="flex flex-col gap-2">
