@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import * as apis from 'apis'
+import moment from 'moment'
 
-const Review = ({ id }) => {
+const ReviewItem = ({ id, isNew }) => {
     const [reviews, setReviews] = useState(null)
 
     useEffect(() => {
@@ -10,7 +11,14 @@ const Review = ({ id }) => {
             if (res.status === 'success') setReviews(res?.data?.data)
         }
         getReviewOnProduct()
-    }, [])
+    }, [isNew])
+
+    const toTimestamp = (strDate) => {
+        const datum = Date.parse(strDate)
+        return datum / 1000
+    }
+
+    // console.log(moment(toTimestamp(reviews[0].createdAt) * 1000).fromNow())
 
     return (
         <div className="w-full h-auto flex flex-col gap-[30px]">
@@ -28,10 +36,16 @@ const Review = ({ id }) => {
                             />
                         </div>
                         <div className="flex-1 h-full flex flex-col">
-                            <h2 className="text-lg text-secondary font-semibold">{item?.user?.name}</h2>
-                            <div>STAR</div>
-                            <p className="text-base text-primary">{item?.content}</p>
-                            <div>NOTE</div>
+                            <h2 className="text-lg text-[#32373d] font-semibold">{item?.user?.name}</h2>
+                            {/* <div>STAR</div> */}
+                            <p className="text-base text-[#444b52] font-medium">{item?.content}</p>
+                            <div>
+                                {item.createdAt && (
+                                    <span className="text-sm font-medium text-[#939ca3]">
+                                        {moment(toTimestamp(item.createdAt) * 1000).fromNow()}
+                                    </span>
+                                )}
+                            </div>
                         </div>
                     </div>
                 ))
@@ -44,4 +58,4 @@ const Review = ({ id }) => {
     )
 }
 
-export default Review
+export default ReviewItem

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Input = ({ id, label, value, placeHolder, type, register, validate, errors, errmsg }) => {
+const Input = ({ id, label, placeHolder, type, className, register, validate, errors, errmsg }) => {
     return (
         <div className="w-full flex items-center gap-2">
             {label && (
@@ -13,7 +13,11 @@ const Input = ({ id, label, value, placeHolder, type, register, validate, errors
                     id={id}
                     placeholder={placeHolder}
                     type={type || 'text'}
-                    className={`w-full p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d]`}
+                    className={
+                        className
+                            ? className
+                            : `w-full p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d]`
+                    }
                     {...register(id, validate)}
                 />
                 {errors[id] && (

@@ -6,7 +6,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import DOMPurify from 'dompurify'
 import 'react-tabs/style/react-tabs.css'
 import * as apis from 'apis'
-import { Breadcrumb, InfoProduct, ProductItem, Review } from 'components'
+import { Breadcrumb, InfoProduct, ProductItem, ReviewWriter, ReviewItem } from 'components'
 import { detailProductTabs, productExtrainInfo } from 'utils/menu'
 
 const DetailProduct = () => {
@@ -15,6 +15,7 @@ const DetailProduct = () => {
 
     const [product, setProduct] = useState(null)
     const [others, setOthers] = useState(null)
+    const [isNewReview, setIsNewReview] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
     const settingsProducts = {
@@ -47,8 +48,6 @@ const DetailProduct = () => {
         }
         getAllProduct()
     }, [type, slug])
-
-    console.log(isLoading)
 
     return (
         <div className="w-full h-auto">
@@ -123,7 +122,8 @@ const DetailProduct = () => {
                         ))}
                         <TabPanel>
                             <div className="border border-[#aaa] border-t-0 p-5">
-                                <Review id={product?._id} />
+                                <ReviewWriter id={product?._id} onSetIsNew={setIsNewReview} />
+                                <ReviewItem id={product?._id} isNew={isNewReview} />
                             </div>
                         </TabPanel>
                     </Tabs>

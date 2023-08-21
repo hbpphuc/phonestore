@@ -1,5 +1,6 @@
 import React, { memo, useEffect, useState } from 'react'
 import Slider from 'react-slick'
+import Skeleton from 'react-loading-skeleton'
 import * as apis from 'apis'
 import ProductItem from 'components/product/ProductItem'
 
@@ -7,10 +8,14 @@ const Section = ({ cateData, title }) => {
     const [cateId, setCateId] = useState('648d84dbc23688213c792cac')
     const [cateType, setCateType] = useState(null)
     const [prodCate, setProdCate] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         const getCategory = async () => {
+            setIsLoading(true)
             const res = await apis.getCategory(cateId)
+            setIsLoading(false)
+
             if (res?.status === 'success') {
                 setProdCate(res?.data?.data?.products)
                 setCateType(res?.data?.data?.slug)
@@ -48,8 +53,11 @@ const Section = ({ cateData, title }) => {
                     ))}
                 </ul>
             )}
+
             <div className="w-full h-auto">
-                {prodCate?.length > 0 ? (
+                {isLoading ? (
+                    <Skeleton />
+                ) : prodCate?.length > 0 ? (
                     <Slider {...settingsProducts}>
                         {prodCate?.map((item) => (
                             <ProductItem key={item._id} data={item} cateType={cateType} />

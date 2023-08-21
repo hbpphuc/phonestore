@@ -32,7 +32,8 @@ export { default as ForgotForm } from './form/ForgotForm'
 export { default as AdminSidebar } from './sidebar/AdminSidebar'
 
 // Review
-export { default as Review } from './review/Review'
+export { default as ReviewWriter } from './review/ReviewWriter'
+export { default as ReviewItem } from './review/ReviewItem'
 
 // Blog
 export { default as Slider } from './slider/Slider'
