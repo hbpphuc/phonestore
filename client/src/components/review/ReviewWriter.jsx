@@ -1,10 +1,13 @@
-import { Button, Input } from 'components'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import * as apis from 'apis'
 import Swal from 'sweetalert2'
+import * as apis from 'apis'
+import { Input, Loading } from 'components'
 
-const ReviewWriter = ({ id, onSetIsNew }) => {
+const ReviewWriter = ({ id, onSetIsNew, isEdit, onSetIsEdit }) => {
+    const [isLoading, setIsLoading] = useState(false)
+    const [review, setReview] = useState(null)
+
     const {
         register,
         handleSubmit,
@@ -13,15 +16,36 @@ const ReviewWriter = ({ id, onSetIsNew }) => {
     } = useForm()
 
     const onSubmit = async (data) => {
-        const res = await apis.createReviewOnProduct(id, data)
+        let res
+
+        if (isEdit && isEdit?.uId === review?.user._id) {
+            setIsLoading(true)
+            res = await apis.updateReviewOnProduct(id, isEdit.rId, data)
+            setIsLoading(false)
+        } else {
+            setIsLoading(true)
+            res = await apis.createReviewOnProduct(id, data)
+            setIsLoading(false)
+        }
+
         if (res?.status === 'success') {
-            console.log(res)
             onSetIsNew((prev) => !prev)
             reset({ content: '' })
         } else {
             Swal.fire('Oops!', res?.message, 'error')
         }
     }
+
+    useEffect(() => {
+        const getReview = async () => {
+            const res = await apis.getReview(isEdit?.rId)
+            setReview(res?.data?.data)
+            reset({
+                content: res?.data?.data?.content || '',
+            })
+        }
+        getReview()
+    }, [isEdit])
 
     return (
         <div className="w-full h-auto mb-8 flex justify-center ">
@@ -35,9 +59,24 @@ const ReviewWriter = ({ id, onSetIsNew }) => {
                     errmsg="Content is required."
                     className=" p-[10px_10px] bg-white border-b border-main outline-none"
                 />
-                <Button type="submit" className="p-3 bg-main text-white">
-                    Send
-                </Button>
+                <div className="flex gap-2">
+                    <button
+                        disabled={isLoading ? true : false}
+                        type="submit"
+                        className={`p-3 bg-main text-white ${isLoading ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                    >
+                        {isLoading ? <Loading size={8} color="white" /> : isEdit ? 'OK' : 'Send'}
+                    </button>
+                    {isEdit && (
+                        <button
+                            onClick={() => onSetIsEdit(null)}
+                            type="button"
+                            className="p-3 bg-gray-400 text-white cursor-pointer"
+                        >
+                            Cancel
+                        </button>
+                    )}
+                </div>
             </form>
         </div>
     )

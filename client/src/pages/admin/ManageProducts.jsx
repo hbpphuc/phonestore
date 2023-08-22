@@ -72,7 +72,8 @@ const ManageProducts = () => {
             confirmButtonColor: 'red',
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const res = await apis.deleteProduct(id)
+                const res = await apis.deleteReviewOnProduct(id)
+                console.log(res)
                 if (res.status === 'success') {
                     setIsNew(!isNew)
                     toast.success('Delete product successfully!')

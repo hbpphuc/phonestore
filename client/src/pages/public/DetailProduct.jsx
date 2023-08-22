@@ -6,7 +6,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import DOMPurify from 'dompurify'
 import 'react-tabs/style/react-tabs.css'
 import * as apis from 'apis'
-import { Breadcrumb, InfoProduct, ProductItem, ReviewWriter, ReviewItem } from 'components'
+import { Breadcrumb, InfoProduct, ProductItem, ReviewWriter, ReviewItem, Icon, Button } from 'components'
 import { detailProductTabs, productExtrainInfo } from 'utils/menu'
 
 const DetailProduct = () => {
@@ -17,6 +17,7 @@ const DetailProduct = () => {
     const [others, setOthers] = useState(null)
     const [isNewReview, setIsNewReview] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [isEditReview, setIsEditReview] = useState(null)
 
     const settingsProducts = {
         dots: false,
@@ -92,8 +93,8 @@ const DetailProduct = () => {
                             ))}
                         </TabList>
 
-                        {!isLoading ? (
-                            <TabPanel>
+                        <TabPanel>
+                            {!isLoading ? (
                                 <div className="border border-[#aaa] border-t-0 p-5">
                                     {product?.description?.length > 0 && (
                                         <div
@@ -104,10 +105,10 @@ const DetailProduct = () => {
                                         ></div>
                                     )}
                                 </div>
-                            </TabPanel>
-                        ) : (
-                            <Skeleton />
-                        )}
+                            ) : (
+                                <Skeleton />
+                            )}
+                        </TabPanel>
                         {detailProductTabs[1].map((item) => (
                             <TabPanel key={item.id}>
                                 <div className="border border-[#aaa] border-t-0 p-5 ">
@@ -122,8 +123,18 @@ const DetailProduct = () => {
                         ))}
                         <TabPanel>
                             <div className="border border-[#aaa] border-t-0 p-5">
-                                <ReviewWriter id={product?._id} onSetIsNew={setIsNewReview} />
-                                <ReviewItem id={product?._id} isNew={isNewReview} />
+                                <ReviewWriter
+                                    id={product?._id}
+                                    onSetIsNew={setIsNewReview}
+                                    isEdit={isEditReview}
+                                    onSetIsEdit={setIsEditReview}
+                                />
+                                <ReviewItem
+                                    id={product?._id}
+                                    isNew={isNewReview}
+                                    onSetIsNew={setIsNewReview}
+                                    onSetIsEdit={setIsEditReview}
+                                />
                             </div>
                         </TabPanel>
                     </Tabs>

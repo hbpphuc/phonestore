@@ -1,7 +1,20 @@
 import React, { forwardRef } from 'react'
 import { Link } from 'react-router-dom'
 
-const Button = ({ type, text, className, active, to, href, onClick, leftIcon, rightIcon, children, ...passProps }) => {
+const Button = ({
+    type,
+    text,
+    className,
+    active,
+    disable,
+    to,
+    href,
+    onClick,
+    leftIcon,
+    rightIcon,
+    children,
+    ...passProps
+}) => {
     let Compnt = 'button'
     const props = {
         type,

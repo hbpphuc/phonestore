@@ -9,9 +9,36 @@ export const getReviewOnProduct = async (id) => {
     }
 }
 
+export const getReview = async (id) => {
+    try {
+        const res = await httpRequest.get(`reviews/${id}`)
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
 export const createReviewOnProduct = async (id, data) => {
     try {
         const res = await httpRequest.post(`products/${id}/reviews`, data, { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export const updateReviewOnProduct = async (pId, rId, data) => {
+    try {
+        const res = await httpRequest.patch(`products/${pId}/reviews/${rId}`, data, { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export const deleteReviewOnProduct = async (pId, rId) => {
+    try {
+        const res = await httpRequest.delete(`products/${pId}/reviews/${rId}`, { withCredentials: true })
         return res.data
     } catch (error) {
         return error.response.data

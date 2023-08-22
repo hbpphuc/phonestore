@@ -1,5 +1,5 @@
 import { RiShoppingBasketFill } from 'react-icons/ri'
-import { TbSearch } from 'react-icons/tb'
+import { TbSearch, TbDotsVertical } from 'react-icons/tb'
 import {
     FaHeart,
     FaEye,
@@ -12,7 +12,7 @@ import {
 } from 'react-icons/fa'
 import { FaShieldHalved } from 'react-icons/fa6'
 import { HiMenu, HiOutlineArrowNarrowLeft, HiOutlineArrowNarrowRight, HiUserGroup } from 'react-icons/hi'
-import { BsCalendar3, BsDisplay, BsSpeaker } from 'react-icons/bs'
+import { BsCalendar3, BsDisplay, BsSpeaker, BsDot } from 'react-icons/bs'
 import { GrClose } from 'react-icons/gr'
 import { BiDetail, BiSolidTruck, BiSolidDashboard } from 'react-icons/bi'
 import { GiReturnArrow } from 'react-icons/gi'
@@ -63,6 +63,8 @@ const Icon = {
     MdDownloadDone,
     RxUpdate,
     CgRemove,
+    TbDotsVertical,
+    BsDot,
 }
 
 export default Icon

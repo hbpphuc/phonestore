@@ -12,3 +12,8 @@ export const convertBase64 = (file) => {
         }
     })
 }
+
+export const toTimestamp = (strDate) => {
+    const datum = Date.parse(strDate)
+    return datum / 1000
+}
