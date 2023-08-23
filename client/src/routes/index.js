@@ -1,6 +1,7 @@
-import { publicRoutes, adminRoutes } from './paths'
+import { publicRoutes, adminRoutes, privateRoutes } from './paths'
 import { Home, AllProduct, DetailProduct, Post, ResetPassword, NotFound } from '../pages/public'
 import { Admin, Dashboard, ManageUsers, ManageProducts, ManageOrders } from 'pages/admin'
+import { Private, UserAccount, UserOrder, UserSetting, UserWishlist } from 'pages/private'
 
 export const publicR = [
     {
@@ -33,7 +34,24 @@ export const publicR = [
     },
 ]
 
-export const privateR = []
+export const privateR = [
+    {
+        path: privateRoutes.account,
+        component: UserAccount,
+    },
+    {
+        path: privateRoutes.wishlist,
+        component: UserWishlist,
+    },
+    {
+        path: privateRoutes.order,
+        component: UserOrder,
+    },
+    {
+        path: privateRoutes.setting,
+        component: UserSetting,
+    },
+]
 
 export const adminR = [
     {

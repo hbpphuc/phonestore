@@ -1,5 +1,5 @@
 import { Icon } from 'components'
-import { publicRoutes, adminRoutes } from 'routes/paths'
+import { publicRoutes, adminRoutes, privateRoutes } from 'routes/paths'
 
 export const navigatorMenu = [
     {
@@ -171,5 +171,32 @@ export const adminSidebarMenu = [
         type: 'link',
         icon: <Icon.FaLayerGroup size={24} />,
         path: `/${adminRoutes.admin}/${adminRoutes.adminOrders}`,
+    },
+]
+
+export const userSidebarMenu = [
+    {
+        id: 1,
+        title: 'Account',
+        icon: <Icon.IoPersonCircleSharp size={24} />,
+        path: `${privateRoutes.account}`,
+    },
+    {
+        id: 2,
+        title: 'Wishlist',
+        icon: <Icon.TfiLayoutListThumbAlt size={24} />,
+        path: `${privateRoutes.wishlist}`,
+    },
+    {
+        id: 3,
+        title: 'Order',
+        icon: <Icon.LiaMoneyBillWaveAltSolid size={24} />,
+        path: `${privateRoutes.order}`,
+    },
+    {
+        id: 4,
+        title: 'Setting',
+        icon: <Icon.AiFillSetting size={24} />,
+        path: `${privateRoutes.setting}`,
     },
 ]

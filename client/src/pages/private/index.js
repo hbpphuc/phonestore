@@ -1,2 +1,5 @@
 export { default as Private } from './Private'
-export { default as User } from './User'
+export { default as UserAccount } from './UserAccount'
+export { default as UserWishlist } from './UserWishlist'
+export { default as UserOrder } from './UserOrder'
+export { default as UserSetting } from './UserSetting'

@@ -236,19 +236,20 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 });
 
 exports.updatePassword = asyncHandler(async (req, res, next) => {
-    const curUser = await User.findById(req.user.id).select('+password');
-    const correct = curUser.correctPassword(
+    const currUser = await User.findById(req.user.id).select('+password');
+    const correct = await currUser.correctPassword(
         req.body.passwordCurrent,
-        curUser.password
+        currUser.password
     );
 
-    if (!correct)
+    if (!correct) {
         return next(new AppError('Your current password is wrong!', 401));
+    }
 
-    curUser.password = req.body.password;
-    curUser.passwordConfirm = req.body.passwordConfirm;
-    await curUser.save();
+    currUser.password = req.body.password;
+    currUser.passwordConfirm = req.body.passwordConfirm;
+    await currUser.save();
 
     // 4. Log user in, send JWT
-    createSendToken(curUser, 201, req, res);
+    sendToken(currUser, 201, req, res);
 });

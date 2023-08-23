@@ -4,7 +4,7 @@ import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
 import { useDispatch, useSelector } from 'react-redux'
 import { Popup, LoginForm, RegisterForm, ForgotForm, Button, Icon, Navigation } from '../components'
 import useModal from '../hooks/useModal'
-import { adminRoutes } from 'routes/paths'
+import { adminRoutes, privateRoutes } from 'routes/paths'
 import logo from '../assets/images/logo.png'
 import { getCurrentUser } from '../redux/user/userAction'
 import * as apis from '../apis'
@@ -46,7 +46,7 @@ const Header = () => {
                                 </>
                             )}
                         </div>
-                        <div className="flex">
+                        <div className="flex relative">
                             {!curUser ? (
                                 <Button
                                     text="Sign In | Sign Up"
@@ -68,7 +68,7 @@ const Header = () => {
                                             to={
                                                 curUser?.data?.role === 'admin'
                                                     ? `/${adminRoutes.admin}/${adminRoutes.adminDashboard}`
-                                                    : '/me'
+                                                    : `${privateRoutes.me}`
                                             }
                                         >
                                             <span className="mr-2">

@@ -32,6 +32,11 @@
     }
 }
 
+.szh-menu {
+    top: 30px !important;
+    left: -50px !important;
+}
+
 .header-menu-item {
     @apply flex items-center text-base font-normal p-[10px] text-[#848484] hover:text-main cursor-pointer transition-all;
 }
@@ -164,4 +169,19 @@ button.slick-prev::before {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.gradient-text {
+    background: radial-gradient(50% 124.93% at 95.86% -10%, #3efad9 0, hsla(0, 0%, 100%, 0) 100%),
+        linear-gradient(91.56deg, #0eb1f2 1.54%, #9000ff 98.71%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.save-btn-hover:hover {
+    background-color: white;
+    color: #0eb1f2;
+    border: 1px solid #0eb1f2;
+    transition: all 0.4s;
 }

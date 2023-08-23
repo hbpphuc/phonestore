@@ -1,10 +1,13 @@
 import React from 'react'
 
-const Input = ({ id, label, placeHolder, type, className, register, validate, errors, errmsg }) => {
+const Input = ({ id, label, placeHolder, type, className, register, validate, errors, errmsg, user, hidden }) => {
     return (
-        <div className="w-full flex items-center gap-2">
+        <div className={`w-full flex ${user ? (hidden ? 'flex-col-reverse' : 'flex-col') : 'items-center'} gap-2`}>
             {label && (
-                <label htmlFor={id} className="w-fit text-base font-medium text-primary cursor-pointer">
+                <label
+                    htmlFor={id}
+                    className={`w-fit text-base font-medium text-primary cursor-pointer ${hidden && 'hover:underline'}`}
+                >
                     {label}
                 </label>
             )}
@@ -16,7 +19,9 @@ const Input = ({ id, label, placeHolder, type, className, register, validate, er
                     className={
                         className
                             ? className
-                            : `w-full p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d]`
+                            : `${
+                                  hidden ? 'hidden' : 'flex'
+                              } relative w-full p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d] rounded-md`
                     }
                     {...register(id, validate)}
                 />

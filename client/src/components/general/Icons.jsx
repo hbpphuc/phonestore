@@ -20,9 +20,13 @@ import { TiPhone } from 'react-icons/ti'
 import { MdNavigateNext, MdLaptop, MdDevicesOther, MdDownloadDone } from 'react-icons/md'
 import { RiEyeCloseLine, RiEyeFill, RiDashboard2Line } from 'react-icons/ri'
 import { IoMdTabletPortrait } from 'react-icons/io'
+import { IoPersonCircleSharp } from 'react-icons/io5'
 import { BiSolidCameraHome, BiLogOut, BiSolidEditAlt, BiTrash } from 'react-icons/bi'
 import { RxUpdate } from 'react-icons/rx'
 import { CgRemove } from 'react-icons/cg'
+import { AiFillSetting } from 'react-icons/ai'
+import { TfiLayoutListThumbAlt } from 'react-icons/tfi'
+import { LiaMoneyBillWaveAltSolid } from 'react-icons/lia'
 
 const Icon = {
     RiShoppingBasketFill,
@@ -65,6 +69,10 @@ const Icon = {
     CgRemove,
     TbDotsVertical,
     BsDot,
+    AiFillSetting,
+    TfiLayoutListThumbAlt,
+    LiaMoneyBillWaveAltSolid,
+    IoPersonCircleSharp,
 }
 
 export default Icon

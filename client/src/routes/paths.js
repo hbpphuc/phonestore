@@ -10,6 +10,13 @@ export const publicRoutes = {
     notfound: '/not-found',
 }
 
+export const privateRoutes = {
+    account: 'account',
+    wishlist: 'wishlist',
+    order: 'order',
+    setting: 'setting',
+}
+
 export const adminRoutes = {
     admin: 'admin',
     adminLogin: 'login',

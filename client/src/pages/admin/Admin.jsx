@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { AdminSidebar, Icon } from 'components'
 
-const LayoutAdmin = () => {
+const Admin = () => {
     const [collapsed, setCollapsed] = useState(true)
 
     return (
@@ -24,4 +24,4 @@ const LayoutAdmin = () => {
     )
 }
 
-export default LayoutAdmin
+export default Admin

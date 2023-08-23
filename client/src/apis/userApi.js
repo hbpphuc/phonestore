@@ -45,6 +45,24 @@ export const resetPassword = async (data, token) => {
     }
 }
 
+export const updateMe = async (data) => {
+    try {
+        const res = await httpRequest.put(`users/updateMe`, data, { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export const updatePassword = async (data) => {
+    try {
+        const res = await httpRequest.put(`users/updatePassword`, data, { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
 export const getCurrentUser = async () => {
     try {
         const res = await httpRequest.get('users/me', { withCredentials: true })
