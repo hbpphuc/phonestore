@@ -31,6 +31,7 @@ export { default as ForgotForm } from './form/ForgotForm'
 // Sidebar
 export { default as UserSidebar } from './sidebar/UserSidebar'
 export { default as AdminSidebar } from './sidebar/AdminSidebar'
+export { default as OrderSidebar } from './sidebar/OrderSidebar'
 
 // Review
 export { default as ReviewWriter } from './review/ReviewWriter'

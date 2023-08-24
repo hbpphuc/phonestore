@@ -2,36 +2,45 @@ import React, { memo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Skeleton from 'react-loading-skeleton'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/navigation'
+import { FreeMode } from 'swiper/modules'
+import { useForm } from 'react-hook-form'
+import * as apis from 'apis'
+
 import Select from 'react-select'
 import { publicRoutes } from 'routes/paths'
+import { Button, Input } from 'components'
+import { toast } from 'react-toastify'
 
 const InfoProduct = ({ data, detail, isLoading }) => {
-    const quantityRef = useRef()
-    const internalRef = useRef()
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm()
+
     const [quantity, setQuantity] = useState(1)
-    const [selectedOption, setSelectedOption] = useState(null)
+    const [color, setColor] = useState(null)
 
     const IsLink = detail ? 'p' : Link
 
-    const internal = [
-        { value: '32gb', label: '32GB' },
-        { value: '64gb', label: '64GB' },
-        { value: '128gb', label: '128GB' },
+    const colors = [
+        { value: 'red', label: 'Red' },
+        { value: 'blue', label: 'Blue' },
+        { value: 'black', label: 'Black' },
     ]
 
-    const colors = [
-        { value: 'red', label: 'RED' },
-        { value: 'blue', label: 'BLUE' },
-        { value: 'black', label: 'BLACK' },
-    ]
+    const onSubmit = async (value) => {
+        const res = await apis.addToCart({ ...value, product: data._id, color: color?.label })
+        console.log(res)
+        if (res?.status === 'success') toast.success('Done!')
+        else toast.error(res?.message)
+    }
 
     return (
-        <div className="w-full h-full flex gap-5">
-            <div className="flex-none w-1/2 h-full flex flex-col items-center">
-                <div className={`${detail ? 'w-full mb-3' : 'w-[70%]'} max-h-[80%]`}>
+        <div className={`w-full h-full flex gap-5`}>
+            <div className="flex-1 h-full flex flex-col items-center">
+                <div className={`w-full mb-3 h-auto`}>
                     {isLoading ? (
                         <Skeleton className="w-full h-[300px]" />
                     ) : (
@@ -43,22 +52,22 @@ const InfoProduct = ({ data, detail, isLoading }) => {
                     )}
                 </div>
                 {data?.images.length > 0 && (
-                    <div className={`w-full max-h-[20%] ${detail ? 'border-t pt-2' : ''}`}>
+                    <div className={`w-full h-full ${detail ? 'border-t pt-2' : ''}`}>
                         <Swiper
-                            slidesPerView={3}
+                            slidesPerView={2}
                             spaceBetween={30}
+                            freeMode={true}
                             pagination={{
                                 clickable: true,
                             }}
-                            modules={[Pagination]}
-                            className="mySwiper"
+                            modules={[FreeMode]}
+                            className="!w-[500px] !h-auto"
                         >
-                            {data?.images.map((item, index) => (
+                            {data?.images?.map((item, index) => (
                                 <SwiperSlide key={index}>
                                     <img
                                         src={item ?? 'https://app.advaiet.com/item_dfile/default_product.png'}
                                         alt={'item'}
-                                        className="w-full h-full object-contain"
                                     />
                                 </SwiperSlide>
                             ))}
@@ -66,7 +75,7 @@ const InfoProduct = ({ data, detail, isLoading }) => {
                     </div>
                 )}
             </div>
-            <div className="flex-none w-1/2 h-full flex flex-col">
+            <div className="flex-1 h-full flex flex-col">
                 <div className="w-full mb-5 ">
                     {isLoading ? (
                         <Skeleton width="70%" />
@@ -100,64 +109,66 @@ const InfoProduct = ({ data, detail, isLoading }) => {
                 <h2 className="w-full mb-[15px] text-xl font-semibold text-main">
                     {isLoading ? <Skeleton width={100} /> : `$${data?.price} USD`}
                 </h2>
-                <div className="w-full mb-[15px]">
-                    <div className="w-full mb-[15px] flex items-center">
-                        <h2 className="min-w-[80px] mr-[10px] text-sm font-semibold text-[#151515]">Internal</h2>
-                        <Select
-                            placeholder="Internal"
-                            isSearchable={false}
-                            value={selectedOption}
-                            options={internal}
-                            className="w-[200px]"
-                        />
-                    </div>
-                    <div className="w-full mb-[15px] flex items-center">
-                        <h2 className="min-w-[80px] mr-[10px] text-sm font-semibold text-[#151515]">Color</h2>
-                        <Select
-                            placeholder="Color"
-                            isSearchable={false}
-                            value={selectedOption}
-                            options={colors}
-                            className="w-[200px]"
-                        />
-                    </div>
-                    <div className="w-full mb-[15px] flex items-center">
-                        <h2 className="min-w-[80px] mr-[10px] text-sm font-semibold text-[#151515]">Quantity</h2>
-                        <div className="w-full flex">
-                            <button
-                                onClick={() => {
-                                    setQuantity((prev) => prev - 1)
-                                }}
-                                disabled={quantity === 1 && true}
-                                className="w-9 h-9 flex justify-center items-center text-2xl font-normal text-white bg-main disabled:bg-[#ccc]"
-                            >
-                                -
-                            </button>
-                            <input
-                                ref={quantityRef}
-                                value={quantity}
-                                readOnly
-                                className="w-12 h-9 text-center border-l border-r flex justify-center items-center"
+                <form className="w-full flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
+                    <div className="w-full mb-[15px]">
+                        <div className="w-full mb-[15px] flex items-center">
+                            <h2 className="min-w-[80px] mr-[10px] text-sm font-semibold text-[#151515]">Color</h2>
+                            <Select
+                                id="color"
+                                onChange={setColor}
+                                options={colors}
+                                placeholder="Choose color"
+                                isSearchable={false}
+                                className="w-[200px] font-semibold text-sm text-primary"
                             />
-                            <button
-                                onClick={() => {
-                                    setQuantity((prev) => prev + 1)
-                                }}
-                                className="w-9 h-9 flex justify-center items-center text-2xl font-normal text-white bg-main"
-                            >
-                                +
-                            </button>
                         </div>
+                        <div className="w-full mb-[15px] flex items-center">
+                            <h2 className="min-w-[80px] mr-[10px] text-sm font-semibold text-[#151515]">Quantity</h2>
+                            <div className="w-full flex">
+                                <Button
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        setQuantity((prev) => prev - 1)
+                                    }}
+                                    disabled={quantity === 1 && true}
+                                    className="w-9 h-9 flex justify-center items-center text-2xl font-normal text-white bg-main disabled:bg-[#ccc]"
+                                >
+                                    -
+                                </Button>
+                                <div className="w-12 h-9">
+                                    <Input
+                                        id="quantity"
+                                        register={register}
+                                        value={quantity}
+                                        validate={{ required: true }}
+                                        errors={errors}
+                                        errmsg="Quantity is required."
+                                        readOnly
+                                        className="w-full h-9 text-xl text-center border-l border-r flex justify-center items-center"
+                                    />
+                                </div>
+                                <Button
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        setQuantity((prev) => prev + 1)
+                                    }}
+                                    className="w-9 h-9 flex justify-center items-center text-2xl font-normal text-white bg-main"
+                                >
+                                    +
+                                </Button>
+                            </div>
+                        </div>
+                        <button
+                            type="submit"
+                            disabled={quantity < 1 && true}
+                            className={`${
+                                detail ? 'w-full mt-10' : 'w-[140px]'
+                            } h-10 p-[11px_15px] flex justify-center items-center text-base text-white bg-main hover:bg-[#333] transition-colors disabled:bg-[#ccc]`}
+                        >
+                            ADD TO CART
+                        </button>
                     </div>
-                    <button
-                        disabled={quantity < 1 && true}
-                        className={`${
-                            detail ? 'w-full mt-10' : 'w-[140px]'
-                        } h-10 p-[11px_15px] flex justify-center items-center text-base text-white bg-main hover:bg-[#333] transition-colors disabled:bg-[#ccc]`}
-                    >
-                        ADD TO CART
-                    </button>
-                </div>
+                </form>
             </div>
         </div>
     )

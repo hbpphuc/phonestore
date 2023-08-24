@@ -7,7 +7,7 @@ const Admin = () => {
 
     return (
         <div className="w-full min-h-screen flex text-white">
-            <div className={`${collapsed ? 'w-20' : 'w-[260px]'} flex-none bg-adminMain sidebar-admin z-50`}>
+            <div className={`${collapsed ? 'w-20' : 'w-[260px]'} flex-none bg-adminMain sidebar-shadow z-50`}>
                 <AdminSidebar collapsed={collapsed} />
             </div>
             <div className="flex-auto h-auto bg-adminPrimary relative">

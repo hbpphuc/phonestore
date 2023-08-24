@@ -57,7 +57,7 @@ const DetailProduct = () => {
                     <Breadcrumb />
                 </div>
                 <div className="w-main h-auto mb-10 flex justify-center">
-                    <div className="w-[80%]">
+                    <div className="w-[80%] pr-5">
                         <InfoProduct data={product} detail isLoading={isLoading} />
                     </div>
                     <div className="flex-1">

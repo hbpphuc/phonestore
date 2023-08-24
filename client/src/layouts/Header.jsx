@@ -11,7 +11,7 @@ import * as apis from '../apis'
 import { logoutt } from '../redux/user/userSlice'
 import Swal from 'sweetalert2'
 
-const Header = () => {
+const Header = ({ onSetOpenOrder, cartItemCount }) => {
     const { isShowing, toggle } = useModal()
     const [form, setForm] = useState(0)
     const navigate = useNavigate()
@@ -68,7 +68,7 @@ const Header = () => {
                                             to={
                                                 curUser?.data?.role === 'admin'
                                                     ? `/${adminRoutes.admin}/${adminRoutes.adminDashboard}`
-                                                    : `${privateRoutes.me}`
+                                                    : `/me`
                                             }
                                         >
                                             <span className="mr-2">
@@ -112,15 +112,15 @@ const Header = () => {
                             </div>
                         </div>
                         <div className="flex-1 flex justify-end">
-                            <Link className="flex justify-center items-center">
+                            <Button onClick={() => onSetOpenOrder(true)} className="flex justify-center items-center">
                                 <div className="flex flex-col justify-center items-end">
                                     <span>Your Cart</span>
-                                    <span className="font-bold">0 ITEM</span>
+                                    <span className="font-bold">{`${cartItemCount > 0 ? cartItemCount : 0} ITEM`}</span>
                                 </div>
                                 <span className="ml-4 text-main">
                                     <Icon.RiShoppingBasketFill size={38} />
                                 </span>
-                            </Link>
+                            </Button>
                         </div>
                     </div>
                 </div>

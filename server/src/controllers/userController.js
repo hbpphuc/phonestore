@@ -79,7 +79,10 @@ exports.updateCart = asyncHandler(async (req, res, next) => {
 
     if (quantity > checkProduct.quantity) {
         return next(
-            new AppError(`This product only has ${checkProduct.quantity}.`, 404)
+            new AppError(
+                `This product only has ${checkProduct.quantity} in stock.`,
+                409
+            )
         );
     }
 

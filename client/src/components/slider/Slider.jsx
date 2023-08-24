@@ -1,22 +1,19 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Pagination, Navigation } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/pagination'
-import 'swiper/css/navigation'
+import { Autoplay } from 'swiper/modules'
 
 const Slider = () => {
     return (
-        <div className="w-full h-[600px] mb-10">
+        <div className="w-full h-[600px] mb-10 -z-10">
             <Swiper
+                className="mySwiper"
                 spaceBetween={30}
                 centeredSlides={true}
                 autoplay={{
                     delay: 5000,
                     disableOnInteraction: false,
                 }}
-                pagination={{ clickable: true }}
-                modules={[Autoplay, Pagination, Navigation]}
+                modules={[Autoplay]}
             >
                 <SwiperSlide>
                     <img

@@ -76,7 +76,7 @@ const ProductItem = ({ data, cateType, detail }) => {
             </div>
             {isShowing && (
                 <Popup modalIsOpen={isShowing} closeModal={toggle}>
-                    <div className="max-w-[1000px] h-[640px] flex flex-col p-5 bg-white overflow-hidden relative">
+                    <div className="w-1/2 h-auto flex flex-col p-5 bg-white overflow-hidden relative">
                         <div className="w-10 h-10 absolute top-0 right-0">
                             <button onClick={toggle} className="w-full h-full flex justify-center items-center">
                                 <Icon.GrClose size={26} />

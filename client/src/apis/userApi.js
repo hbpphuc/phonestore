@@ -98,3 +98,12 @@ export const deleteUser = async (id) => {
         return error.response.data
     }
 }
+
+export const addToCart = async (data) => {
+    try {
+        const res = await httpRequest.put('users/updateCart', data, { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}

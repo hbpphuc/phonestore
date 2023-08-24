@@ -1,6 +1,20 @@
 import React from 'react'
 
-const Input = ({ id, label, placeHolder, type, className, register, validate, errors, errmsg, user, hidden }) => {
+const Input = ({
+    id,
+    label,
+    placeHolder,
+    type,
+    value,
+    className,
+    register,
+    validate,
+    errors,
+    errmsg,
+    user,
+    hidden,
+    readOnly,
+}) => {
     return (
         <div className={`w-full flex ${user ? (hidden ? 'flex-col-reverse' : 'flex-col') : 'items-center'} gap-2`}>
             {label && (
@@ -15,6 +29,8 @@ const Input = ({ id, label, placeHolder, type, className, register, validate, er
                 <input
                     id={id}
                     placeholder={placeHolder}
+                    value={value}
+                    readOnly={readOnly}
                     type={type || 'text'}
                     className={
                         className

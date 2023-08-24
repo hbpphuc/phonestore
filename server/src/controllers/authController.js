@@ -127,12 +127,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
     }
 
     if (!token)
-        return next(
-            new AppError(
-                'You are not logged in. Please logged in to get access!',
-                401
-            )
-        );
+        return next(new AppError('Please logged in to get access!', 401));
 
     const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
 

@@ -9,6 +9,10 @@ import { Default, NotFound, Signup } from './pages/public'
 import { NotFoundAdmin } from './pages/admin'
 import { Admin } from 'pages/admin'
 import { Private } from 'pages/private'
+import 'swiper/css'
+import 'swiper/css/pagination'
+import 'swiper/css/navigation'
+import 'swiper/css/free-mode'
 
 function App() {
     const { isLoggedIn, curUser } = useSelector((state) => state.user)
@@ -57,7 +61,7 @@ function App() {
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover
-                theme="dark"
+                theme="light"
             />
         </>
     )
