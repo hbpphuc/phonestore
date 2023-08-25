@@ -22,6 +22,7 @@ export { default as Section3 } from './section/Section3'
 // Product
 export { default as ProductItem } from './product/ProductItem'
 export { default as InfoProduct } from './product/InfoProduct'
+export { default as ProductInCart } from './product/ProductInCart'
 
 // Form
 export { default as LoginForm } from './form/LoginForm'

@@ -9,6 +9,7 @@ router.use(authController.protect);
 router.route('/userOrder').get(orderController.getUserOrder);
 
 router.route('/').post(orderController.createOrder);
+
 router.route('/:id').get(orderController.getOrder);
 
 router.use(authController.restrictTo('admin'));

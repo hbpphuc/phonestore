@@ -73,3 +73,18 @@ export const searchProduct = async (name) => {
         console.log(error)
     }
 }
+
+export const findManyProduct = async (pIds) => {
+    try {
+        const res = await httpRequest.get(
+            `products/findMany`,
+            {
+                params: { pIds },
+            },
+            { withCredentials: true }
+        )
+        return res.data
+    } catch (error) {
+        console.log(error)
+    }
+}

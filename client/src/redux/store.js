@@ -3,6 +3,7 @@ import { combineReducers } from 'redux'
 import storage from 'redux-persist/lib/storage'
 import { persistReducer, persistStore } from 'redux-persist'
 import appSlice from './app/appSlice'
+import orderSlice from './order/orderSlice'
 import userSlice from './user/userSlice'
 
 const persistConfig = {
@@ -10,14 +11,15 @@ const persistConfig = {
     storage,
 }
 
-const userConfig = {
+const config = {
     ...persistConfig,
-    whitelist: ['isLoggedIn'],
+    whitelist: ['isLoggedIn', 'productInCart'],
 }
 
 const reducer = combineReducers({
     app: appSlice,
-    user: persistReducer(userConfig, userSlice),
+    order: persistReducer(config, orderSlice),
+    user: persistReducer(config, userSlice),
 })
 
 export const store = configureStore({

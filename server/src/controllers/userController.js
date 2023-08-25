@@ -93,7 +93,7 @@ exports.updateCart = asyncHandler(async (req, res, next) => {
     let curCart;
 
     if (productInCart) {
-        productInCart.quantity = quantity;
+        productInCart.quantity = productInCart.quantity + quantity * 1;
         curCart = await user.save({ validateBeforeSave: false });
     } else {
         curCart = await User.findByIdAndUpdate(

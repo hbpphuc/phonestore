@@ -17,7 +17,7 @@ import { GrClose } from 'react-icons/gr'
 import { BiDetail, BiSolidTruck, BiSolidDashboard } from 'react-icons/bi'
 import { GiReturnArrow } from 'react-icons/gi'
 import { TiPhone } from 'react-icons/ti'
-import { MdNavigateNext, MdLaptop, MdDevicesOther, MdDownloadDone } from 'react-icons/md'
+import { MdNavigateNext, MdLaptop, MdDevicesOther, MdDownloadDone, MdShoppingCartCheckout } from 'react-icons/md'
 import { RiEyeCloseLine, RiEyeFill, RiDashboard2Line } from 'react-icons/ri'
 import { IoMdTabletPortrait, IoMdCloseCircle } from 'react-icons/io'
 import { IoPersonCircleSharp } from 'react-icons/io5'
@@ -74,6 +74,7 @@ const Icon = {
     LiaMoneyBillWaveAltSolid,
     IoPersonCircleSharp,
     IoMdCloseCircle,
+    MdShoppingCartCheckout,
 }
 
 export default Icon

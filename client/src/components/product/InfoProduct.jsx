@@ -1,23 +1,20 @@
-import React, { memo, useRef, useState } from 'react'
+import React, { memo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Skeleton from 'react-loading-skeleton'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { FreeMode } from 'swiper/modules'
-import { useForm } from 'react-hook-form'
-import * as apis from 'apis'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { setProductInCart } from 'redux/order/orderSlice'
 import Select from 'react-select'
+
+import * as apis from 'apis'
 import { publicRoutes } from 'routes/paths'
-import { Button, Input } from 'components'
+import { Button } from 'components'
 import { toast } from 'react-toastify'
 
 const InfoProduct = ({ data, detail, isLoading }) => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        reset,
-    } = useForm()
+    const { productInCart } = useSelector((state) => state.order)
+    const dispatch = useDispatch()
 
     const [quantity, setQuantity] = useState(1)
     const [color, setColor] = useState(null)
@@ -30,11 +27,12 @@ const InfoProduct = ({ data, detail, isLoading }) => {
         { value: 'black', label: 'Black' },
     ]
 
-    const onSubmit = async (value) => {
-        const res = await apis.addToCart({ ...value, product: data._id, color: color?.label })
-        console.log(res)
-        if (res?.status === 'success') toast.success('Done!')
-        else toast.error(res?.message)
+    const onSubmit = async () => {
+        const res = await apis.addToCart({ quantity, product: data?._id, color: color?.label })
+        if (res?.status === 'success') {
+            dispatch(setProductInCart(productInCart + quantity))
+            toast.success('Done!')
+        } else toast.error(res?.message)
     }
 
     return (
@@ -109,7 +107,7 @@ const InfoProduct = ({ data, detail, isLoading }) => {
                 <h2 className="w-full mb-[15px] text-xl font-semibold text-main">
                     {isLoading ? <Skeleton width={100} /> : `$${data?.price} USD`}
                 </h2>
-                <form className="w-full flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
+                <form className="w-full flex flex-col items-center">
                     <div className="w-full mb-[15px]">
                         <div className="w-full mb-[15px] flex items-center">
                             <h2 className="min-w-[80px] mr-[10px] text-sm font-semibold text-[#151515]">Color</h2>
@@ -136,15 +134,10 @@ const InfoProduct = ({ data, detail, isLoading }) => {
                                     -
                                 </Button>
                                 <div className="w-12 h-9">
-                                    <Input
-                                        id="quantity"
-                                        register={register}
+                                    <input
                                         value={quantity}
-                                        validate={{ required: true }}
-                                        errors={errors}
-                                        errmsg="Quantity is required."
                                         readOnly
-                                        className="w-full h-9 text-xl text-center border-l border-r flex justify-center items-center"
+                                        className="w-full h-9 text-xl text-center border-l border-r flex justify-center items-center outline-none"
                                     />
                                 </div>
                                 <Button
@@ -160,6 +153,10 @@ const InfoProduct = ({ data, detail, isLoading }) => {
                         </div>
                         <button
                             type="submit"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                onSubmit()
+                            }}
                             disabled={quantity < 1 && true}
                             className={`${
                                 detail ? 'w-full mt-10' : 'w-[140px]'

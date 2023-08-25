@@ -63,3 +63,18 @@ exports.searchProduct = asyncHandler(async (req, res, next) => {
         },
     });
 });
+
+exports.findManyProduct = asyncHandler(async (req, res, next) => {
+    const { pIds } = req.query;
+    const products = await Product.find({ _id: { $in: pIds } });
+
+    if (!products) return next(new AppError('There is no product.', 404));
+
+    res.status(200).json({
+        status: 'success',
+        results: products.length,
+        data: {
+            products,
+        },
+    });
+});

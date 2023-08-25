@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.use('/:prodId/reviews', reviewRouter);
 
+router.route('/findMany').get(productController.findManyProduct);
+
 router
     .route('/uploads/:id')
     .put(

@@ -10,8 +10,8 @@ const couponRouter = require('./coupon.routes');
 const orderRouter = require('./order.routes');
 
 const initRoutes = (app) => {
-    app.use('/api/v1/categories', categoryRouter);
     app.use('/api/v1/products', productRouter);
+    app.use('/api/v1/categories', categoryRouter);
     app.use('/api/v1/topics', topicRouter);
     app.use('/api/v1/posts', postRouter);
     app.use('/api/v1/reviews', reviewRouter);
