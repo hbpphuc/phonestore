@@ -112,7 +112,12 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                             </div>
                         </div>
                         <div className="flex-1 flex justify-end">
-                            <Button onClick={() => onSetOpenOrder(true)} className="flex justify-center items-center">
+                            <span
+                                onClick={() => {
+                                    onSetOpenOrder(true)
+                                }}
+                                className="flex justify-center items-center cursor-pointer"
+                            >
                                 <div className="flex flex-col justify-center items-end">
                                     <span>Your Cart</span>
                                     <span className="font-bold">{`${cartItemCount > 0 ? cartItemCount : 0} ITEM`}</span>
@@ -120,7 +125,7 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                                 <span className="ml-4 text-main">
                                     <Icon.RiShoppingBasketFill size={38} />
                                 </span>
-                            </Button>
+                            </span>
                         </div>
                     </div>
                 </div>

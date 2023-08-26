@@ -1,10 +1,11 @@
 import React from 'react'
-import { BeatLoader } from 'react-spinners'
+import { BeatLoader, FadeLoader } from 'react-spinners'
 
-const Loading = ({ color, size }) => {
+const Loading = ({ type, color, size }) => {
+    const Loader = type ? type : BeatLoader
     return (
         <div className="sweet-loading flex items-center justify-center">
-            <BeatLoader color={color} size={size} margin={5} aria-label="Loading Spinner" data-testid="loader" />
+            <Loader color={color} size={size} margin={5} aria-label="Loading Spinner" data-testid="loader" />
         </div>
     )
 }

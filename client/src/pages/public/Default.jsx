@@ -9,11 +9,9 @@ import { setProductInCart } from 'redux/order/orderSlice'
 const Default = () => {
     const dispatch = useDispatch()
     const { productInCart } = useSelector((state) => state.order)
-    console.log(productInCart)
 
     const [openOrder, setOpenOrder] = useState(false)
     const [user, setUser] = useState(null)
-    const [isNew, setIsNew] = useState(false)
 
     useEffect(() => {
         const getCurUser = async () => {
@@ -22,14 +20,14 @@ const Default = () => {
             setUser(res?.data?.data)
         }
         getCurUser()
-    }, [isNew, productInCart])
+    }, [productInCart])
 
     return (
         <div className="w-full h-full flex flex-col justify-center items-center relative">
             <Header onSetOpenOrder={setOpenOrder} cartItemCount={user?.cart?.length} />
             <Outlet />
             <Footer />
-            {openOrder && <OrderSidebar onSetOpenOrder={setOpenOrder} user={user} onSetIsNew={setIsNew} />}
+            {openOrder && <OrderSidebar onSetOpenOrder={setOpenOrder} user={user} />}
         </div>
     )
 }

@@ -20,8 +20,8 @@ import { TiPhone } from 'react-icons/ti'
 import { MdNavigateNext, MdLaptop, MdDevicesOther, MdDownloadDone, MdShoppingCartCheckout } from 'react-icons/md'
 import { RiEyeCloseLine, RiEyeFill, RiDashboard2Line } from 'react-icons/ri'
 import { IoMdTabletPortrait, IoMdCloseCircle } from 'react-icons/io'
-import { IoPersonCircleSharp } from 'react-icons/io5'
-import { BiSolidCameraHome, BiLogOut, BiSolidEditAlt, BiTrash } from 'react-icons/bi'
+import { IoPersonCircleSharp, IoClose } from 'react-icons/io5'
+import { BiSolidCameraHome, BiLogOut, BiSolidEditAlt, BiTrash, BiCheck } from 'react-icons/bi'
 import { RxUpdate } from 'react-icons/rx'
 import { CgRemove } from 'react-icons/cg'
 import { AiFillSetting } from 'react-icons/ai'
@@ -75,6 +75,8 @@ const Icon = {
     IoPersonCircleSharp,
     IoMdCloseCircle,
     MdShoppingCartCheckout,
+    BiCheck,
+    IoClose,
 }
 
 export default Icon

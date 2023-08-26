@@ -69,7 +69,7 @@ exports.deleteMe = asyncHandler(async (req, res, next) => {
 });
 
 exports.updateCart = asyncHandler(async (req, res, next) => {
-    const { product, quantity, color } = req.body;
+    const { product, quantity, color, cart } = req.body;
     const user = await User.findById(req.user.id);
     const checkProduct = await Product.findById(product);
 
@@ -80,7 +80,7 @@ exports.updateCart = asyncHandler(async (req, res, next) => {
     if (quantity > checkProduct.quantity) {
         return next(
             new AppError(
-                `This product only has ${checkProduct.quantity} in stock.`,
+                `This product has ${checkProduct.quantity} left in stock.`,
                 409
             )
         );
@@ -92,10 +92,7 @@ exports.updateCart = asyncHandler(async (req, res, next) => {
 
     let curCart;
 
-    if (productInCart) {
-        productInCart.quantity = productInCart.quantity + quantity * 1;
-        curCart = await user.save({ validateBeforeSave: false });
-    } else {
+    if (!productInCart) {
         curCart = await User.findByIdAndUpdate(
             req.user.id,
             {
@@ -103,6 +100,21 @@ exports.updateCart = asyncHandler(async (req, res, next) => {
             },
             { new: true }
         );
+    } else {
+        if (productInCart && quantity === 0) {
+            curCart = await User.findByIdAndUpdate(
+                req.user.id,
+                {
+                    $pull: { cart: productInCart },
+                },
+                { new: true }
+            );
+        } else {
+            productInCart.quantity = cart
+                ? quantity
+                : productInCart.quantity + quantity * 1;
+            curCart = await user.save({ validateBeforeSave: false });
+        }
     }
 
     res.status(200).json({

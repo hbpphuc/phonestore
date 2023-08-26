@@ -28,7 +28,7 @@ const InfoProduct = ({ data, detail, isLoading }) => {
     ]
 
     const onSubmit = async () => {
-        const res = await apis.addToCart({ quantity, product: data?._id, color: color?.label })
+        const res = await apis.addToCart({ quantity, product: data?._id, color: color?.label, price: data?.price })
         if (res?.status === 'success') {
             dispatch(setProductInCart(productInCart + quantity))
             toast.success('Done!')
