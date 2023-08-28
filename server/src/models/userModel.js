@@ -62,7 +62,6 @@ const userSchema = new mongoose.Schema(
                 product: { type: mongoose.Types.ObjectId, ref: 'Product' },
                 quantity: Number,
                 color: String,
-                price: Number,
             },
         ],
         passwordChangeAt: Date,

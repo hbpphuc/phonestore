@@ -21,7 +21,13 @@ exports.getMe = (req, res, next) => {
 };
 
 exports.getCurrent = asyncHandler(async (req, res, next) => {
-    const curUser = await User.findById(req.user.id);
+    const curUser = await User.findById(req.user.id).populate({
+        path: 'cart',
+        populate: {
+            path: 'product',
+            select: 'name imageCover price quantity slug',
+        },
+    });
 
     if (!curUser) {
         return next(new AppError('No document found with this id', 404));

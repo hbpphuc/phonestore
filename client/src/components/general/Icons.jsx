@@ -1,5 +1,5 @@
 import { RiShoppingBasketFill } from 'react-icons/ri'
-import { TbSearch, TbDotsVertical } from 'react-icons/tb'
+import { TbSearch, TbDotsVertical, TbCurrencyDollar } from 'react-icons/tb'
 import {
     FaHeart,
     FaEye,
@@ -77,6 +77,7 @@ const Icon = {
     MdShoppingCartCheckout,
     BiCheck,
     IoClose,
+    TbCurrencyDollar,
 }
 
 export default Icon

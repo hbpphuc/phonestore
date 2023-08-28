@@ -13,7 +13,7 @@ const OrderSidebar = ({ onSetOpenOrder, user }) => {
 
     const [value] = useDebounce(couponCode, 700)
 
-    const total = user?.cart?.reduce((init, curr) => init + curr.quantity * curr.price, 0)
+    const total = user?.cart?.reduce((init, curr) => init + curr.quantity * curr.product.price, 0)
 
     const { register, handleSubmit } = useForm()
 
@@ -33,11 +33,17 @@ const OrderSidebar = ({ onSetOpenOrder, user }) => {
             }
         }
         if (value.length > 0) getAllCoupon()
-    }, [value])
+    }, [value, isValid])
 
-    useEffect(() => {}, [couponItem])
+    let totalDiscount
 
-    console.log({ couponItem })
+    if (couponItem?.type === 'percent') {
+        totalDiscount = (total * couponItem?.discount) / 100
+    }
+
+    if (couponItem?.type === 'price') {
+        totalDiscount = total - couponItem?.discount
+    }
 
     const onSubmit = (data) => {
         console.log(data)
@@ -77,7 +83,14 @@ const OrderSidebar = ({ onSetOpenOrder, user }) => {
                         >
                             <div className="w-full h-auto flex justify-between items-center">
                                 <h1 className="uppercase text-sm font-bold tracking-wider">subtotal</h1>
-                                <h1 className="text-lg">${total} USD</h1>
+                                <h1
+                                    className={`${
+                                        value && isValid ? 'line-through text-lg' : 'text-yellow-300 text-2xl'
+                                    } flex justify-center items-center `}
+                                >
+                                    <Icon.TbCurrencyDollar size={20} />
+                                    <span className="leading-[18px]">{total}</span>
+                                </h1>
                             </div>
                             <div className="w-full h-auto flex justify-between items-center gap-2">
                                 <div className="flex-1 flex relative">
@@ -94,8 +107,12 @@ const OrderSidebar = ({ onSetOpenOrder, user }) => {
                                         className="w-full mb-3 p-2 text-base bg-transparent border-b border-l border-[#656c72] text-gray-300 rounded-sm outline-none"
                                     />
 
-                                    <span className="flex justify-center items-center absolute right-0 top-1 cursor-pointer">
-                                        {value.length > 0 && isLoading ? (
+                                    <span
+                                        className={`${
+                                            value && value.length > 0 ? 'flex' : 'hidden'
+                                        } justify-center items-center absolute right-0 top-1`}
+                                    >
+                                        {isLoading ? (
                                             <span className="w-7 h-7 flex justify-center items-center">
                                                 <Loading type={PuffLoader} color="#ffffff" size={20} />
                                             </span>
@@ -106,7 +123,12 @@ const OrderSidebar = ({ onSetOpenOrder, user }) => {
                                         )}
                                     </span>
                                 </div>
-                                <h1 className="text-yellow-300 text-lg whitespace-nowrap">$10000 USD</h1>
+                                {value && isValid && couponItem && (
+                                    <h1 className="text-yellow-300 text-2xl whitespace-nowrap flex justify-center items-center">
+                                        <Icon.TbCurrencyDollar size={22} />
+                                        <span className="leading-[24px]">{totalDiscount}</span>
+                                    </h1>
+                                )}
                             </div>
                             <div>
                                 <Button className="w-full py-3 flex justify-center items-center gap-3 bg-main rounded">
