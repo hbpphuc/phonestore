@@ -10,7 +10,7 @@ const Section2 = ({ title }) => {
                 <h2 className="pb-[15px] text-xl text-secondary uppercase font-normal">{title}</h2>
                 <span className="w-10 h-[3px] bg-[#ccc] absolute bottom-0"></span>
             </div>
-            <div className="w-full h-auto flex flex-wrap justify-between items-center">
+            <div className="w-full h-auto flex flex-row-reverse flex-wrap justify-between items-center">
                 {categories?.data.slice(0, 6).map((item) => (
                     <div
                         key={item._id}

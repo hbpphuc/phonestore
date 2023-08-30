@@ -15,7 +15,7 @@ const Navbar = () => {
     return (
         <div className="w-full">
             <h2 className="bg-main text-white text-lg font-semibold uppercase p-[14px_15px] mb-0">ALL CATEGORIES</h2>
-            <ul className="border">
+            <ul className="border flex flex-col-reverse">
                 {categories?.data?.map((item) => (
                     <li key={item.slug} className="p-5">
                         <NavLink

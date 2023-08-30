@@ -133,6 +133,5 @@ exports.updateCart = asyncHandler(async (req, res, next) => {
 
 exports.getAllUser = crud.getAll(User);
 exports.getUser = crud.getOne(User);
-// DO NOT UPDATE PASSWORD WITH THIS
 exports.updateUser = crud.updateOne(User);
 exports.deleteUser = crud.deleteOne(User);

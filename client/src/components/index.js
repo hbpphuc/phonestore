@@ -8,6 +8,10 @@ export { default as ImageUpload } from './general/ImageUpload'
 export { default as Popup } from './general/Popup'
 export { default as Loading } from './general/Loading'
 
+// Search
+export { default as SearchBar } from './search/SearchBar'
+export { default as SearchResultPopup } from './search/SearchResultPopup'
+
 // Navigation
 export { default as Navbar } from './navigation/Navbar'
 export { default as Paginate } from './navigation/Paginate'

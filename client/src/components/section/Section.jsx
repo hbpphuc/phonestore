@@ -39,7 +39,7 @@ const Section = ({ cateData, title }) => {
                 <span className="w-10 h-[3px] bg-[#ccc] absolute bottom-0"></span>
             </div>
             {cateData && (
-                <ul className="w-full mb-[30px] flex justify-center items-center">
+                <ul className="w-full mb-[30px] flex flex-row-reverse justify-center items-center">
                     {cateData?.data?.map((item) => (
                         <li
                             key={item.slug}

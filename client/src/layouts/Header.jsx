@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
 import { useDispatch, useSelector } from 'react-redux'
-import { Popup, LoginForm, RegisterForm, ForgotForm, Button, Icon, Navigation } from '../components'
+import { Popup, LoginForm, RegisterForm, ForgotForm, Button, Icon, Navigation, SearchBar } from '../components'
 import useModal from '../hooks/useModal'
-import { adminRoutes, privateRoutes } from 'routes/paths'
+import { adminRoutes } from 'routes/paths'
 import logo from '../assets/images/logo.png'
 import { getCurrentUser } from '../redux/user/userAction'
 import * as apis from '../apis'
@@ -96,20 +96,8 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                                 <img src={logo} alt="logo" />
                             </Link>
                         </div>
-                        <div className="w-[50%] px-[57px] mx-5">
-                            <div className="w-full flex justify-center items-center">
-                                <input
-                                    type="text"
-                                    placeholder="Search something"
-                                    className="flex-1 max-w-[80%] h-[42px] text-sm font-light p-[8px_10px] border-2 border-main outline-[#101010]"
-                                />
-                                <Button
-                                    type="submit"
-                                    className="w-[42px] h-[42px] flex justify-center items-center text-white bg-main hover:brightness-95 transition-all"
-                                >
-                                    <Icon.TbSearch size={24} />
-                                </Button>
-                            </div>
+                        <div className="w-[50%] flex-none px-[57px] mx-5 flex justify-center items-center">
+                            <SearchBar />
                         </div>
                         <div className="flex-1 flex justify-end">
                             <span

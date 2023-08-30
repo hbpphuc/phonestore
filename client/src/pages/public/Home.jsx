@@ -15,7 +15,7 @@ const Home = () => {
         <div className="w-full h-full mb-[30px] flex flex-col items-center">
             <Slider />
             <Section cateData={categories} title="Featured Products" />
-            <Section2 title="hot collections" />
+            {/* <Section2 title="hot collections" /> */}
             <Section3 title="Blog" />
         </div>
     )
