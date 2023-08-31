@@ -8,3 +8,13 @@ export const getAllBrand = async () => {
         return error.response.data
     }
 }
+
+export const getBrand = async ({ id }) => {
+    console.log(id)
+    try {
+        const res = await httpRequest.get(`brands/${id}`)
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}

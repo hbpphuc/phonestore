@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const SearchResultPopup = ({ data, onSetFocus }) => {
     return (
-        <div className="w-full max-h-[400px] z-50">
+        <div className="w-full max-h-[400px] z-50 overflow-auto text-sm">
             <h2 className="w-full p-[4px_8px] bg-[#f8f9fa] text-[#6c757d] cursor-default select-none">
                 Products in your search
             </h2>
@@ -28,11 +28,11 @@ const SearchResultPopup = ({ data, onSetFocus }) => {
                                 <Link
                                     onClick={() => onSetFocus(false)}
                                     to={`/products/${item.category.slug}/${item.slug}`}
-                                    className="text-[#333] ml-1 text-lg font-medium"
+                                    className="text-[#333] ml-1 text-base font-medium"
                                 >
                                     {item.name}
                                 </Link>
-                                <h3 className="flex items-center text-[#e83a45] text-base font-bold">
+                                <h3 className="flex items-center text-[#e83a45] text-sm font-bold">
                                     <Icon.TbCurrencyDollar size={18} />
                                     <span>{item.price}</span>
                                 </h3>
@@ -40,7 +40,7 @@ const SearchResultPopup = ({ data, onSetFocus }) => {
                         </div>
                     ))
                 ) : (
-                    <h1 className="w-full p-2 text-red-700 text-lg font-medium text-center">
+                    <h1 className="w-full p-2 text-red-700 text-base font-medium text-center">
                         No product found with that name
                     </h1>
                 )}

@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDebounce } from 'use-debounce'
+import LoadingBar from 'react-top-loading-bar'
 import Select from 'react-select'
 import * as apis from 'apis'
 import { Breadcrumb, ProductItem, Navbar, Paginate } from 'components'
 import { optSort, optColor } from 'utils/constant'
 
-const limit = 3
-
 const AllProduct = () => {
     const { type } = useParams()
 
-    const [allProds, setAllProds] = useState(null)
+    const [prods, setProds] = useState(null)
+    const [cId, setCId] = useState(null)
     const [totalProds, setTotalProds] = useState(0)
     const [page, setPage] = useState(1)
+    const [limit, setLimit] = useState(6)
+
+    const [progress, setProgress] = useState(0)
 
     const [brandOpt, setBrandOpt] = useState(null)
     const [brandS, setBrandS] = useState(null)
@@ -24,37 +27,52 @@ const AllProduct = () => {
     const [valueColor] = useDebounce(colorS, 1000)
 
     useEffect(() => {
+        const params = {
+            page,
+            limit,
+            sort: sortS?.query,
+            color: valueColor?.map((item) => item.value),
+            brand: valueBrand?.map((item) => item.id),
+            category: cId || undefined,
+        }
+
         const fetchApi = async () => {
-            const res = await apis.getAllProduct({
-                sort: sortS?.query,
-                color: valueColor?.map((item) => item.value),
-                brand: valueBrand?.map((item) => item.id),
-                page: page,
-                limit: limit,
-            })
+            setProgress(40)
+            const res = await apis.getAllProduct(params)
+            console.log(res)
+            setProgress(100)
 
-            res?.data?.data.length < 1 && setPage(1)
+            setTotalProds(res?.pagination?.total)
 
-            if (type) {
-                const res2 = await apis.getAllCategory()
-                const cateItem = res2?.data?.data?.find((item) => item.slug === type)
-                const resCate = await apis.getCategory(cateItem?._id)
-                setAllProds(resCate?.data?.data?.products)
-                setTotalProds(resCate?.data?.data?.products.length)
-
-                const brandObj = cateItem?.brands.map((item) => ({ value: item.slug, label: item.name, id: item._id }))
-                setBrandOpt(brandObj)
+            if (!type) {
+                setProds(res?.data?.data)
+                setCId(undefined)
             } else {
-                setAllProds(res?.data?.data)
-                setTotalProds(res?.pagination?.total)
+                const prodType = res?.data?.data?.filter((item) => item.category.slug === type)
+                setCId(prodType[0]?.category?.id)
+                setProds(prodType)
+                setBrandOpt(
+                    prodType[0]?.category?.brands.map((item) => ({
+                        value: item.slug,
+                        label: item.name,
+                        id: item._id,
+                    }))
+                )
             }
         }
 
         fetchApi()
-    }, [type, sortS, valueBrand, valueColor, page])
+    }, [type, sortS, valueBrand, valueColor, page, limit, cId])
 
     return (
         <div className="w-full h-auto">
+            <LoadingBar
+                color="#0eb1f2"
+                progress={progress}
+                onLoaderFinished={() => setProgress(0)}
+                height={4}
+                transitionTime={1000}
+            />
             <div className="w-full h-auto flex justify-center items-center flex-col">
                 <div className="w-full h-auto py-5 mb-5 bg-[#f7f7f7] flex justify-center items-center">
                     <Breadcrumb />
@@ -71,7 +89,7 @@ const AllProduct = () => {
                                 <div className="w-[80%] h-full flex flex-col">
                                     <h2 className="text-base font-semibold text-primary mb-2">Filter by</h2>
                                     <div className="w-full h-auto flex flex-wrap gap-2">
-                                        {type && allProds?.length > 0 && (
+                                        {type && (
                                             <div className="w-auto h-auto ">
                                                 <Select
                                                     onChange={setBrandS}
@@ -105,15 +123,17 @@ const AllProduct = () => {
                             </div>
                         </div>
                         <div className="w-full h-auto flex flex-wrap">
-                            {allProds?.map((item) => (
+                            {prods?.map((item) => (
                                 <div key={item.id} className="w-1/3 h-auto mb-3">
-                                    <ProductItem data={item} cateType={item.category.slug} />
+                                    <ProductItem data={item} cateType={item.category.slug} loading={progress} />
                                 </div>
                             ))}
                         </div>
-                        <div className="w-full h-auto mt-5 flex justify-center items-end">
-                            <Paginate itemCount={totalProds} itemsPerPage={limit} onSetPage={setPage} />
-                        </div>
+                        {prods?.length > 0 && (
+                            <div className="w-full h-auto mt-5 flex justify-center items-end">
+                                <Paginate itemCount={totalProds} itemsPerPage={limit} onSetPage={setPage} />
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

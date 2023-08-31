@@ -58,11 +58,11 @@ const SearchBar = () => {
                                 setSearchValue(e.target.value)
                             },
                         })}
-                        className="flex-1 h-12 text-base font-normal text-secondary p-[8px_10px] border-2 border-main outline-none"
+                        className="flex-1 h-10 text-sm font-normal text-secondary p-[6px_8px] border-2 border-main outline-none"
                     />
                     <Button
                         type="submit"
-                        className="w-12 h-12 flex justify-center items-center text-white bg-main hover:brightness-95 transition-all"
+                        className="w-10 h-10 flex justify-center items-center text-white bg-main hover:brightness-95 transition-all"
                     >
                         <Icon.TbSearch size={24} />
                     </Button>

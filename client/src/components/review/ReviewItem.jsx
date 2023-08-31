@@ -7,10 +7,8 @@ import { toTimestamp } from 'utils/helper'
 import { Icon } from 'components'
 import Swal from 'sweetalert2'
 import { toast } from 'react-toastify'
-import { useParams } from 'react-router-dom'
 
 const ReviewItem = ({ id, isNew, onSetIsNew, onSetIsEdit }) => {
-    const { slug } = useParams()
     const { curUser } = useSelector((state) => state.user)
 
     const [loading, setLoading] = useState(false)
@@ -18,14 +16,16 @@ const ReviewItem = ({ id, isNew, onSetIsNew, onSetIsEdit }) => {
 
     useEffect(() => {
         const getReviewOnProduct = async () => {
+            console.log({ id })
             setLoading(true)
             const res = await apis.getReviewOnProduct(id)
+            console.log(res)
             setLoading(false)
 
             if (res.status === 'success') setReviews(res?.data?.data)
         }
         getReviewOnProduct()
-    }, [slug, id, isNew])
+    }, [id, isNew])
 
     const handleDeleteReview = async (pId, rId, uId) => {
         Swal.fire({
@@ -72,13 +72,13 @@ const ReviewItem = ({ id, isNew, onSetIsNew, onSetIsEdit }) => {
                                 {loading ? (
                                     <Skeleton width="200px" />
                                 ) : (
-                                    <h2 className="text-lg text-[#32373d] font-semibold">{item?.user?.name}</h2>
+                                    <h2 className="text-[#32373d] font-semibold">{item?.user?.name}</h2>
                                 )}
                                 {/* <div>STAR</div> */}
                                 {loading ? (
                                     <Skeleton width="600px" />
                                 ) : (
-                                    <p className="text-base text-[#444b52] font-medium mb-2">{item?.content}</p>
+                                    <p className="text-sm text-[#444b52] font-medium mb-2">{item?.content}</p>
                                 )}
                                 <div className="w-full flex">
                                     {loading ? (
@@ -91,13 +91,13 @@ const ReviewItem = ({ id, isNew, onSetIsNew, onSetIsEdit }) => {
                                         )
                                     )}
                                     {curUser?.data?._id === item.user._id && (
-                                        <div className="flex">
-                                            <span className="flex items-end text-sm font-normal text-gray-500 mr-1">
+                                        <div className="flex text-xs">
+                                            <span className="flex items-end font-normal text-gray-500 mr-1">
                                                 <Icon.BsDot size={18} />
                                             </span>
                                             <span
                                                 onClick={() => onSetIsEdit({ rId: item._id, uId: curUser?.data?._id })}
-                                                className="text-sm text-[#939ca3] hover:text-yellow-400 cursor-pointer pr-3 border-r border-gray-500"
+                                                className="text-[#939ca3] hover:text-yellow-400 cursor-pointer pr-3 border-r border-gray-500"
                                             >
                                                 Edit
                                             </span>
@@ -105,7 +105,7 @@ const ReviewItem = ({ id, isNew, onSetIsNew, onSetIsEdit }) => {
                                                 onClick={() =>
                                                     handleDeleteReview(item.product, item._id, item.user._id)
                                                 }
-                                                className="pl-3 text-sm text-[#939ca3] hover:text-red-600 cursor-pointer"
+                                                className="pl-3 text-[#939ca3] hover:text-red-600 cursor-pointer"
                                             >
                                                 Delete
                                             </span>

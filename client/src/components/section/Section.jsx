@@ -43,7 +43,7 @@ const Section = ({ cateData, title }) => {
                     {cateData?.data?.map((item) => (
                         <li
                             key={item.slug}
-                            className={`mx-[15px] text-[#8b8b8b] text-base uppercase cursor-pointer hover:text-main transition-colors ${
+                            className={`mx-[15px] text-[#8b8b8b] text-sm uppercase cursor-pointer hover:text-main transition-colors ${
                                 cateId === item._id && 'text-main'
                             }`}
                             onClick={() => setCateId(item._id)}

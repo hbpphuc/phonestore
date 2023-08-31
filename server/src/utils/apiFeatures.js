@@ -1,7 +1,8 @@
 class APIFeatures {
-    constructor(query, queryString) {
+    constructor(query, queryString, count) {
         this.query = query;
         this.queryString = queryString;
+        this.count = count;
     }
 
     filter() {
@@ -19,6 +20,8 @@ class APIFeatures {
 
         const formatQ = JSON.parse(queryStr);
 
+        if (queryObj?.category) formatQ.category = queryObj.category;
+
         if (queryObj?.name)
             formatQ.name = { $regex: queryObj.name, $options: 'i' };
 
@@ -30,58 +33,33 @@ class APIFeatures {
             ];
         }
 
-        // if (queryObj?.color) {
-        //     let colorArr;
+        if (queryObj?.brand) {
+            formatQ.brand = { $in: queryObj.brand };
+        }
 
-        //     Array.isArray(queryObj.color)
-        //         ? (colorArr = queryObj?.color)
-        //         : (colorArr = queryObj?.color.split(','));
-
-        //     const colorQuery = colorArr?.map((item) => ({
-        //         color: { $regex: item, $options: 'i' },
-        //     }));
-
-        //     formatQ.color = { color: { $in: [...colorQuery] } };
-        // }
+        let colorObj = {};
 
         if (queryObj?.color) {
-            formatQ.color = queryObj.color;
+            delete formatQ.color;
+
+            let colorArr;
+
+            Array.isArray(queryObj.color)
+                ? (colorArr = queryObj?.color)
+                : (colorArr = queryObj?.color.split(','));
+
+            const colorQuery = colorArr?.map((item) => ({
+                color: { $regex: item, $options: 'i' },
+            }));
+
+            colorObj = { $or: colorQuery };
         }
 
-        if (queryObj?.brand) {
-            formatQ.brand = queryObj.brand;
-        }
-
-        // let colorObj = {};
-        // if (queryObj?.color) {
-        //     delete formatQ.color;
-
-        //     let colorArr;
-
-        //     Array.isArray(queryObj.color)
-        //         ? (colorArr = queryObj?.color)
-        //         : (colorArr = queryObj?.color.split(','));
-
-        //     const colorQuery = colorArr?.map((item) => ({
-        //         color: { $regex: item, $options: 'i' },
-        //     }));
-
-        //     colorObj = { $or: [...colorQuery] };
-        // }
-
-        // let brandObj = {};
-        // // if (queryObj?.brand) {
-        // //     console.log(queryObj?.brand);
-        // //     // const brandQuery = queryObj?.brand?.map((item) => ({
-        // //     //     brand: item,
-        // //     // }));
-
-        // //     brandObj = { brand: { slug: { $in: queryObj?.brand } } };
-        // // }
-
-        console.log({ formatQ });
-
-        this.query = this.query.find({ ...formatQ });
+        this.query = this.query.find({ ...colorObj, ...formatQ });
+        this.count = this.query
+            .find({ ...colorObj, ...formatQ })
+            .clone()
+            .count();
 
         return this;
     }
@@ -114,9 +92,15 @@ class APIFeatures {
         const skip = (page - 1) * limit;
 
         this.query = this.query.skip(skip).limit(limit);
+        // this.count = this.query.skip(skip).limit(limit).clone().count();
 
         return this;
     }
+
+    // countDocs() {
+    //     this.count = this.query.clone().count();
+    //     return this.count;
+    // }
 }
 
 module.exports = APIFeatures;

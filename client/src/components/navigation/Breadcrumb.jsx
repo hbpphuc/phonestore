@@ -9,7 +9,7 @@ const Breadcrumb = () => {
 
     return (
         <div className="w-main h-full flex flex-col">
-            <h3 className="mb-[10px] text-xl text-secondary font-semibold uppercase">{title}</h3>
+            <h3 className="mb-[10px] text-lg text-secondary font-semibold uppercase">{title}</h3>
             <div className="flex">
                 {breadcrumbs.map(({ match, breadcrumb }, index, self) => (
                     <div key={match.pathname} className="flex justify-center items-center">

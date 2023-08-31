@@ -41,7 +41,7 @@ const DetailProduct = () => {
     useEffect(() => {
         const getAllProduct = async () => {
             setIsLoading(true)
-            const res = await apis.getAllProductNoQurey()
+            const res = await apis.getAllProduct()
             setIsLoading(false)
             if (res.status === 'success') {
                 setOthers(res?.data?.data.filter((item) => item?.slug !== slug && item.category.slug === type))
@@ -65,16 +65,16 @@ const DetailProduct = () => {
                             {productExtrainInfo.map((item) => (
                                 <li
                                     key={item.id}
-                                    className="w-full h-[60px] flex gap-2 p-[10px] mb-[10px] text-sm font-normal leading-[6px] border border-[#ebebeb]"
+                                    className="w-full h-[60px] flex gap-2 p-[10px] mb-[10px] leading-[6px] border border-[#ebebeb]"
                                 >
-                                    <span className="w-10 h-10 flex justify-center items-center rounded-full text-xl text-white bg-[#505050]">
+                                    <span className="w-10 h-10 flex justify-center items-center rounded-full text-lg text-white bg-[#505050]">
                                         {item.icon}
                                     </span>
                                     <span className="flex-1 h-full flex flex-col justify-center gap-1">
-                                        <h3 className="flex-1 h-[50%] flex items-center capitalize text-base  text-primary">
+                                        <h3 className="flex-1 h-[50%] flex items-center capitalize text-base text-primary">
                                             {item.title}
                                         </h3>
-                                        <h3 className="flex-1 h-[50%] flex items-center capitalize text-xs text-[#999]">
+                                        <h3 className="flex-1 h-[50%] flex items-center capitalize text-sm text-[#999]">
                                             {item.subTitle}
                                         </h3>
                                     </span>
@@ -88,7 +88,7 @@ const DetailProduct = () => {
                         <TabList>
                             {detailProductTabs[0].map((item) => (
                                 <Tab key={item.id}>
-                                    <span className="uppercase">{item.title}</span>
+                                    <span className="uppercase text-sm">{item.title}</span>
                                 </Tab>
                             ))}
                         </TabList>
@@ -113,7 +113,7 @@ const DetailProduct = () => {
                             <TabPanel key={item.id}>
                                 <div className="border border-[#aaa] border-t-0 p-5 ">
                                     {item.subTitle !== '' && (
-                                        <h2 className="text-xl text-[#505050] font-semibold uppercase mb-5">
+                                        <h2 className="text-lg text-[#505050] font-semibold uppercase mb-5">
                                             {item.subTitle}
                                         </h2>
                                     )}

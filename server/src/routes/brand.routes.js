@@ -3,6 +3,8 @@ const brandController = require('../controllers/brandController');
 
 const router = express.Router();
 
+router.route('/findMany').get(brandController.findManyBrand);
+
 router
     .route('/')
     .get(brandController.getAllBrand)

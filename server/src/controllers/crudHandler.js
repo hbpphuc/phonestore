@@ -4,12 +4,8 @@ const { AppError, APIFeatures } = require('../utils');
 
 exports.getAll = (Model, popOptions) =>
     asyncHandler(async (req, res, next) => {
-        // To allow for nested GET review on tour
-        let filter = {};
-        if (req.params.prodId) filter = { product: req.params.prodId };
-
         // EXECUTE QUERY
-        const features = new APIFeatures(Model.find(filter), req.query)
+        const features = new APIFeatures(Model.find(), req.query)
             .filter()
             .sort()
             .limitFields()
@@ -19,9 +15,12 @@ exports.getAll = (Model, popOptions) =>
 
         if (popOptions) docs = features.query.populate(popOptions);
 
-        const total = await Model.find().count();
+        docs = await features.query.find();
 
-        docs = await features.query;
+        let total;
+
+        if (Object.keys(req.query).length > 0) total = await features.count;
+        else total = await Model.find().count();
 
         // SEND RESPONSE
         res.status(200).json({

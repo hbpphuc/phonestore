@@ -81,7 +81,7 @@ const InfoProduct = ({ data, detail, isLoading }) => {
                     ) : (
                         <IsLink
                             to={`${publicRoutes.products}/${data?.category?.slug}/${data?.slug}`}
-                            className={`text-[#1c1c1c] text-xl font-semibold ${
+                            className={`text-[#1c1c1c] text-lg font-semibold ${
                                 detail ? '' : 'hover:text-main'
                             } transition-colors`}
                         >
@@ -105,24 +105,24 @@ const InfoProduct = ({ data, detail, isLoading }) => {
                     </ul>
                 )}
 
-                <h2 className="w-full mb-[15px] text-xl font-semibold text-main">
+                <h2 className="w-full mb-[15px] text-lg font-semibold text-main">
                     {isLoading ? <Skeleton width={100} /> : `$${data?.price} USD`}
                 </h2>
                 <form className="w-full flex flex-col items-center">
                     <div className="w-full mb-[15px]">
                         <div className="w-full mb-[15px] flex items-center">
-                            <h2 className="min-w-[80px] mr-[10px] text-sm font-semibold text-[#151515]">Color</h2>
+                            <h2 className="min-w-[80px] mr-[10px] text-sm font-medium text-[#151515]">Color</h2>
                             <Select
                                 id="color"
                                 onChange={setColor}
                                 options={colors}
                                 placeholder="Choose color"
                                 isSearchable={false}
-                                className="w-[200px] font-semibold text-sm text-primary"
+                                className="w-[200px] font-medium text-sm text-primary"
                             />
                         </div>
                         <div className="w-full mb-[15px] flex items-center">
-                            <h2 className="min-w-[80px] mr-[10px] text-sm font-semibold text-[#151515]">Quantity</h2>
+                            <h2 className="min-w-[80px] mr-[10px] text-sm font-medium text-[#151515]">Quantity</h2>
                             <div className="w-full flex">
                                 <Button
                                     onClick={(e) => {
@@ -130,15 +130,15 @@ const InfoProduct = ({ data, detail, isLoading }) => {
                                         setQuantity((prev) => prev - 1)
                                     }}
                                     disabled={quantity === 1 && true}
-                                    className="w-9 h-9 flex justify-center items-center text-2xl font-normal text-white bg-main disabled:bg-[#ccc]"
+                                    className="w-8 h-8 flex justify-center items-center text-xl font-normal text-white bg-main disabled:bg-[#ccc]"
                                 >
                                     -
                                 </Button>
-                                <div className="w-12 h-9">
+                                <div className="w-12 h-8">
                                     <input
                                         value={quantity}
                                         readOnly
-                                        className="w-full h-9 text-xl text-center border-l border-r flex justify-center items-center outline-none"
+                                        className="w-full h-8 text-lg text-center border-l border-r flex justify-center items-center outline-none"
                                     />
                                 </div>
                                 <Button
@@ -146,7 +146,7 @@ const InfoProduct = ({ data, detail, isLoading }) => {
                                         e.preventDefault()
                                         setQuantity((prev) => prev + 1)
                                     }}
-                                    className="w-9 h-9 flex justify-center items-center text-2xl font-normal text-white bg-main"
+                                    className="w-8 h-8 flex justify-center items-center text-xl font-normal text-white bg-main"
                                 >
                                     +
                                 </Button>

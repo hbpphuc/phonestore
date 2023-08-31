@@ -64,9 +64,8 @@ exports.searchProduct = asyncHandler(async (req, res, next) => {
     });
 });
 
-exports.findManyProduct = asyncHandler(async (req, res, next) => {
-    const { pIds } = req.query;
-    const products = await Product.find({ _id: { $in: pIds } });
+exports.getProductOnCategory = asyncHandler(async (req, res, next) => {
+    const products = await Product.find({ category: req.params.type });
 
     if (!products) return next(new AppError('There is no product.', 404));
 

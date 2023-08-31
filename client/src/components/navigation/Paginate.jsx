@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { memo } from 'react'
 import ReactPaginate from 'react-paginate'
 import Icon from '../general/Icons'
 
@@ -38,4 +39,4 @@ const Paginate = ({ itemCount, itemsPerPage, onSetPage }) => {
     )
 }
 
-export default Paginate
+export default memo(Paginate)

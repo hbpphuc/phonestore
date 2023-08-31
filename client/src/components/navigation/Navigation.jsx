@@ -9,7 +9,7 @@ const Navigation = () => {
                 {navigatorMenu.map((item) => (
                     <li
                         key={item.id}
-                        className="p-[18px_15px] text-base font-normal text-secondary uppercase hover:text-main transition-colors"
+                        className="p-[14px_11px] text-sm text-secondary uppercase hover:text-main transition-colors"
                     >
                         <NavLink to={item.path} className={({ isActive }) => (isActive ? 'text-main' : '')}>
                             {item.title}

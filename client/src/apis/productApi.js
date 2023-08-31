@@ -1,22 +1,23 @@
 import httpRequest from '../utils/httpRequest'
 
-export const getAllProductNoQurey = async () => {
+export const getAllProduct = async (params) => {
     try {
-        const res = await httpRequest.get('products')
+        const res = await httpRequest.get(
+            'products',
+            params && {
+                params: {
+                    page: params.page || undefined,
+                    limit: params.limit || undefined,
+                    sort: params.sort || undefined,
+                    color: params.color || undefined,
+                    brand: params.brand || undefined,
+                    category: params.category || undefined,
+                },
+            }
+        )
         return res.data
     } catch (error) {
-        console.log(error)
-    }
-}
-
-export const getAllProduct = async ({ sort = 'createdAt', color, brand, page, limit }) => {
-    try {
-        const res = await httpRequest.get('products', {
-            params: { sort, color, brand, page, limit },
-        })
-        return res.data
-    } catch (error) {
-        console.log(error)
+        return error.response.data
     }
 }
 
@@ -25,7 +26,7 @@ export const getProductById = async ({ id }) => {
         const res = await httpRequest.get(`products/${id}`)
         return res.data
     } catch (error) {
-        console.log(error)
+        return error.response.data
     }
 }
 
@@ -34,7 +35,7 @@ export const getProductBySlug = async ({ slug }) => {
         const res = await httpRequest.get(`products/${slug}`)
         return res.data
     } catch (error) {
-        console.log(error)
+        return error.response.data
     }
 }
 
@@ -65,26 +66,20 @@ export const deleteProduct = async (id) => {
     }
 }
 
-export const searchProduct = async (name) => {
+export const searchProduct = async ({ name }) => {
     try {
         const res = await httpRequest.get(`products/search`, { params: { name } })
         return res.data
     } catch (error) {
-        console.log(error)
+        return error.response.data
     }
 }
 
-export const findManyProduct = async (pIds) => {
+export const getProductOnCategory = async (cId) => {
     try {
-        const res = await httpRequest.get(
-            `products/findMany`,
-            {
-                params: { pIds },
-            },
-            { withCredentials: true }
-        )
+        const res = await httpRequest.get(`products/getProductOnCategory/${cId}`)
         return res.data
     } catch (error) {
-        console.log(error)
+        return error.response.data
     }
 }
