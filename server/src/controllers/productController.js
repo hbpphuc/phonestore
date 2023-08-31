@@ -38,11 +38,11 @@ exports.getAllProduct = crud.getAll(Product);
 exports.createProduct = crud.createOne(Product);
 exports.getProduct = crud.getOne(Product, {
     path: 'reviews',
-    select: 'content rating user',
+    select: 'content rating user createdAt',
 });
 exports.getProductSlug = crud.getOneSlug(Product, {
     path: 'reviews',
-    select: 'content rating user',
+    select: 'content rating user createdAt',
 });
 exports.updateProduct = crud.updateOne(Product);
 exports.deleteProduct = crud.deleteOne(Product);

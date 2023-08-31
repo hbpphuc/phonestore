@@ -36,7 +36,7 @@ const DetailProduct = () => {
             else navigate('/not-found', { replace: true })
         }
         getProduct()
-    }, [slug])
+    }, [slug, isNewReview])
 
     useEffect(() => {
         const getAllProduct = async () => {
@@ -49,6 +49,8 @@ const DetailProduct = () => {
         }
         getAllProduct()
     }, [type, slug])
+
+    console.log(product)
 
     return (
         <div className="w-full h-auto">
@@ -130,7 +132,7 @@ const DetailProduct = () => {
                                     onSetIsEdit={setIsEditReview}
                                 />
                                 <ReviewItem
-                                    id={product?._id}
+                                    data={product?.reviews}
                                     isNew={isNewReview}
                                     onSetIsNew={setIsNewReview}
                                     onSetIsEdit={setIsEditReview}
