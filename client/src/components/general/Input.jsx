@@ -31,6 +31,7 @@ const Input = ({
                     placeholder={placeHolder}
                     value={value}
                     readOnly={readOnly}
+                    spellCheck={false}
                     type={type || 'text'}
                     className={
                         className

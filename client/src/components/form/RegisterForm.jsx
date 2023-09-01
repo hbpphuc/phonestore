@@ -48,6 +48,7 @@ const RegisterForm = ({ onSetForm }) => {
                     <input
                         type="text"
                         placeholder="Name"
+                        spellCheck={false}
                         {...register('name', { required: true })}
                         className="w-full p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d]"
                     />
@@ -57,6 +58,7 @@ const RegisterForm = ({ onSetForm }) => {
                     <input
                         type="email"
                         placeholder="Email"
+                        spellCheck={false}
                         {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
                         className="w-full p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d]"
                     />
@@ -66,6 +68,7 @@ const RegisterForm = ({ onSetForm }) => {
                     <input
                         type={changeIconPw ? 'password' : 'text'}
                         placeholder="Password"
+                        spellCheck={false}
                         {...register('password', { required: true, min: 8 })}
                         className="w-full p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d]"
                     />
@@ -83,6 +86,7 @@ const RegisterForm = ({ onSetForm }) => {
                     <input
                         type={changeIconPwc ? 'password' : 'text'}
                         placeholder="Password confirm"
+                        spellCheck={false}
                         {...register('passwordConfirm', { required: true, min: 8 })}
                         className="w-full p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d]"
                     />

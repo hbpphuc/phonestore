@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { getAllCategories } from 'redux/app/action'
 import { publicRoutes } from 'routes/paths'
 import { useDispatch, useSelector } from 'react-redux'
+import { memo } from 'react'
 
 const Navbar = () => {
     const { categories } = useSelector((state) => state.app)
@@ -31,4 +32,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default memo(Navbar)

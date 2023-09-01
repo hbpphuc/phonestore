@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import { useDebounce } from 'use-debounce'
 import LoadingBar from 'react-top-loading-bar'
 import Select from 'react-select'
 import * as apis from 'apis'
 import { Breadcrumb, ProductItem, Navbar, Paginate } from 'components'
 import { optSort, optColor } from 'utils/constant'
+import { toast } from 'react-toastify'
+
+const limit = 6
 
 const AllProduct = () => {
     const { type } = useParams()
+    const { search } = useLocation()
 
     const [prods, setProds] = useState(null)
     const [cId, setCId] = useState(null)
     const [totalProds, setTotalProds] = useState(0)
     const [page, setPage] = useState(1)
-    const [limit, setLimit] = useState(6)
 
     const [progress, setProgress] = useState(0)
 
@@ -34,19 +37,20 @@ const AllProduct = () => {
             color: valueColor?.map((item) => item.value),
             brand: valueBrand?.map((item) => item.id),
             category: cId || undefined,
+            name: search.split('=')[1] || undefined,
         }
 
         const fetchApi = async () => {
             setProgress(40)
             const res = await apis.getAllProduct(params)
-            console.log(res)
             setProgress(100)
 
+            if (res?.results === 0) toast.error('No product found!')
             setTotalProds(res?.pagination?.total)
 
             if (!type) {
-                setProds(res?.data?.data)
                 setCId(undefined)
+                setProds(res?.data?.data)
             } else {
                 const prodType = res?.data?.data?.filter((item) => item.category.slug === type)
                 setCId(prodType[0]?.category?.id)
@@ -62,7 +66,7 @@ const AllProduct = () => {
         }
 
         fetchApi()
-    }, [type, sortS, valueBrand, valueColor, page, limit, cId])
+    }, [type, sortS, valueBrand, valueColor, page, limit, cId, search])
 
     return (
         <div className="w-full h-auto">

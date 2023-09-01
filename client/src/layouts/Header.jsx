@@ -108,7 +108,10 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                             >
                                 <div className="flex flex-col justify-center items-end">
                                     <span>Your Cart</span>
-                                    <span className="font-bold">{`${cartItemCount > 0 ? cartItemCount : 0} ITEM`}</span>
+                                    <div className="flex justify-center items-center gap-1 text-base font-bold">
+                                        <span className="text-red-500">{cartItemCount > 0 ? cartItemCount : 0}</span>
+                                        <span>ITEM</span>
+                                    </div>
                                 </div>
                                 <span className="ml-4 text-main">
                                     <Icon.RiShoppingBasketFill size={38} />

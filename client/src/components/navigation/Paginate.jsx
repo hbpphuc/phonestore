@@ -6,6 +6,8 @@ import Icon from '../general/Icons'
 const Paginate = ({ itemCount, itemsPerPage, onSetPage }) => {
     const [pageCount, setPageCount] = useState(1)
 
+    const flag = itemCount > itemsPerPage
+
     useEffect(() => {
         setPageCount(Math.ceil(itemCount / itemsPerPage))
     }, [itemsPerPage, itemCount])
@@ -20,9 +22,9 @@ const Paginate = ({ itemCount, itemsPerPage, onSetPage }) => {
                 onPageChange={handlePageClick}
                 pageRangeDisplayed={3}
                 marginPagesDisplayed={2}
-                pageCount={pageCount}
-                previousLabel={<Icon.HiOutlineArrowNarrowLeft size={22} />}
-                nextLabel={<Icon.HiOutlineArrowNarrowRight size={22} />}
+                pageCount={flag ? pageCount : 0}
+                previousLabel={flag && <Icon.HiOutlineArrowNarrowLeft size={22} color="#0c0c0c" />}
+                nextLabel={flag && <Icon.HiOutlineArrowNarrowRight size={22} color="#0c0c0c" />}
                 pageClassName="page-item"
                 pageLinkClassName="page-link"
                 previousClassName="page-btn"

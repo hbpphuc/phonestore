@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
 import HeadlessTippy from '@tippyjs/react/headless'
+import { useNavigate, createSearchParams } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 import { useDebounce } from 'use-debounce'
 import { Button, Icon, SearchResultPopup } from 'components'
 import * as apis from 'apis'
@@ -12,6 +13,8 @@ const SearchBar = () => {
 
     const [value] = useDebounce(searchValue, 600)
 
+    const navigate = useNavigate()
+
     const { register, handleSubmit } = useForm()
 
     useEffect(() => {
@@ -20,12 +23,17 @@ const SearchBar = () => {
             setSearchResults(res?.data?.product)
         }
 
-        value.length > 0 ? searchProducts() : setSearchResults(null)
+        value.length > 0 && !value.startsWith(' ') && searchProducts()
     }, [value])
 
     const onSubmit = async (data) => {
-        // const res = await apis.searchProduct(data)
-        // console.log('submit form: ', res?.data?.product)
+        if (data[Object.keys(data)] !== '') {
+            navigate({
+                pathname: 'products',
+                search: createSearchParams({ ...data }).toString(),
+            })
+            setIsFocus(false)
+        }
     }
 
     const renderSearchResult = (attrs) => (
@@ -42,6 +50,7 @@ const SearchBar = () => {
         <div className="w-full flex justify-center items-center relative">
             <HeadlessTippy
                 interactive
+                placement="bottom"
                 visible={isFocus && value.length > 0}
                 render={renderSearchResult}
                 onClickOutside={() => setIsFocus(false)}
@@ -50,12 +59,13 @@ const SearchBar = () => {
                 <form onSubmit={handleSubmit(onSubmit)} className="w-full flex justify-center items-center">
                     <input
                         type="text"
+                        spellCheck={false}
                         placeholder="Search product name"
                         onFocus={() => setIsFocus(true)}
                         value={searchValue}
                         {...register('name', {
                             onChange: (e) => {
-                                setSearchValue(e.target.value)
+                                if (!e.target.value.startsWith(' ')) setSearchValue(e.target.value)
                             },
                         })}
                         className="flex-1 h-10 text-sm font-normal text-secondary p-[6px_8px] border-2 border-main outline-none"

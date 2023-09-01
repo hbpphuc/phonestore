@@ -40,6 +40,7 @@ const ForgotForm = ({ onSetForm }) => {
                     <input
                         id="emailForgot"
                         type="email"
+                        spellCheck={false}
                         className="w-[70%] p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d]"
                         {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
                     />

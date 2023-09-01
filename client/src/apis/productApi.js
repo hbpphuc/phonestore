@@ -12,6 +12,7 @@ export const getAllProduct = async (params) => {
                     color: params.color || undefined,
                     brand: params.brand || undefined,
                     category: params.category || undefined,
+                    name: params.name || undefined,
                 },
             }
         )
