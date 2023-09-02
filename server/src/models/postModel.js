@@ -40,7 +40,6 @@ const postSchema = new mongoose.Schema(
             type: String,
             default: 'default-post.jpg',
         },
-        images: [String],
         author: {
             type: String,
             default: 'Administrator',

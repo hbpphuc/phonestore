@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom'
 import useBreadcrumbs from 'use-react-router-breadcrumbs'
 import Icon from '../general/Icons'
 
-const Breadcrumb = () => {
+const Breadcrumb = ({ title }) => {
     const breadcrumbs = useBreadcrumbs()
-    const title = breadcrumbs[breadcrumbs.length - 1].breadcrumb.props.children
 
     return (
         <div className="w-main h-full flex flex-col">
-            <h3 className="mb-[10px] text-lg text-secondary font-semibold uppercase">{title}</h3>
+            <h3 className="mb-[10px] text-lg text-secondary font-semibold uppercase">
+                {title || breadcrumbs[breadcrumbs.length - 1].breadcrumb.props.children}
+            </h3>
             <div className="flex">
                 {breadcrumbs.map(({ match, breadcrumb }, index, self) => (
                     <div key={match.pathname} className="flex justify-center items-center">

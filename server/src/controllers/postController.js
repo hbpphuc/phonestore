@@ -34,6 +34,7 @@ exports.uploadPostImages = asyncHandler(async (req, res, next) => {
 exports.getAllPost = crud.getAll(Post);
 exports.createPost = crud.createOne(Post);
 exports.getPost = crud.getOne(Post);
+exports.getPostSlug = crud.getOneSlug(Post);
 exports.updatePost = crud.updateOne(Post);
 exports.deletePost = crud.deleteOne(Post);
 

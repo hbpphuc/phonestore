@@ -1,5 +1,5 @@
 import { publicRoutes, adminRoutes, privateRoutes } from './paths'
-import { Home, AllProduct, DetailProduct, Post, ResetPassword, NotFound } from '../pages/public'
+import { Home, AllProduct, DetailProduct, Post, ResetPassword, NotFound, DetailPost } from '../pages/public'
 import { Admin, Dashboard, ManageUsers, ManageProducts, ManageOrders } from 'pages/admin'
 import { Private, UserAccount, UserOrder, UserSetting, UserWishlist } from 'pages/private'
 
@@ -21,8 +21,12 @@ export const publicR = [
         component: DetailProduct,
     },
     {
-        path: publicRoutes.blog,
+        path: publicRoutes.post,
         component: Post,
+    },
+    {
+        path: publicRoutes.post_detail,
+        component: DetailPost,
     },
     {
         path: publicRoutes.reset_password,

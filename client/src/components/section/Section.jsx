@@ -59,7 +59,7 @@ const Section = ({ cateData, title }) => {
                     <Skeleton />
                 ) : prodCate?.length > 0 ? (
                     <Slider {...settingsProducts}>
-                        {prodCate?.map((item) => (
+                        {prodCate?.slice(0, 6)?.map((item) => (
                             <ProductItem key={item._id} data={item} cateType={cateType} />
                         ))}
                     </Slider>
