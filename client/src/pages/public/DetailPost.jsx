@@ -27,14 +27,14 @@ const DetailPost = () => {
                     </div>
                     <div className="absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-b from-[#ffffff00] via-[#00000099] to-[#000000cc] z-50">
                         <div className="w-full flex flex-col justify-center items-center absolute bottom-0 mb-10">
-                            <h1 className="max-w-[800px] text-5xl text-white font-semibold post-title-font leading-snug">
+                            <h1 className="max-w-[800px] text-5xl text-white font-semibold font-robotoCondensed leading-snug">
                                 {post?.title}
                             </h1>
                         </div>
                     </div>
                 </div>
                 <div className="max-w-[800px] h-[auto] p-[20px_100px] flex justify-center shadow-[0_0_50px_0_#00000026] -mb-5">
-                    <p className="post-description-first-letter post-title-font">{post?.description}</p>
+                    <p className="post-description-first-letter font-robotoCondensed">{post?.description}</p>
                 </div>
             </div>
         </div>

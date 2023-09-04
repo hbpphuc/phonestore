@@ -25,6 +25,10 @@ export const publicR = [
         component: Post,
     },
     {
+        path: publicRoutes.post_type,
+        component: Post,
+    },
+    {
         path: publicRoutes.post_detail,
         component: DetailPost,
     },

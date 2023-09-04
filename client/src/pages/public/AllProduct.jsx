@@ -66,7 +66,7 @@ const AllProduct = () => {
         }
 
         fetchApi()
-    }, [type, sortS, valueBrand, valueColor, page, limit, cId, search])
+    }, [type, sortS, valueBrand, valueColor, page, cId, search])
 
     return (
         <div className="w-full h-auto">

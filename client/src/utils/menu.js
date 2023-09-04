@@ -19,8 +19,8 @@ export const navigatorMenu = [
     },
     {
         id: 4,
-        path: publicRoutes.blog,
-        title: 'blog',
+        path: publicRoutes.post,
+        title: 'news',
     },
 ]
 

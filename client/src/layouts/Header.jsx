@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
 import { useDispatch, useSelector } from 'react-redux'
 import { Popup, LoginForm, RegisterForm, ForgotForm, Button, Icon, Navigation, SearchBar } from '../components'
@@ -9,7 +10,6 @@ import logo from '../assets/images/logo.png'
 import { getCurrentUser } from '../redux/user/userAction'
 import * as apis from '../apis'
 import { logoutt } from '../redux/user/userSlice'
-import Swal from 'sweetalert2'
 
 const Header = ({ onSetOpenOrder, cartItemCount }) => {
     const { isShowing, toggle } = useModal()
