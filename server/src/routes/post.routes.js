@@ -9,10 +9,8 @@ router.route('/:slug').get(postController.getPostSlug);
 
 router.use(authController.protect);
 
-router.route('/:id/liking').put(authController.protect, postController.liking);
-router
-    .route('/:id/disliking')
-    .put(authController.protect, postController.disliking);
+router.route('/:id/like').put(postController.like);
+router.route('/:id/dislike').put(postController.dislike);
 
 router.use(authController.restrictTo('admin'));
 

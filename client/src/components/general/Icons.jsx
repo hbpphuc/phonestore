@@ -1,27 +1,27 @@
 import { RiShoppingBasketFill } from 'react-icons/ri'
 import { TbSearch, TbDotsVertical, TbCurrencyDollar } from 'react-icons/tb'
-import {
-    FaHeart,
-    FaEye,
-    FaRegComments,
-    FaGift,
-    FaMobileAlt,
-    FaUserCircle,
-    FaChartPie,
-    FaLayerGroup,
-} from 'react-icons/fa'
+import { FaHeart, FaEye, FaRegComments, FaGift, FaUserCircle, FaChartPie, FaLayerGroup } from 'react-icons/fa'
 import { FaShieldHalved } from 'react-icons/fa6'
 import { HiMenu, HiOutlineArrowNarrowLeft, HiOutlineArrowNarrowRight, HiUserGroup } from 'react-icons/hi'
-import { BsCalendar3, BsDisplay, BsSpeaker, BsDot } from 'react-icons/bs'
+import { BsCalendar3, BsDot } from 'react-icons/bs'
 import { GrClose } from 'react-icons/gr'
 import { BiDetail, BiSolidTruck, BiSolidDashboard } from 'react-icons/bi'
 import { GiReturnArrow } from 'react-icons/gi'
 import { TiPhone } from 'react-icons/ti'
-import { MdNavigateNext, MdLaptop, MdDevicesOther, MdDownloadDone, MdShoppingCartCheckout } from 'react-icons/md'
+import { MdNavigateNext, MdDownloadDone, MdShoppingCartCheckout } from 'react-icons/md'
 import { RiEyeCloseLine, RiEyeFill, RiDashboard2Line } from 'react-icons/ri'
-import { IoMdTabletPortrait, IoMdCloseCircle } from 'react-icons/io'
+import { IoMdCloseCircle } from 'react-icons/io'
 import { IoPersonCircleSharp, IoClose } from 'react-icons/io5'
-import { BiSolidCameraHome, BiLogOut, BiSolidEditAlt, BiTrash, BiCheck } from 'react-icons/bi'
+import {
+    BiLogOut,
+    BiSolidEditAlt,
+    BiTrash,
+    BiCheck,
+    BiLike,
+    BiDislike,
+    BiSolidDislike,
+    BiSolidLike,
+} from 'react-icons/bi'
 import { RxUpdate } from 'react-icons/rx'
 import { CgRemove } from 'react-icons/cg'
 import { AiFillSetting } from 'react-icons/ai'
@@ -46,13 +46,6 @@ const Icon = {
     MdNavigateNext,
     RiEyeCloseLine,
     RiEyeFill,
-    FaMobileAlt,
-    MdLaptop,
-    IoMdTabletPortrait,
-    BiSolidCameraHome,
-    BsDisplay,
-    BsSpeaker,
-    MdDevicesOther,
     HiOutlineArrowNarrowLeft,
     HiOutlineArrowNarrowRight,
     FaUserCircle,
@@ -78,6 +71,10 @@ const Icon = {
     BiCheck,
     IoClose,
     TbCurrencyDollar,
+    BiLike,
+    BiDislike,
+    BiSolidDislike,
+    BiSolidLike,
 }
 
 export default Icon

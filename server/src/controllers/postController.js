@@ -38,7 +38,7 @@ exports.getPostSlug = crud.getOneSlug(Post);
 exports.updatePost = crud.updateOne(Post);
 exports.deletePost = crud.deleteOne(Post);
 
-exports.liking = asyncHandler(async (req, res, next) => {
+exports.like = asyncHandler(async (req, res, next) => {
     const post = await Post.findById(req.params.id);
 
     let result;
@@ -68,7 +68,7 @@ exports.liking = asyncHandler(async (req, res, next) => {
     });
 });
 
-exports.disliking = asyncHandler(async (req, res, next) => {
+exports.dislike = asyncHandler(async (req, res, next) => {
     const post = await Post.findById(req.params.id);
 
     let result;

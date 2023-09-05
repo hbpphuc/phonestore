@@ -23,11 +23,19 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
     }, [dispatch, isLoggedIn])
 
     const logout = async () => {
-        const res = await apis.logout()
-        if (res.status === 'success') {
-            dispatch(logoutt({ isLoggedIn: false }))
-            Swal.fire('Congratulation!', 'User logout successfully!', 'success').then(() => navigate(0))
-        }
+        Swal.fire({
+            title: 'Logout',
+            text: 'Are you sure?',
+            showCancelButton: true,
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const res = await apis.logout()
+                if (res.status === 'success') {
+                    dispatch(logoutt({ isLoggedIn: false }))
+                    Swal.fire('Congratulation!', 'User logout successfully!', 'success').then(() => navigate(0))
+                }
+            }
+        })
     }
 
     return (

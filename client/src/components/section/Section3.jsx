@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Slider from 'react-slick'
-import Blog from 'components/blog/Blog'
+import { PostItem } from 'components'
+import * as apis from 'apis'
 
 const Section3 = ({ title }) => {
+    const [post, setPost] = useState(null)
+    const [type, setType] = useState(null)
+
+    useEffect(() => {
+        const fetchApi = async () => {
+            const res = await apis.getAllPost()
+            const res2 = await apis.getAllTopic()
+            setPost(res?.data?.data)
+            setType(res2?.data?.data)
+        }
+
+        fetchApi()
+    }, [])
+
     const settingsBlogs = {
         dots: false,
         infinite: false,
@@ -18,8 +33,8 @@ const Section3 = ({ title }) => {
                 <span className="w-10 h-[3px] bg-[#ccc] absolute bottom-0"></span>
             </div>
             <Slider {...settingsBlogs}>
-                {[1, 2, 3, 4].map((item, index) => (
-                    <Blog key={index} data={item} />
+                {post?.slice(0, 7).map((item) => (
+                    <PostItem key={item._id} data={item} typePost={type?.find((el) => el._id === item?.topic)?.slug} />
                 ))}
             </Slider>
         </div>

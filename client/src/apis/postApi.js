@@ -17,3 +17,21 @@ export const getPost = async (slug) => {
         return error.response.data
     }
 }
+
+export const likePost = async (id) => {
+    try {
+        const res = await httpRequest.put(`posts/${id}/like`, {}, { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export const dislikePost = async (id) => {
+    try {
+        const res = await httpRequest.put(`posts/${id}/dislike`, {}, { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}

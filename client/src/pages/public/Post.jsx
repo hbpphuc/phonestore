@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Link, NavLink, useParams } from 'react-router-dom'
+import LoadingBar from 'react-top-loading-bar'
 import moment from 'moment/moment'
 import { Breadcrumb, Icon } from 'components'
 import * as apis from 'apis'
 import { publicRoutes } from 'routes/paths'
-import LoadingBar from 'react-top-loading-bar'
 
 const Post = () => {
     const { type } = useParams()

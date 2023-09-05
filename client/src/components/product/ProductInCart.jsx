@@ -26,7 +26,7 @@ const ProductInCart = ({ data, i, length }) => {
         }
 
         if (value <= data?.product?.quantity) updateCart()
-    }, [value, data?.product, data?.color])
+    }, [value])
 
     return (
         <div className={`w-full h-auto pb-5 flex gap-5 ${!i && 'border-b border-[#4b545c]'}`}>
