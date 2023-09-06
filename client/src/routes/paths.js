@@ -24,6 +24,7 @@ export const adminRoutes = {
     adminLogin: 'login',
     adminDashboard: 'dashboard',
     adminProducts: 'products',
+    adminPosts: 'posts',
     adminUsers: 'users',
     adminOrders: 'orders',
 }

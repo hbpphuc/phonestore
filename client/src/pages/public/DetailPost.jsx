@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import DOMPurify from 'dompurify'
 import { Breadcrumb, Icon } from 'components'
 import * as apis from 'apis'
 import moment from 'moment'
@@ -58,14 +59,20 @@ const DetailPost = () => {
                                     {moment(toTimestamp(post?.createdAt) * 1000).fromNow()}
                                 </div>
                                 <div className="flex gap-2 text-white">
-                                    <span onClick={handleLikePost} className="p-2 cursor-pointer">
+                                    <span
+                                        onClick={handleLikePost}
+                                        className="p-2 cursor-pointer active:animate-like-effect"
+                                    >
                                         {post?.likes?.find((item) => curUser?.data?._id === item) ? (
                                             <Icon.BiSolidLike size={24} />
                                         ) : (
                                             <Icon.BiLike size={24} />
                                         )}
                                     </span>
-                                    <span onClick={handleDislikePost} className="p-2 cursor-pointer">
+                                    <span
+                                        onClick={handleDislikePost}
+                                        className="p-2 cursor-pointer active:animate-like-effect"
+                                    >
                                         {post?.dislikes?.find((item) => curUser?.data?._id === item) ? (
                                             <Icon.BiSolidDislike size={24} />
                                         ) : (
@@ -78,7 +85,12 @@ const DetailPost = () => {
                     </div>
                 </div>
                 <div className="max-w-[800px] h-[auto] p-[20px_100px] flex justify-center shadow-[0_0_50px_0_#00000026] -mb-5">
-                    <p className="post-description-first-letter font-robotoCondensed">{post?.description}</p>
+                    <p
+                        className="font-robotoCondensed"
+                        dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(post?.description),
+                        }}
+                    ></p>
                 </div>
             </div>
         </div>

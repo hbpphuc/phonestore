@@ -1,4 +1,4 @@
-import httpRequest from '../utils/httpRequest'
+import httpRequest from 'utils/httpRequest'
 
 export const getAllPost = async () => {
     try {
@@ -12,6 +12,33 @@ export const getAllPost = async () => {
 export const getPost = async (slug) => {
     try {
         const res = await httpRequest.get(`posts/${slug}`)
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export const createPost = async (data) => {
+    try {
+        const res = await httpRequest.post('posts', data, { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export const updatePost = async (id, data) => {
+    try {
+        const res = await httpRequest.put(`posts/${id}`, data, { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export const deletePost = async (id) => {
+    try {
+        const res = await httpRequest.delete(`posts/${id}`, { withCredentials: true })
         return res.data
     } catch (error) {
         return error.response.data

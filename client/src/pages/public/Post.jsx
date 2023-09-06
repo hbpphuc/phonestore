@@ -5,11 +5,10 @@ import moment from 'moment/moment'
 import { Breadcrumb, Icon } from 'components'
 import * as apis from 'apis'
 import { publicRoutes } from 'routes/paths'
+import DOMPurify from 'dompurify'
 
 const Post = () => {
     const { type } = useParams()
-
-    console.log({ type })
 
     const [topic, setTopic] = useState(null)
     const [post, setPost] = useState(null)
@@ -31,11 +30,7 @@ const Post = () => {
             const res = await apis.getAllPost()
             setProgress(100)
 
-            if (!type) setPost(res?.data?.data)
-            else {
-                const typePost = topic?.find((el) => el.slug === type)
-                setPost(res?.data?.data?.filter((item) => item.topic === typePost?._id))
-            }
+            type ? setPost(res?.data?.data?.filter((item) => item.topic.slug === type)) : setPost(res?.data?.data)
         }
 
         getAllPost()
@@ -86,7 +81,12 @@ const Post = () => {
                                 <Icon.BsDot size={16} />
                                 {moment(item?.createdAt).format('MMM DD, YYYY')}
                             </div>
-                            <p className="line-clamp-5 font-robotoCondensed text-justify">{item?.description}</p>
+                            <p
+                                dangerouslySetInnerHTML={{
+                                    __html: DOMPurify.sanitize(item?.description),
+                                }}
+                                className="line-clamp-5 font-robotoCondensed text-justify"
+                            ></p>
                         </div>
                     </div>
                 ))}

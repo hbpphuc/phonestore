@@ -12,7 +12,8 @@ const postSchema = new mongoose.Schema(
             required: [true, 'A post must have a description'],
         },
         topic: {
-            type: String,
+            type: mongoose.Types.ObjectId,
+            ref: 'Topic',
             required: [true, 'A post must have a topic'],
         },
         summary: {
@@ -36,9 +37,10 @@ const postSchema = new mongoose.Schema(
                 ref: 'User',
             },
         ],
-        thumbnail: {
+        imageCover: {
             type: String,
-            default: 'default-post.jpg',
+            default:
+                'https://res.cloudinary.com/dqsmvz7lv/image/upload/v1693997309/Phonestore/aal8bqkgxdf6sjhxqegf.jpg',
         },
         author: {
             type: String,
@@ -57,13 +59,13 @@ postSchema.pre('save', function (next) {
     next();
 });
 
-// postSchema.pre(/^find/, function (next) {
-//     this.populate({
-//         path: 'likes dislikes',
-//         select: 'name -_id',
-//     });
-//     next();
-// });
+postSchema.pre(/^find/, function (next) {
+    this.populate({
+        path: 'topic',
+        select: 'name slug',
+    });
+    next();
+});
 
 const Post = mongoose.model('Post', postSchema);
 

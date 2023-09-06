@@ -25,6 +25,21 @@ module.exports = {
                 primary: '#101010',
                 admin: '#4b545c',
             },
+            keyframes: {
+                'like-effect': {
+                    '0%': {
+                        '-webkit-transform': 'rotate(-10deg)',
+                        transform: 'rotate(-30deg)',
+                    },
+                    '100%': {
+                        '-webkit-transform': 'rotate(0)',
+                        transform: 'rotate(0)',
+                    },
+                },
+            },
+            animation: {
+                'like-effect': 'like-effect 1s',
+            },
         },
     },
     plugins: [],

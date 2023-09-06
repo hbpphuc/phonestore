@@ -11,7 +11,7 @@ import { TiPhone } from 'react-icons/ti'
 import { MdNavigateNext, MdDownloadDone, MdShoppingCartCheckout } from 'react-icons/md'
 import { RiEyeCloseLine, RiEyeFill, RiDashboard2Line } from 'react-icons/ri'
 import { IoMdCloseCircle } from 'react-icons/io'
-import { IoPersonCircleSharp, IoClose } from 'react-icons/io5'
+import { IoPersonCircleSharp, IoClose, IoNewspaperOutline } from 'react-icons/io5'
 import {
     BiLogOut,
     BiSolidEditAlt,
@@ -75,6 +75,7 @@ const Icon = {
     BiDislike,
     BiSolidDislike,
     BiSolidLike,
+    IoNewspaperOutline,
 }
 
 export default Icon

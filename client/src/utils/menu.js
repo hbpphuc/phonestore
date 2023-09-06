@@ -145,28 +145,24 @@ export const adminSidebarMenu = [
         title: 'Manage Products',
         type: 'button',
         icon: <Icon.BiSolidDashboard size={24} />,
-        subMenu: [
-            {
-                id: 2.1,
-                title: 'List Product',
-                path: `/${adminRoutes.admin}/${adminRoutes.adminProducts}`,
-            },
-            {
-                id: 2.2,
-                title: 'Create Product',
-                path: `/`,
-            },
-        ],
+        path: `/${adminRoutes.admin}/${adminRoutes.adminProducts}`,
     },
     {
         id: 3,
+        title: 'Manage Post',
+        type: 'button',
+        icon: <Icon.IoNewspaperOutline size={24} />,
+        path: `/${adminRoutes.admin}/${adminRoutes.adminPosts}`,
+    },
+    {
+        id: 4,
         title: 'Manage Users',
         type: 'link',
         icon: <Icon.HiUserGroup size={24} />,
         path: `/${adminRoutes.admin}/${adminRoutes.adminUsers}`,
     },
     {
-        id: 4,
+        id: 5,
         title: 'Manage Orders',
         type: 'link',
         icon: <Icon.FaLayerGroup size={24} />,

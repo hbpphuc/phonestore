@@ -2,6 +2,7 @@ import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 import Icon from 'components/general/Icons'
 import moment from 'moment'
+import DOMPurify from 'dompurify'
 
 const PostItem = ({ data, typePost }) => {
     return (
@@ -9,7 +10,7 @@ const PostItem = ({ data, typePost }) => {
             <div className="w-full mx-2 flex flex-col items-center">
                 <img src={data?.imageCover} alt={data?.summary} className="w-full mb-5 object-cover" />
                 <Link
-                    to={`/posts/${typePost}/${data?.slug}`}
+                    to={`/posts/${data?.topic?.slug}/${data?.slug}`}
                     className="text-base text-secondary text-center font-semibold mb-[15px] uppercase hover:text-main transition-colors font-robotoCondensed "
                 >
                     {data?.title}
@@ -27,9 +28,12 @@ const PostItem = ({ data, typePost }) => {
                         </span>
                     </div>
                 </div>
-                <p className="text-center text-[13px] text-primary leading-[24px] line-clamp-3 font-robotoCondensed ">
-                    {data?.description}
-                </p>
+                <p
+                    dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(data?.description),
+                    }}
+                    className="text-center text-[13px] text-primary leading-[24px] line-clamp-3 font-robotoCondensed"
+                ></p>
             </div>
         </div>
     )

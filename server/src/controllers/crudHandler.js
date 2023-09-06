@@ -75,6 +75,8 @@ exports.getOneSlug = (Model, popOptions) =>
 
 exports.createOne = (Model) =>
     asyncHandler(async (req, res, next) => {
+        console.log('body:', req.body);
+
         const imageCover = req?.files?.imageCover[0].path;
         if (imageCover) req.body.imageCover = imageCover;
 

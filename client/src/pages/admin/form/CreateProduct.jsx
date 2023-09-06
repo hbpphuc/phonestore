@@ -95,7 +95,7 @@ const CreateProduct = ({ id, pData }) => {
         setIsLoading(false)
         if (res?.status === 'success') {
             toast.success('Create product successfully!')
-            navigate(0)
+            // navigate(0)
         } else {
             if (res.message.startsWith('E11000'))
                 toast.error('Product name has already exist. Please enter an other name!')
@@ -104,8 +104,6 @@ const CreateProduct = ({ id, pData }) => {
     }
 
     useEffect(() => {
-        console.log(categories, pData, cateOpt)
-
         reset({
             name: id ? pData?.name : '',
             price: id ? pData?.price : '',
@@ -220,7 +218,13 @@ const CreateProduct = ({ id, pData }) => {
                         </div>
                     </div>
                 </div>
-                <button className="w-[400px] mt-[30px] bg-main text-white py-2 hover:brightness-95" type="submit">
+                <button
+                    className={`w-[400px] mt-[30px] bg-main text-white py-2 hover:brightness-95 ${
+                        isLoading ? 'cursor-not-allowed' : 'cursor-pointer'
+                    }`}
+                    disabled={isLoading ? true : false}
+                    type="submit"
+                >
                     {isLoading ? <Loading size={8} color="white" /> : 'Submit'}
                 </button>
             </form>

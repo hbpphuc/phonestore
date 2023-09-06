@@ -49,8 +49,9 @@ app.use('/api', limiter);
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 
 // Body parser, reading data from body into req.body
-app.use(bodyParser.json({ limit: '10kb' }));
-app.use(bodyParser.urlencoded({ extended: true, limit: '10kb' }));
+app.use(express.json({ limit: '50mb' }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use(cookieParser());
 
 // Data sanitization against NoSQL query injection

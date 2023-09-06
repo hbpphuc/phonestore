@@ -3,11 +3,8 @@ import { Editor } from '@tinymce/tinymce-react'
 
 const EditorZone = ({ label, id, name, value, changeValue, invalid, setInvalid }) => {
     const editorRef = useRef(null)
-    // const log = () => {
-    //     if (editorRef.current) {
-    //         console.log(editorRef.current.getContent())
-    //     }
-    // }
+
+    // console.log(editorRef?.current?.getContent())
 
     return (
         <div className="flex flex-col gap-2">
@@ -49,7 +46,7 @@ const EditorZone = ({ label, id, name, value, changeValue, invalid, setInvalid }
                         'bold italic forecolor | alignleft aligncenter ' +
                         'alignright alignjustify | bullist numlist outdent indent | ' +
                         'removeformat | help',
-                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                    content_style: 'body { font-family: "Roboto Condensed", sans-serif; font-size:14px }',
                 }}
                 onChange={(e) => changeValue((prev) => ({ ...prev, [name]: e.target.getContent() }))}
                 onFocus={() => setInvalid && setInvalid([])}

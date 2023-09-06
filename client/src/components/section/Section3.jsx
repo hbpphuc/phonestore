@@ -5,14 +5,11 @@ import * as apis from 'apis'
 
 const Section3 = ({ title }) => {
     const [post, setPost] = useState(null)
-    const [type, setType] = useState(null)
 
     useEffect(() => {
         const fetchApi = async () => {
             const res = await apis.getAllPost()
-            const res2 = await apis.getAllTopic()
             setPost(res?.data?.data)
-            setType(res2?.data?.data)
         }
 
         fetchApi()
@@ -34,7 +31,7 @@ const Section3 = ({ title }) => {
             </div>
             <Slider {...settingsBlogs}>
                 {post?.slice(0, 7).map((item) => (
-                    <PostItem key={item._id} data={item} typePost={type?.find((el) => el._id === item?.topic)?.slug} />
+                    <PostItem key={item._id} data={item} />
                 ))}
             </Slider>
         </div>
