@@ -18,11 +18,13 @@ router
     .route('/uploads/:id')
     .put(postController.populatedImages, postController.uploadPostImages);
 
-router.route('/').post(postController.createPost);
+router
+    .route('/')
+    .post(postController.populatedImages, postController.createPost);
 
 router
     .route('/:id')
-    .put(postController.updatePost)
+    .put(postController.uploadPostImages, postController.updatePost)
     .delete(postController.deletePost);
 
 module.exports = router;

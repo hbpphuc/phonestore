@@ -73,7 +73,6 @@ const ManageProducts = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 const res = await apis.deleteProduct(id)
-                console.log(res)
                 if (res.status === 'success') {
                     setIsNew(!isNew)
                     toast.success('Delete product successfully!')

@@ -22,16 +22,16 @@ const CreatePost = ({ id, pData }) => {
 
     const [type, setType] = useState(null)
 
-    const [payload, setPayload] = useState({ description: '' })
+    const [desc, setDesc] = useState({ description: '' })
     const [invalid, setInvalid] = useState([])
 
     const [imageCover, setImageCover] = useState([])
 
     const changeValue = useCallback(
         (e) => {
-            setPayload(e)
+            setDesc(e)
         },
-        [payload]
+        [desc]
     )
 
     useEffect(() => {
@@ -59,24 +59,19 @@ const CreatePost = ({ id, pData }) => {
             ...data,
             topic: type?.id,
             imageCover: imageCover[0]?.file || undefined,
-            ...payload,
+            ...desc,
         }
 
         for (let i of Object.entries(newData)) {
             formData.append(i[0], i[1])
         }
 
-        for (var pair of formData.entries()) {
-            console.log(pair[0] + ' - ' + pair[1])
-        }
-
         setIsLoading(true)
         const res = await apis.createPost(formData)
-        console.log(res)
         setIsLoading(false)
         if (res?.status === 'success') {
             toast.success('Create post successfully!')
-            // navigate(0)
+            navigate(0)
         } else {
             if (res.message.startsWith('E11000'))
                 toast.error('Post title has already exist. Please enter an other title!')
@@ -98,11 +93,7 @@ const CreatePost = ({ id, pData }) => {
     return (
         <div className="w-full h-auto mt-5">
             <h1 className="w-full mb-5 font-semibold text-xl text-blue-400 text-center uppercase">create new post</h1>
-            <form
-                className="w-full flex flex-col items-center"
-                onSubmit={handleSubmit(onSubmit)}
-                enctype="multipart/form-data"
-            >
+            <form className="w-full flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
                 <div className="w-full flex gap-6">
                     <div className="flex-1 flex flex-col gap-2">
                         <div className="w-full flex items-center mb-3">
@@ -140,8 +131,8 @@ const CreatePost = ({ id, pData }) => {
                         </div>
                         <div className="w-full">
                             <EditorZone
-                                label="Description"
                                 id="description"
+                                label="Description"
                                 name="description"
                                 changeValue={changeValue}
                                 invalid={invalid}

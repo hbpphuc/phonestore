@@ -37,13 +37,13 @@ const ManagePosts = () => {
     }, [page, isNew])
 
     const onSubmit = async (data) => {
-        if (data.name !== '') {
-            const res2 = await apis.searchProduct(data.name)
-            setPosts(res2?.data?.product)
-            setTotalCount(res2?.data?.product.length)
-        } else {
-            getAllProduct()
-        }
+        // if (data.name !== '') {
+        //     const res2 = await apis.searchProduct(data.name)
+        //     setPosts(res2?.data?.product)
+        //     setTotalCount(res2?.data?.product.length)
+        // } else {
+        //     getAllProduct()
+        // }
     }
 
     const handleEdit = (id, data) => {
@@ -75,7 +75,6 @@ const ManagePosts = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 const res = await apis.deletePost(id)
-                console.log(res)
                 if (res.status === 'success') {
                     setIsNew(!isNew)
                     toast.success('Delete post successfully!')
@@ -139,8 +138,8 @@ const ManagePosts = () => {
                                 <td className="p-2">
                                     <img src={item.imageCover} alt={item.summary} className="w-20 h-20 object-cover" />
                                 </td>
-                                <td className="p-2">{item.title}</td>
-                                <td className="p-2 font-robotoCondensed">{item.topic.name}</td>
+                                <td className="p-2 font-robotoCondensed">{item.title}</td>
+                                <td className="p-2">{item.topic.name}</td>
                                 <td className="p-2">{moment(item.createdAt).format('DD/MM/YYYY')}</td>
                                 <td className="p-2">
                                     <Tippy content="Edit" className="text-base">

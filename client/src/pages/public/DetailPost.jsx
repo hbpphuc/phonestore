@@ -52,7 +52,7 @@ const DetailPost = () => {
                                 {post?.title}
                             </h1>
                             <div className="w-[800px] flex justify-between items-center">
-                                <div className="flex items-center text-sm text-[#999]">
+                                <div className="flex items-center text-sm text-[#999] font-robotoCondensed">
                                     By
                                     <span className="ml-1 text-main font-medium">{post?.author}</span>
                                     <Icon.BsDot size={16} />
@@ -84,7 +84,7 @@ const DetailPost = () => {
                         </div>
                     </div>
                 </div>
-                <div className="max-w-[800px] h-[auto] p-[20px_100px] flex justify-center shadow-[0_0_50px_0_#00000026] -mb-5">
+                <div className="max-w-[800px] h-[auto] p-[20px_100px] flex justify-center shadow-[0_0_50px_0_#00000026] -mb-5 font-robotoCondensed">
                     <p
                         className="font-robotoCondensed"
                         dangerouslySetInnerHTML={{
