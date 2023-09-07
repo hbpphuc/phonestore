@@ -4,7 +4,6 @@ const Coupon = require('../models/couponModel');
 const Order = require('../models/orderModel');
 const User = require('../models/userModel');
 const Product = require('../models/productModel');
-const Coupon = require('../models/couponModel');
 const { AppError } = require('../utils');
 const crud = require('./crudHandler');
 
@@ -118,16 +117,6 @@ exports.getCheckoutSession = asyncHandler(async (req, res, next) => {
         },
     });
 });
-
-// exports.createBookingCheckout = asyncHandler(async (req, res, next) => {
-//     // This is only TEMPORARY, because it's UNSECURE: averyone can make bookings without paying
-//     const { tour, user, price } = req.query;
-
-//     if (!tour && !user && !price) return next();
-//     await Booking.create({ tour, user, price });
-
-//     res.redirect(req.originalUrl.split('?')[0]);
-// });
 
 exports.getAllOrder = crud.getAll(Order);
 exports.getOrder = crud.getOne(Order);
