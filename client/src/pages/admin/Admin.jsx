@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 import { AdminSidebar, Icon } from 'components'
 
 const Admin = () => {
@@ -11,10 +11,13 @@ const Admin = () => {
                 <AdminSidebar collapsed={collapsed} />
             </div>
             <div className="flex-auto h-auto bg-adminPrimary relative">
-                <div className="fixed top-0 w-full h-auto p-[10px_8px] bg-adminMain border-b border-admin z-40">
+                <div className="flex items-center fixed top-0 w-full h-auto p-[10px_8px] bg-adminMain border-b border-admin z-40 gap-5">
                     <button onClick={() => setCollapsed(!collapsed)} className="cursor-pointer">
                         <Icon.HiMenu size={32} className="text-[#ffffffbf] hover:text-white transition-colors" />
                     </button>
+                    <Link to="/">
+                        <Icon.BiSolidHome size={30} className="text-[#ffffffbf] hover:text-white transition-colors" />
+                    </Link>
                 </div>
                 <div className="w-full h-auto overflow-y-auto">
                     <Outlet />

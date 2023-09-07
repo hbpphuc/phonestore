@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { loadStripe } from '@stripe/stripe-js'
 import { useDebounce } from 'use-debounce'
 import { PuffLoader } from 'react-spinners'
 import { Button, Icon, ProductInCart, Loading } from 'components'
 import * as apis from 'apis'
+import { toast } from 'react-toastify'
+
+const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
 
 const OrderSidebar = ({ onSetOpenOrder, user }) => {
     const [couponCode, setCouponCode] = useState('')
@@ -11,9 +15,11 @@ const OrderSidebar = ({ onSetOpenOrder, user }) => {
     const [isValid, setIsValid] = useState(false)
     const [couponItem, setCouponItem] = useState(null)
 
+    const [checkout, setCheckout] = useState(null)
+
     const [value] = useDebounce(couponCode, 700)
 
-    const total = user?.cart?.reduce((init, curr) => init + curr.quantity * curr.product.price, 0)
+    const total = user?.cart?.reduce((init, curr) => init + curr.quantity * curr.product?.price, 0)
 
     const { register, handleSubmit } = useForm()
 
@@ -45,9 +51,25 @@ const OrderSidebar = ({ onSetOpenOrder, user }) => {
         totalDiscount = total - couponItem?.discount
     }
 
-    const onSubmit = (data) => {
-        console.log(data)
+    const onSubmit = async (data) => {
+        const dataObj = {
+            ...data,
+            cart: user?.cart,
+        }
+        const res = await apis.getCheckoutSession(dataObj)
+        if (res?.status === 'success') {
+            setCheckout(res?.data)
+        } else toast(res?.message)
     }
+
+    useEffect(() => {
+        const redirectCheckout = async () => {
+            await stripe.redirectToCheckout({
+                sessionId: checkout?.session.id,
+            })
+        }
+        checkout && redirectCheckout()
+    }, [checkout])
 
     return (
         <div className="fixed top-0 right-0 w-[400px] h-screen flex flex-col bg-[#1c1d1d] text-white sidebar-shadow">

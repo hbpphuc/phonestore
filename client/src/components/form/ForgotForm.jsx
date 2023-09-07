@@ -27,7 +27,7 @@ const ForgotForm = ({ onSetForm }) => {
     }
 
     return (
-        <div className="min-w-[500px] w-full h-full flex flex-col items-center">
+        <div className="min-w-[500px] w-full h-full flex flex-col items-center z-50">
             <h1 className="w-full mb-5 font-semibold text-xl text-[#505050] text-center ">RESET YOUR PASSWORD</h1>
             <p className="w-full p-[12px_12px] mb-[10px] border border-secondary text-sm text-primary">
                 We will send you an email to reset your password.

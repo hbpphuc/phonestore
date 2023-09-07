@@ -41,7 +41,7 @@ const ProductInCart = ({ data, i, length }) => {
                 <div>
                     <Link
                         to={`/products/${data?.product?.category?.slug}/${data?.product?.slug}`}
-                        className="text-lg line-clamp-1 hover:underline"
+                        className="line-clamp-1 hover:underline"
                     >
                         {data?.product?.name}
                     </Link>

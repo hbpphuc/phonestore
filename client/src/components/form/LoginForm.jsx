@@ -33,7 +33,7 @@ const LoginForm = ({ onSetForm }) => {
     }
 
     return (
-        <div className="min-w-[500px] w-full h-full flex flex-col items-center">
+        <div className="min-w-[500px] w-full h-full flex flex-col items-center z-50">
             <h1 className="w-full mb-5 font-semibold text-xl text-[#505050] text-center ">LOGIN</h1>
             <form className="w-full flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
                 <div className="w-full">

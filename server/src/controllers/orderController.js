@@ -1,9 +1,14 @@
 const asyncHandler = require('express-async-handler');
+const Stripe = require('stripe');
 const Coupon = require('../models/couponModel');
 const Order = require('../models/orderModel');
 const User = require('../models/userModel');
+const Product = require('../models/productModel');
+const Coupon = require('../models/couponModel');
 const { AppError } = require('../utils');
 const crud = require('./crudHandler');
+
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 exports.createOrder = asyncHandler(async (req, res, next) => {
     const user = await User.findById(req.user.id).populate(
@@ -79,6 +84,50 @@ exports.getUserOrder = asyncHandler(async (req, res, next) => {
         },
     });
 });
+
+exports.getCheckoutSession = asyncHandler(async (req, res, next) => {
+    const { cart, coupon } = req.body;
+
+    // Create checkout session
+    const session = await stripe.checkout.sessions.create({
+        mode: 'payment',
+        payment_method_types: ['card'],
+        success_url: process.env.CLIENT_URL,
+        cancel_url: process.env.CLIENT_URL,
+        customer_email: req.user.email,
+        client_reference_id: req.user._id,
+        line_items: cart.map((item) => ({
+            price_data: {
+                product_data: {
+                    name: item.product.name,
+                    description: item.color,
+                    images: [item.product.imageCover],
+                },
+                unit_amount: item.product.price * 100,
+                currency: 'usd',
+            },
+            quantity: item.quantity,
+        })),
+    });
+
+    // Create session at response
+    res.status(200).json({
+        status: 'success',
+        data: {
+            session,
+        },
+    });
+});
+
+// exports.createBookingCheckout = asyncHandler(async (req, res, next) => {
+//     // This is only TEMPORARY, because it's UNSECURE: averyone can make bookings without paying
+//     const { tour, user, price } = req.query;
+
+//     if (!tour && !user && !price) return next();
+//     await Booking.create({ tour, user, price });
+
+//     res.redirect(req.originalUrl.split('?')[0]);
+// });
 
 exports.getAllOrder = crud.getAll(Order);
 exports.getOrder = crud.getOne(Order);

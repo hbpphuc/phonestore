@@ -21,6 +21,7 @@ import {
     BiDislike,
     BiSolidDislike,
     BiSolidLike,
+    BiSolidHome,
 } from 'react-icons/bi'
 import { RxUpdate } from 'react-icons/rx'
 import { CgRemove } from 'react-icons/cg'
@@ -76,6 +77,7 @@ const Icon = {
     BiSolidDislike,
     BiSolidLike,
     IoNewspaperOutline,
+    BiSolidHome,
 }
 
 export default Icon
