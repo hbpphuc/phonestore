@@ -4,7 +4,6 @@ import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { store, persistor } from './redux/store'
 import { PersistGate } from 'redux-persist/integration/react'
-import LazyLoad from 'react-lazy-load'
 import App from './App'
 import ScrollToTop from './hooks/ScrollToTop'
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -19,9 +18,7 @@ root.render(
         <PersistGate loading={null} persistor={persistor}>
             <BrowserRouter>
                 <ScrollToTop />
-                <LazyLoad threshold={0.95}>
-                    <App />
-                </LazyLoad>
+                <App />
             </BrowserRouter>
         </PersistGate>
     </Provider>

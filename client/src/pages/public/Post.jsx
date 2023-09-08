@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Link, NavLink, useParams } from 'react-router-dom'
 import LoadingBar from 'react-top-loading-bar'
+import DOMPurify from 'dompurify'
 import moment from 'moment/moment'
+import LazyLoad from 'react-lazyload'
 import { Breadcrumb, Icon } from 'components'
 import * as apis from 'apis'
 import { publicRoutes } from 'routes/paths'
-import DOMPurify from 'dompurify'
 
 const Post = () => {
     const { type } = useParams()
@@ -63,7 +64,7 @@ const Post = () => {
             </div>
             <div className="w-main grid grid-cols-4 gap-6">
                 {post?.map((item) => (
-                    <div key={item?._id} className={`w-full col-start-1 col-span-3 flex gap-4`}>
+                    <LazyLoad offset={100} key={item?._id} className={`w-full col-start-1 col-span-3 flex gap-4`}>
                         <img
                             src={item?.imageCover}
                             alt={item?.summary}
@@ -88,7 +89,7 @@ const Post = () => {
                                 className="line-clamp-5 font-robotoCondensed text-justify"
                             ></p>
                         </div>
-                    </div>
+                    </LazyLoad>
                 ))}
                 <div className="col-start-4 col-span-1 row-start-1">
                     <img src="https://cdn.tgdd.vn/2023/08/banner/380x215-380x215.png" alt="ads" />

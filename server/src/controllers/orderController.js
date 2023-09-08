@@ -10,6 +10,7 @@ const crud = require('./crudHandler');
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 exports.createOrder = asyncHandler(async (req, res, next) => {
+    // const session = await stripe.checkout.sessions.create()
     const user = await User.findById(req.user.id).populate(
         'cart.product',
         'name price'
@@ -74,7 +75,10 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
 });
 
 exports.getUserOrder = asyncHandler(async (req, res, next) => {
-    const userOrder = await Order.find({ orderBy: req.user._id });
+    const userOrder = await Order.find({ orderBy: req.user._id }).populate({
+        path: 'products.product',
+        select: 'name imageCover price',
+    });
 
     res.status(200).json({
         status: 'success',
@@ -91,7 +95,7 @@ exports.getCheckoutSession = asyncHandler(async (req, res, next) => {
     const session = await stripe.checkout.sessions.create({
         mode: 'payment',
         payment_method_types: ['card'],
-        success_url: process.env.CLIENT_URL,
+        success_url: `${process.env.CLIENT_URL}/me/order`,
         cancel_url: process.env.CLIENT_URL,
         customer_email: req.user.email,
         client_reference_id: req.user._id,

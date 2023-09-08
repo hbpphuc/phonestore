@@ -8,3 +8,12 @@ export const getCheckoutSession = async (data) => {
         return error.response.data
     }
 }
+
+export const getUserOrders = async () => {
+    try {
+        const res = await httpRequest.get('orders/userOrder', { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
