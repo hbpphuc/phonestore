@@ -62,8 +62,8 @@ const UserAccount = () => {
     }, [])
 
     return (
-        <div className="w-full h-auto flex gap-8">
-            <div className="flex-1 ml-6">
+        <div className="w-full h-auto flex gap-4">
+            <div className="flex-1 ml-4">
                 <h1 className="w-full h-auto flex text-xl font-bold uppercase gradient-text">Your Account Setting</h1>
                 <div className="w-full mt-5">
                     <form className="w-full flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>

@@ -57,20 +57,19 @@ const OrderSidebar = ({ onSetOpenOrder, user }) => {
             cart: user?.cart,
         }
         const res = await apis.getCheckoutSession(dataObj)
-        console.log(res)
         if (res?.status === 'success') {
             setCheckout(res?.data)
         } else toast(res?.message)
     }
 
-    // useEffect(() => {
-    //     const redirectCheckout = async () => {
-    //         await stripe.redirectToCheckout({
-    //             sessionId: checkout?.session.id,
-    //         })
-    //     }
-    //     checkout && redirectCheckout()
-    // }, [checkout])
+    useEffect(() => {
+        const redirectCheckout = async () => {
+            await stripe.redirectToCheckout({
+                sessionId: checkout?.session.id,
+            })
+        }
+        checkout && redirectCheckout()
+    }, [checkout])
 
     return (
         <div className="fixed top-0 right-0 w-[400px] h-screen flex flex-col bg-[#1c1d1d] text-white sidebar-shadow">

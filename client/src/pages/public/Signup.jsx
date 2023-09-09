@@ -6,6 +6,7 @@ import { publicRoutes } from 'routes/paths'
 const Signup = () => {
     const { status } = useParams()
     const navigate = useNavigate()
+
     useEffect(() => {
         if (status === 'success')
             Swal.fire('Congratulation!', 'Now you can log in!', 'success').then(() => navigate(`/${publicRoutes.home}`))

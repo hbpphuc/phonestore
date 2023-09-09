@@ -8,9 +8,9 @@ router.use(authController.protect);
 
 router.post('/checkout', orderController.getCheckoutSession);
 
-router.route('/userOrder').get(orderController.getUserOrder);
+router.route('/createOrder').get(orderController.createOrder);
 
-router.route('/').post(orderController.createOrder);
+router.route('/userOrder').get(orderController.getUserOrder);
 
 router.route('/:id').get(orderController.getOrder);
 

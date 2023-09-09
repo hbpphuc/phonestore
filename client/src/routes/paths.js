@@ -8,6 +8,7 @@ export const publicRoutes = {
     post_type: '/posts/:type',
     post_detail: '/posts/:type/:slug',
     signup: '/signup/:status',
+    checkout: '/checkout/:status',
     reset_password: '/reset-password/:token',
     notfound: '/not-found',
 }

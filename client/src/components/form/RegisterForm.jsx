@@ -30,7 +30,7 @@ const RegisterForm = ({ onSetForm }) => {
                 'Congratulation!',
                 'An email confirm was send into your mail. Please check it and confirm to final sign up!',
                 'success'
-            ).then(onSetForm((prev) => !prev))
+            ).then(onSetForm(0))
         } else {
             if (res.status === 'fail') {
                 Swal.fire('Oops!', res.message, 'error')

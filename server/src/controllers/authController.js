@@ -86,6 +86,11 @@ exports.signup = asyncHandler(async (req, res, next) => {
     });
 
     res.clearCookie('registerInfo');
+    res.cookie('signupToken', token, {
+        expires: new Date(Date.now() + 2 * 60 * 1000),
+        httpOnly: true,
+        secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+    });
     res.redirect(`${process.env.CLIENT_URL}/signup/success`);
 
     // sendToken(newUser, 201, req, res);

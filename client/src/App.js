@@ -2,21 +2,24 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
-import LoadingBar from 'react-top-loading-bar'
+import Cookies from 'js-cookie'
+
+import { publicR, privateR, adminR } from './routes'
+import { publicRoutes } from './routes/paths'
+import { Default, NotFound, Signup } from './pages/public'
+import { Admin, NotFoundAdmin } from 'pages/admin'
+import { Private } from 'pages/private'
+
 import 'react-toastify/dist/ReactToastify.css'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import 'swiper/css/free-mode'
-import { publicR, privateR, adminR } from './routes'
-import { publicRoutes } from './routes/paths'
-import { Default, NotFound, Signup } from './pages/public'
-import { NotFoundAdmin } from './pages/admin'
-import { Admin } from 'pages/admin'
-import { Private } from 'pages/private'
 
 function App() {
     const { isLoggedIn, curUser } = useSelector((state) => state.user)
+
+    const { signupToken } = Cookies.get()
 
     return (
         <>

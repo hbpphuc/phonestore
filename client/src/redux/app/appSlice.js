@@ -32,20 +32,6 @@ const appSlice = createSlice({
         builder.addCase(actions.getAllCategories.rejected, (state, action) => {
             state.isLoading = false
         })
-
-        // products
-        builder.addCase(actions.getAllProduct.pending, (state, action) => {
-            state.isLoading = true
-        })
-
-        builder.addCase(actions.getAllProduct.fulfilled, (state, action) => {
-            state.isLoading = false
-            state.categories = action.payload
-        })
-
-        builder.addCase(actions.getAllProduct.rejected, (state, action) => {
-            state.isLoading = false
-        })
     },
 })
 
