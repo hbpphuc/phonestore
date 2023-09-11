@@ -21,6 +21,8 @@ router
 router.route('/deleteMe', userController.deleteMe);
 router.route('/updatePassword').put(authController.updatePassword);
 router.route('/updateCart').put(userController.updateCart);
+router.route('/addToWishlist').put(userController.addToWishlist);
+router.route('/getUserWishlist').get(userController.getUserWishlist);
 
 router.use(authController.restrictTo('manager', 'admin'));
 

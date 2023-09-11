@@ -64,6 +64,7 @@ const userSchema = new mongoose.Schema(
                 color: String,
             },
         ],
+        wishlist: [{ type: mongoose.Types.ObjectId, ref: 'Product' }],
         passwordChangeAt: Date,
         passwordResetToken: String,
         passwordResetExpires: Date,

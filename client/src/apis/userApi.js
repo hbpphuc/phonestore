@@ -107,3 +107,21 @@ export const addToCart = async (data) => {
         return error.response.data
     }
 }
+
+export const addToWishlist = async ({ pId }) => {
+    try {
+        const res = await httpRequest.put('users/addToWishlist', { pId }, { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export const getUserWishlist = async () => {
+    try {
+        const res = await httpRequest.get('users/getUserWishlist', { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}

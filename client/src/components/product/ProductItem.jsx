@@ -1,11 +1,15 @@
 /* eslint-disable react/style-prop-object */
-import React, { memo } from 'react'
+import React, { memo, useState, useRef, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import useModal from 'hooks/useModal'
 import Skeleton from 'react-loading-skeleton'
+import { toast } from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux'
 
+import { wishlist } from 'redux/user/userSlice'
+import * as apis from 'apis'
 import { publicRoutes } from 'routes/paths'
 import { productAction } from 'utils/menu'
 import InfoProduct from './InfoProduct'
@@ -13,14 +17,34 @@ import Popup from 'components/general/Popup'
 import Icon from 'components/general/Icons'
 
 const ProductItem = ({ data, cateType, detail, loading }) => {
+    const { curUser } = useSelector((state) => state.user)
+    const dispatch = useDispatch()
+
     const { isShowing, toggle } = useModal()
+
     const isNew = true
     const navigate = useNavigate()
 
-    const handleClickActionBtn = (item) => {
+    const wishlistRef = useRef()
+
+    const handleClickActionBtn = async (item, id) => {
+        if (item.id === 1) {
+            const res = await apis.addToWishlist({ pId: id })
+            res?.status !== 'success' && toast.error(res?.message)
+
+            if (res?.data?.wishlist?.wishlist?.includes(id)) {
+                dispatch(wishlist(true))
+                wishlistRef?.current.classList.add('wishlist-action')
+            } else {
+                dispatch(wishlist(false))
+                wishlistRef?.current.classList.remove('wishlist-action')
+            }
+        }
+
         if (item.id === 2) {
             navigate(`${publicRoutes.products}/${cateType}/${data?.slug}`)
         }
+
         if (item.id === 3) {
             toggle()
         }
@@ -60,8 +84,13 @@ const ProductItem = ({ data, cateType, detail, loading }) => {
                             {productAction.map((item) => (
                                 <Tippy key={item.id} content={item.title} placement="top">
                                     <button
-                                        onClick={() => handleClickActionBtn(item)}
-                                        className="w-11 h-11 flex justify-center items-center rounded-full product-action"
+                                        onClick={() => handleClickActionBtn(item, data._id)}
+                                        ref={item.id === 1 && wishlistRef}
+                                        className={`w-11 h-11 flex justify-center items-center rounded-full product-action ${
+                                            item.id === 1 && curUser?.data?.wishlist.includes(data._id)
+                                                ? 'wishlist-action'
+                                                : ''
+                                        }`}
                                     >
                                         {item.icon}
                                     </button>

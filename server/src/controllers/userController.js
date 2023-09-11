@@ -131,6 +131,58 @@ exports.updateCart = asyncHandler(async (req, res, next) => {
     });
 });
 
+exports.addToWishlist = asyncHandler(async (req, res, next) => {
+    const { pId } = req.body;
+
+    const user = await User.findById(req.user.id);
+    const checkProduct = await Product.findOne({ _id: pId });
+
+    if (!checkProduct) {
+        return next(new AppError('This product does not exist.', 404));
+    }
+
+    const checkWishlist = user?.wishlist?.includes(pId);
+
+    let wishlist;
+
+    if (!checkWishlist) {
+        wishlist = await User.findByIdAndUpdate(
+            req.user.id,
+            {
+                $push: { wishlist: pId },
+            },
+            { new: true }
+        );
+    } else {
+        wishlist = await User.findByIdAndUpdate(
+            req.user.id,
+            {
+                $pull: { wishlist: pId },
+            },
+            { new: true }
+        );
+    }
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            wishlist,
+        },
+    });
+});
+
+exports.getUserWishlist = asyncHandler(async (req, res, next) => {
+    const user = await User.findById(req.user.id);
+    const products = await Product.find({ _id: { $in: user.wishlist } });
+
+    res?.status(200).json({
+        status: 'success',
+        data: {
+            products,
+        },
+    });
+});
+
 exports.getAllUser = crud.getAll(User);
 exports.getUser = crud.getOne(User);
 exports.updateUser = crud.updateOne(User);

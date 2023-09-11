@@ -18,8 +18,6 @@ const UserOrder = () => {
         getUserOrder()
     }, [])
 
-    console.log(userOrder)
-
     return (
         <div className="w-full h-auto flex flex-col gap-2">
             <div className="flex-1 ml-4">

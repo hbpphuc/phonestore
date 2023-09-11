@@ -7,6 +7,7 @@ const userSlice = createSlice({
         isLoggedIn: false,
         curUser: null,
         isLoading: false,
+        isWishlist: false,
     },
     reducers: {
         login(state, action) {
@@ -14,6 +15,9 @@ const userSlice = createSlice({
         },
         logoutt(state, action) {
             state.isLoggedIn = action.payload.isLoggedIn
+        },
+        wishlist(state, action) {
+            state.isWishlist = action.payload
         },
     },
     extraReducers: (builder) => {
@@ -32,6 +36,6 @@ const userSlice = createSlice({
     },
 })
 
-export const { login, logoutt } = userSlice.actions
+export const { login, logoutt, wishlist } = userSlice.actions
 
 export default userSlice.reducer
