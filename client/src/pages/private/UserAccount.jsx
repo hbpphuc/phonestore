@@ -8,7 +8,6 @@ import * as apis from 'apis'
 
 const UserAccount = () => {
     const { curUser } = useSelector((state) => state.user)
-    console.log(curUser)
     const navigate = useNavigate()
     const {
         register,
@@ -27,7 +26,6 @@ const UserAccount = () => {
     const [loading, setLoading] = useState(false)
 
     const onSubmit = async (data) => {
-        console.log(data)
         setLoading(true)
         const res = await apis.updateMe(data)
         setLoading(false)
@@ -92,7 +90,7 @@ const UserAccount = () => {
                             <Input
                                 id="phone"
                                 label="Phone number"
-                                type="text"
+                                type="tel"
                                 placeHolder="Enter phone number"
                                 register={register}
                                 errors={errors}

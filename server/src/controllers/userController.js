@@ -50,7 +50,7 @@ exports.updateMe = asyncHandler(async (req, res, next) => {
             )
         );
 
-    const filterBody = filterObj(req.body, 'name', 'email');
+    const filterBody = filterObj(req.body, 'name', 'email', 'phone', 'address');
     if (req.file) filterBody.photo = req.file.path;
     const user = await User.findByIdAndUpdate(req.user.id, filterBody, {
         new: true,

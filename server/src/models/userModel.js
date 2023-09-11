@@ -47,8 +47,8 @@ const userSchema = new mongoose.Schema(
             default:
                 'https://res.cloudinary.com/dqsmvz7lv/image/upload/v1687345761/Phonestore/qviw1rylnqoqjmeyrucb.jpg',
         },
-        phone: { type: String },
-        address: { type: String },
+        phone: String,
+        address: String,
         refreshToken: {
             type: String,
         },
