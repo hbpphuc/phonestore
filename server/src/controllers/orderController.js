@@ -56,8 +56,6 @@ exports.getCheckoutSession = asyncHandler(async (req, res, next) => {
 exports.createOrder = asyncHandler(async (req, res, next) => {
     const cookie = req.cookies;
 
-    console.log(cookie.userCart);
-
     if (!cookie || !cookie.userCart.cart.length === 0) {
         res.clearCookie('userCart');
         return next(new AppError('Cart is empty.', 404));
@@ -130,7 +128,10 @@ exports.getUserOrder = asyncHandler(async (req, res, next) => {
     });
 });
 
-exports.getAllOrder = crud.getAll(Order);
+exports.getAllOrder = crud.getAll(Order, {
+    path: 'products.product',
+    select: 'name imageCover price',
+});
 exports.getOrder = crud.getOne(Order);
 exports.updateOrder = crud.updateOne(Order);
 exports.deleteOrder = crud.deleteOne(Order);

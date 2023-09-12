@@ -184,11 +184,19 @@ button.slick-prev::before {
     -webkit-text-fill-color: transparent;
 }
 
-.save-btn-hover:hover {
+.save-btn {
+    @apply flex justify-center items-center text-white bg-main border border-transparent rounded-full uppercase;
+}
+
+.save-btn:hover {
     background-color: white;
     color: #0eb1f2;
     border: 1px solid #0eb1f2;
     transition: all 0.4s;
+}
+
+.save-btn:disabled {
+    @apply cursor-not-allowed select-none bg-main text-white border-transparent;
 }
 
 .font-robotoCondensed {

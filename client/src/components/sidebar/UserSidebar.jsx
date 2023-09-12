@@ -7,7 +7,7 @@ const activeStyle = 'flex text-main border-l-4 border-main'
 
 const UserSidebar = () => {
     return (
-        <div className="w-[260px] h-full flex flex-col">
+        <div className="w-[260px] h-full flex flex-col z-0">
             <div className="w-full h-auto">
                 <ul className="w-full">
                     <Sidebar width="full" backgroundColor="#f7f7f7" style={{ border: 'none' }}>

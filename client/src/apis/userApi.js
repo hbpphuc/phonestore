@@ -54,6 +54,15 @@ export const updateMe = async (data) => {
     }
 }
 
+export const updateAvatar = async (data) => {
+    try {
+        const res = await httpRequest.put('users/updateAvatar', data, { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
 export const updatePassword = async (data) => {
     try {
         const res = await httpRequest.put(`users/updatePassword`, data, { withCredentials: true })

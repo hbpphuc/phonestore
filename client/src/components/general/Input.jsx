@@ -14,6 +14,7 @@ const Input = ({
     user,
     hidden,
     readOnly,
+    onChange,
 }) => {
     return (
         <div className={`w-full flex ${user ? (hidden ? 'flex-col-reverse' : 'flex-col') : 'items-center'} gap-2`}>
@@ -41,6 +42,7 @@ const Input = ({
                               } relative w-full p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d] rounded-md outline-none`
                     }
                     {...register(id, validate)}
+                    onChange={onChange}
                 />
                 {errors[id] && (
                     <span>

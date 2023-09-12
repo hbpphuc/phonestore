@@ -1,5 +1,5 @@
 import { RiShoppingBasketFill } from 'react-icons/ri'
-import { TbSearch, TbDotsVertical, TbCurrencyDollar } from 'react-icons/tb'
+import { TbSearch, TbDotsVertical, TbCurrencyDollar, TbPhotoEdit } from 'react-icons/tb'
 import { FaHeart, FaEye, FaRegComments, FaGift, FaUserCircle, FaChartPie, FaLayerGroup } from 'react-icons/fa'
 import { FaShieldHalved } from 'react-icons/fa6'
 import { HiMenu, HiOutlineArrowNarrowLeft, HiOutlineArrowNarrowRight, HiUserGroup } from 'react-icons/hi'
@@ -25,9 +25,10 @@ import {
 } from 'react-icons/bi'
 import { RxUpdate } from 'react-icons/rx'
 import { CgRemove } from 'react-icons/cg'
-import { AiFillSetting } from 'react-icons/ai'
+import { AiFillSetting, AiOutlineCloudUpload } from 'react-icons/ai'
 import { TfiLayoutListThumbAlt } from 'react-icons/tfi'
 import { LiaMoneyBillWaveAltSolid } from 'react-icons/lia'
+import { RiMore2Fill } from 'react-icons/ri'
 
 const Icon = {
     RiShoppingBasketFill,
@@ -78,6 +79,9 @@ const Icon = {
     BiSolidLike,
     IoNewspaperOutline,
     BiSolidHome,
+    AiOutlineCloudUpload,
+    TbPhotoEdit,
+    RiMore2Fill,
 }
 
 export default Icon

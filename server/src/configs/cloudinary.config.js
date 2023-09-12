@@ -10,7 +10,7 @@ cloudinary.config({
 });
 
 const multerFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith('image')) {
+    if (file.mimetype.startsWith('image') || file.type.startsWith('image')) {
         cb(null, true);
     } else {
         cb(

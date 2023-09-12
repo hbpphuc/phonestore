@@ -15,6 +15,23 @@ const filterObj = (obj, ...fields) => {
 
 exports.populatedImages = uploadCloud.single('photo');
 
+exports.updateAvatar = asyncHandler(async (req, res, next) => {
+    const photo = req?.file?.path;
+    if (photo) req.body.photo = photo;
+
+    const user = await User.findByIdAndUpdate(req.user.id, req.body, {
+        new: true,
+        runValidators: true,
+    });
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            user,
+        },
+    });
+});
+
 exports.getMe = (req, res, next) => {
     req.params.id = req.user.id;
     next();
@@ -51,7 +68,10 @@ exports.updateMe = asyncHandler(async (req, res, next) => {
         );
 
     const filterBody = filterObj(req.body, 'name', 'email', 'phone', 'address');
-    if (req.file) filterBody.photo = req.file.path;
+    console.log(req?.file);
+    const photo = req?.file?.path;
+    if (photo) filterBody.photo = photo;
+
     const user = await User.findByIdAndUpdate(req.user.id, filterBody, {
         new: true,
         runValidators: true,
