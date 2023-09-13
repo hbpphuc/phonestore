@@ -14,11 +14,6 @@ export const navigatorMenu = [
     },
     {
         id: 3,
-        path: publicRoutes.category,
-        title: 'collection',
-    },
-    {
-        id: 4,
         path: publicRoutes.post,
         title: 'news',
     },

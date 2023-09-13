@@ -44,15 +44,7 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                 <div className="w-full flex justify-center items-center border-b border-[#0000000d] py-[10px]">
                     <div className="w-main flex justify-between ">
                         <div className="flex">
-                            {curUser && (
-                                <>
-                                    <p className="flex gap-1 text-sm font-normal text-[#848484]">
-                                        <span>Hello</span>
-                                        <i className="text-main font-semibold">{curUser?.data?.name.split(' ')[0]}</i>
-                                    </p>
-                                    <p className="text-sm font-normal text-[#848484]">, welcome to our Store!</p>
-                                </>
-                            )}
+                            <p className="text-sm font-normal text-[#848484]">Welcome to our Store!</p>
                         </div>
                         <div className="flex relative">
                             {!curUser ? (

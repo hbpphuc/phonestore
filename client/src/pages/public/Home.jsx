@@ -16,7 +16,7 @@ const Home = () => {
             <Slider />
             <Section cateData={categories} title="Featured Products" />
             {/* <Section2 title="hot collections" /> */}
-            <Section3 title="Blog" />
+            <Section3 title="news" />
         </div>
     )
 }
