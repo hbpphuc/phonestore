@@ -2,28 +2,19 @@ const asyncHandler = require('express-async-handler');
 const Product = require('../models/productModel');
 const Order = require('../models/orderModel');
 const User = require('../models/userModel');
+const Post = require('../models/postModel');
 
-exports.getProductStats = asyncHandler(async (req, res, next) => {
-    const stats = await Product.aggregate([
+exports.getStats = asyncHandler(async (req, res, next) => {
+    const pStats = await Product.aggregate([
         {
             $group: {
                 _id: 'products',
                 numProduct: { $sum: 1 },
-                avgPrice: { $avg: '$price' },
-                minPrice: { $min: '$price' },
-                maxPrice: { $max: '$price' },
             },
         },
     ]);
 
-    res.status(200).json({
-        status: 'success',
-        data: { stats },
-    });
-});
-
-exports.getUserStats = asyncHandler(async (req, res, next) => {
-    const stats = await User.aggregate([
+    const uStats = await User.aggregate([
         {
             $group: {
                 _id: 'users',
@@ -34,18 +25,21 @@ exports.getUserStats = asyncHandler(async (req, res, next) => {
 
     res.status(200).json({
         status: 'success',
-        data: { stats },
+        data: {
+            pStats,
+            uStats,
+        },
     });
 });
 
 exports.getOrderStats = asyncHandler(async (req, res, next) => {
     const stats = await Order.aggregate([
         { $match: { status: 'Delivered' } },
+        { $unwind: '$products' },
         {
             $group: {
-                _id: '$orderBy',
-                goods: { $push: '$products' },
-                totalAmount: { $sum: '$total' },
+                _id: { user: '$orderBy', totalPrice: { $sum: '$total' } },
+                totalSale: { $sum: '$products.count' },
             },
         },
     ]);

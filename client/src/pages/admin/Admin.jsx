@@ -11,7 +11,7 @@ const Admin = () => {
                 <AdminSidebar collapsed={collapsed} />
             </div>
             <div className="flex-auto h-auto bg-adminPrimary relative">
-                <div className="flex items-center fixed top-0 w-full h-auto p-[10px_8px] bg-adminMain border-b border-admin z-40 gap-5">
+                <div className="flex items-center fixed top-0 w-full h-auto p-[13px_8px] bg-adminMain border-b border-admin z-40 gap-5">
                     <button onClick={() => setCollapsed(!collapsed)} className="cursor-pointer">
                         <Icon.HiMenu size={32} className="text-[#ffffffbf] hover:text-white transition-colors" />
                     </button>
