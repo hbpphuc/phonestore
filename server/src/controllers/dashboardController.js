@@ -51,7 +51,7 @@ exports.getOrderStats = asyncHandler(async (req, res, next) => {
 });
 
 exports.getMonthlyPlan = asyncHandler(async (req, res, next) => {
-    const year = req.params.year * 1;
+    const { year } = req.query;
     const plan = await Order.aggregate([
         {
             $match: {
