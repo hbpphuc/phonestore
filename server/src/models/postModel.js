@@ -39,8 +39,7 @@ const postSchema = new mongoose.Schema(
         ],
         imageCover: {
             type: String,
-            default:
-                'https://res.cloudinary.com/dqsmvz7lv/image/upload/v1693997309/Phonestore/aal8bqkgxdf6sjhxqegf.jpg',
+            required: [true, 'A post must have an image cover'],
         },
         author: {
             type: String,

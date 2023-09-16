@@ -56,20 +56,13 @@ const ManagePosts = () => {
     const handleUpdate = async () => {
         setEditItem(null)
         setIsUpdate(false)
-        // const res = await apis.updateUser(editItem)
-        // if (res.status === 'success') {
-        //     setIsNew(!isNew)
-        //     toast.success('Update user successfully!')
-        // } else {
-        //     toast.error('Oops! Something went wrong')
-        // }
     }
 
     const handleDelete = (id) => {
         Swal.fire({
             title: 'Delete',
             icon: 'warning',
-            text: 'This action will delete the product and cannot be restored. Are you sure?',
+            text: 'This action will delete the post and cannot be restore. Are you sure?',
             showCancelButton: true,
             confirmButtonColor: 'red',
         }).then(async (result) => {
@@ -143,21 +136,12 @@ const ManagePosts = () => {
                                 <td className="p-2">{moment(item.createdAt).format('DD/MM/YYYY')}</td>
                                 <td className="p-2">
                                     <Tippy content="Edit" className="text-base">
-                                        {isUpdate && item.id === editItem ? (
-                                            <Button
-                                                onClick={() => handleUpdate()}
-                                                className="p-2 bg-yellow-600 rounded-md hover:brightness-125 transition-all mr-2"
-                                            >
-                                                <Icon.MdDownloadDone size={20} />
-                                            </Button>
-                                        ) : (
-                                            <Button
-                                                onClick={() => handleEdit(item.id, item)}
-                                                className="p-2 bg-yellow-600 rounded-md hover:brightness-125 transition-all mr-2"
-                                            >
-                                                <Icon.BiSolidEditAlt size={20} />
-                                            </Button>
-                                        )}
+                                        <Button
+                                            onClick={() => handleEdit(item.id, item)}
+                                            className="p-2 bg-yellow-600 rounded-md hover:brightness-125 transition-all mr-2"
+                                        >
+                                            <Icon.BiSolidEditAlt size={20} />
+                                        </Button>
                                     </Tippy>
                                     <Tippy content="Delete" className="text-base">
                                         <Button
@@ -193,7 +177,7 @@ const ManagePosts = () => {
                             </Button>
                         </div>
                         <div className="w-full h-full p-5 overflow-y-auto">
-                            <CreatePost id={editItem} pData={data} />
+                            <CreatePost id={editItem} pData={data} onUpdate={handleUpdate} />
                         </div>
                     </div>
                 </Popup>

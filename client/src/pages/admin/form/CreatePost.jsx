@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom'
 import Select from 'react-select'
 import { toast } from 'react-toastify'
 import * as apis from 'apis'
-import { EditorZone, Input, ImageUpload, Loading } from 'components'
+import { EditorZone, Input, ImageUpload, Loading, Icon } from 'components'
 
-const CreatePost = ({ id, pData }) => {
+const CreatePost = ({ id, pData, onUpdate }) => {
     const {
         register,
         handleSubmit,
@@ -20,12 +20,13 @@ const CreatePost = ({ id, pData }) => {
 
     const [topic, setTopic] = useState(null)
 
-    const [type, setType] = useState(null)
+    const [type, setType] = useState({ label: pData?.topic.name, value: pData?.topic.slug })
 
-    const [desc, setDesc] = useState({ description: '' })
+    const [desc, setDesc] = useState({ description: pData?.description })
     const [invalid, setInvalid] = useState([])
 
     const [imageCover, setImageCover] = useState([])
+    const [preview, setPreview] = useState('')
 
     const changeValue = useCallback(
         (e) => {
@@ -55,10 +56,14 @@ const CreatePost = ({ id, pData }) => {
             return toast.error('Topic is require!')
         }
 
+        if (imageCover.length === 0) {
+            return toast.error('Image Cover is require!')
+        }
+
         const newData = {
             ...data,
             topic: type?.id,
-            imageCover: imageCover[0]?.file || undefined,
+            imageCover: id ? imageCover : imageCover[0]?.file,
             ...desc,
         }
 
@@ -66,11 +71,16 @@ const CreatePost = ({ id, pData }) => {
             formData.append(i[0], i[1])
         }
 
+        let res
+
         setIsLoading(true)
-        const res = await apis.createPost(formData)
+        if (id) {
+            res = await apis.updatePost(id, formData)
+            onUpdate()
+        } else res = await apis.createPost(formData)
         setIsLoading(false)
         if (res?.status === 'success') {
-            toast.success('Create post successfully!')
+            toast.success(`${id ? 'Update' : 'Create'} post successfully!`)
             navigate(0)
         } else {
             if (res.message.startsWith('E11000'))
@@ -79,20 +89,25 @@ const CreatePost = ({ id, pData }) => {
         }
     }
 
-    // useEffect(() => {
-    //     reset({
-    //         name: id ? pData?.name : '',
-    //         price: id ? pData?.price : '',
-    //         quantity: id ? pData?.quantity : '',
-    //         color: id ? pData?.color : '',
-    //         cateOpt: id ? { label: pData?.category?.name, value: pData?.category?.slug } : null,
-    //         brandOpt: id ? brand : null,
-    //     })
-    // }, [id])
+    useEffect(() => {
+        setType({ label: pData?.topic.name, value: pData?.topic.slug })
+        reset({
+            title: id ? pData?.title : '',
+            summary: id ? pData?.summary : '',
+            description: id ? pData?.description : '',
+        })
+    }, [id])
+
+    const handleChange = (e) => {
+        setImageCover(e.target.files[0])
+        setPreview(URL.createObjectURL(e.target.files[0]))
+    }
 
     return (
         <div className="w-full h-auto mt-5">
-            <h1 className="w-full mb-5 font-semibold text-xl text-blue-400 text-center uppercase">create new post</h1>
+            <h1 className="w-full mb-5 font-semibold text-xl text-blue-400 text-center uppercase">
+                {id ? 'update post' : 'create new post'}
+            </h1>
             <form className="w-full flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
                 <div className="w-full flex gap-6">
                     <div className="flex-1 flex flex-col gap-2">
@@ -122,6 +137,7 @@ const CreatePost = ({ id, pData }) => {
                                 <Select
                                     id="topicOpt"
                                     onChange={setType}
+                                    value={id ? type : undefined}
                                     options={topicOpt}
                                     placeholder="Choose topic"
                                     isSearchable={false}
@@ -134,6 +150,7 @@ const CreatePost = ({ id, pData }) => {
                                 id="description"
                                 label="Description"
                                 name="description"
+                                value={id ? pData?.description : undefined}
                                 changeValue={changeValue}
                                 invalid={invalid}
                                 setInvalid={setInvalid}
@@ -142,12 +159,39 @@ const CreatePost = ({ id, pData }) => {
                     </div>
                     <div className="w-[30%] flex">
                         <div className="w-full flex flex-col items-center gap-2 mb-3">
-                            <ImageUpload
-                                id="imageCover"
-                                label="Upload Image Cover"
-                                images={imageCover}
-                                onChangeImages={onChangeImageCover}
-                            />
+                            {id ? (
+                                <div className="relative">
+                                    <img
+                                        src={preview || pData?.imageCover}
+                                        alt={pData?.title}
+                                        className="w-full h-full object-cover"
+                                    />
+                                    <div className="w-full flex justify-between items-center gap-4 absolute top-0 right-0">
+                                        <label
+                                            htmlFor="updateImg"
+                                            className="p-2 bg-slate-400 text-white cursor-pointer"
+                                        >
+                                            <Icon.RxUpdate size={24} />
+                                        </label>
+                                        <div className="w-full flex flex-col-reverse items-center gap-2">
+                                            <input
+                                                id="updateImg"
+                                                type="file"
+                                                {...register('imageCover')}
+                                                onChange={handleChange}
+                                                hidden
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <ImageUpload
+                                    id="imageCover"
+                                    label="Upload Image Cover"
+                                    images={imageCover}
+                                    onChangeImages={onChangeImageCover}
+                                />
+                            )}
                         </div>
                     </div>
                 </div>
@@ -158,7 +202,7 @@ const CreatePost = ({ id, pData }) => {
                     disabled={isLoading ? true : false}
                     type="submit"
                 >
-                    {isLoading ? <Loading size={8} color="white" /> : 'Submit'}
+                    {isLoading ? <Loading size={8} color="white" /> : id ? 'Update' : 'Submit'}
                 </button>
             </form>
         </div>

@@ -3,16 +3,11 @@ const Post = require('../models/postModel');
 const crud = require('./crudHandler');
 const uploadCloud = require('../configs/cloudinary.config');
 
-exports.populatedImages = uploadCloud.fields([
+exports.populatedImage = uploadCloud.fields([
     { name: 'imageCover', maxCount: 1 },
-    { name: 'images', maxCount: 10 },
 ]);
 
 exports.uploadPostImages = asyncHandler(async (req, res, next) => {
-    if (!req.files.imageCover || !req.files.images) {
-        return next(new AppError('There is no image cover or images.', 404));
-    }
-
     const post = await Post.findByIdAndUpdate(
         req.params.id,
         {

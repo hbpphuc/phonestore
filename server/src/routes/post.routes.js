@@ -16,15 +16,15 @@ router.use(authController.restrictTo('admin'));
 
 router
     .route('/uploads/:id')
-    .put(postController.populatedImages, postController.uploadPostImages);
+    .put(postController.populatedImage, postController.uploadPostImages);
 
 router
     .route('/')
-    .post(postController.populatedImages, postController.createPost);
+    .post(postController.populatedImage, postController.createPost);
 
 router
     .route('/:id')
-    .put(postController.uploadPostImages, postController.updatePost)
+    .put(postController.populatedImage, postController.updatePost)
     .delete(postController.deletePost);
 
 module.exports = router;

@@ -75,6 +75,7 @@ export const optionsChart = {
                 weight: 'bold',
                 lineHeight: 2,
             },
+            align: 'start',
         },
         tooltip: {
             titleFont: {
@@ -85,7 +86,7 @@ export const optionsChart = {
             },
             callbacks: {
                 // custom label khi hover
-                label: (context) => `Earn: $1234`,
+                label: (context) => `Earn: ${context}`,
             },
         },
         datalabels: {

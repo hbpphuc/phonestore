@@ -93,13 +93,22 @@ exports.createOne = (Model) =>
 
 exports.updateOne = (Model) =>
     asyncHandler(async (req, res, next) => {
+        const imageCover = req?.files?.imageCover[0].path;
+        if (imageCover) req.body.imageCover = imageCover;
+
+        const images = req?.files?.images?.map((item) => item.path);
+        if (images) req.body.images = images;
+
         const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators: true,
         });
 
-        if (doc.slug)
+        if (doc.slug && doc.name)
             doc.slug = slugify(doc.name, { lower: true, locale: 'vi' });
+
+        if (doc.slug && doc.summary)
+            doc.slug = slugify(doc.summary, { lower: true, locale: 'vi' });
 
         if (!doc) {
             return next(new AppError('No document found with this ID', 404));

@@ -11,7 +11,7 @@ import {
     Legend,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
-import faker from 'faker'
+import Select from 'react-select'
 import { Icon } from 'components'
 import * as apis from 'apis'
 import { month, optionsChart } from 'utils/constant'
@@ -28,17 +28,19 @@ const Dashboard = () => {
 
     const curYear = new Date().getFullYear()
 
+    const [year, setYear] = useState({ label: curYear, value: curYear })
+
     useEffect(() => {
         const fetchApi = async () => {
             const stats = await apis.getStats()
             const oStats = await apis.getOrderStats()
-            const mPlan = await apis.getMonthlyPlan({ year: curYear })
+            const mPlan = await apis.getMonthlyPlan({ year: year.value })
             setStats(stats.data)
             setOStats(oStats.data.stats)
             setMonPlan(mPlan.data.plan)
         }
         fetchApi()
-    }, [])
+    }, [year])
 
     optionsChart.scales.y.max = totalSalePrice
 
@@ -54,6 +56,16 @@ const Dashboard = () => {
             },
         ],
     }
+
+    oStats?.forEach((item) => optionsChart.plugins.tooltip.callbacks.label(item._id.totalPrice))
+
+    const yearOpt = [
+        { label: curYear - 2, value: curYear - 2 },
+        { label: curYear - 1, value: curYear - 1 },
+        { label: curYear, value: curYear },
+        { label: curYear + 1, value: curYear + 1 },
+        { label: curYear + 2, value: curYear + 2 },
+    ]
 
     return (
         <div className="w-full h-auto mt-[60px]">
@@ -101,8 +113,18 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </div>
-                <div className="w-full h-[560px] flex justify-between items-center mt-[15px] bg-adminMain rounded overflow-hidden">
+                <div className="w-full h-[560px] flex justify-between mt-[15px] bg-adminMain rounded overflow-hidden relative">
                     <Line options={optionsChart} data={data} />
+                    <div className="absolute left-1/2 top-4">
+                        <Select
+                            value={year}
+                            onChange={setYear}
+                            options={yearOpt}
+                            placeholder="Year"
+                            isSearchable={false}
+                            className="w-[120px] font-semibold text-sm text-primary"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
