@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom'
 import Select from 'react-select'
 import { toast } from 'react-toastify'
 import * as apis from 'apis'
-import { EditorZone, Input, ImageUpload, Loading } from 'components'
+import { EditorZone, Input, ImageUpload, Loading, Icon } from 'components'
 
-const CreateProduct = ({ id, pData }) => {
+const CreateProduct = ({ id, pData, onUpdate }) => {
     const {
         register,
         handleSubmit,
@@ -23,10 +23,11 @@ const CreateProduct = ({ id, pData }) => {
     const [payload, setPayload] = useState({ description: '' })
     const [invalid, setInvalid] = useState([])
 
-    const [cate, setCate] = useState(null)
-    const [brand, setBrand] = useState(null)
+    const [cate, setCate] = useState({ label: pData?.category.name, value: pData?.category.slug })
+    const [brand, setBrand] = useState({ label: pData?.brand.name, value: pData?.brand.slug })
     const [imageCover, setImageCover] = useState([])
     const [images, setImages] = useState([])
+    const [preview, setPreview] = useState('')
 
     const changeValue = useCallback(
         (e) => {
@@ -75,7 +76,7 @@ const CreateProduct = ({ id, pData }) => {
             ...data,
             category: cate?.id,
             brand: brand?.id,
-            imageCover: imageCover[0].file,
+            imageCover: id ? imageCover : imageCover[0].file,
             images: images.map((item) => item.file),
             ...payload,
         }
@@ -90,12 +91,17 @@ const CreateProduct = ({ id, pData }) => {
             }
         }
 
+        let res
+
         setIsLoading(true)
-        const res = await apis.createProduct(formData)
+        if (id) {
+            res = await apis.updateProduct(id, formData)
+            onUpdate()
+        } else res = await apis.createProduct(formData)
         setIsLoading(false)
         if (res?.status === 'success') {
-            toast.success('Create product successfully!')
-            // navigate(0)
+            toast.success(`${id ? 'Update' : 'Create'} product successfully!`)
+            navigate(0)
         } else {
             if (res.message.startsWith('E11000'))
                 toast.error('Product name has already exist. Please enter an other name!')
@@ -109,15 +115,18 @@ const CreateProduct = ({ id, pData }) => {
             price: id ? pData?.price : '',
             quantity: id ? pData?.quantity : '',
             color: id ? pData?.color : '',
-            cateOpt: id ? { label: pData?.category?.name, value: pData?.category?.slug } : null,
-            brandOpt: id ? brand : null,
         })
     }, [id])
+
+    const handleChange = (e) => {
+        setImageCover(e.target.files[0])
+        setPreview(URL.createObjectURL(e.target.files[0]))
+    }
 
     return (
         <div className="w-full h-auto mt-5">
             <h1 className="w-full mb-5 font-semibold text-xl text-blue-400 text-center uppercase">
-                create new product
+                {id ? 'update product' : 'create new product'}
             </h1>
             <form className="w-full flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
                 <div className="w-full flex gap-6">
@@ -126,7 +135,7 @@ const CreateProduct = ({ id, pData }) => {
                             <Input
                                 id="name"
                                 label="Name"
-                                placeHolder="Enter name..."
+                                placeHolder="Enter name"
                                 register={register}
                                 validate={{ required: true }}
                                 errors={errors}
@@ -136,6 +145,7 @@ const CreateProduct = ({ id, pData }) => {
                         <div className="w-full flex items-center gap-2 mb-3">
                             <Input
                                 id="price"
+                                placeHolder="Enter price"
                                 label="Price"
                                 type="number"
                                 register={register}
@@ -146,6 +156,7 @@ const CreateProduct = ({ id, pData }) => {
                             <Input
                                 id="quantity"
                                 label="Quantity"
+                                placeHolder="Enter quantity"
                                 type="number"
                                 register={register}
                                 validate={{ required: true }}
@@ -155,7 +166,7 @@ const CreateProduct = ({ id, pData }) => {
                             <Input
                                 id="color"
                                 label="Color"
-                                placeHolder="Enter color..."
+                                placeHolder="Enter color"
                                 register={register}
                                 validate={{ required: true }}
                                 errors={errors}
@@ -167,6 +178,7 @@ const CreateProduct = ({ id, pData }) => {
                                 <label htmlFor="cateOpt">Category</label>
                                 <Select
                                     id="cateOpt"
+                                    value={id ? cate : undefined}
                                     onChange={setCate}
                                     options={cateOpt}
                                     placeholder="Choose Category"
@@ -178,6 +190,7 @@ const CreateProduct = ({ id, pData }) => {
                                 <label htmlFor="brandOpt">Brand</label>
                                 <Select
                                     id="brandOpt"
+                                    value={id ? brand : undefined}
                                     onChange={setBrand}
                                     options={brandOpt}
                                     placeholder="Choose Brand"
@@ -200,13 +213,39 @@ const CreateProduct = ({ id, pData }) => {
                     </div>
                     <div className="w-[35%] flex">
                         <div className="w-full flex flex-col items-center gap-2 mb-3">
-                            <ImageUpload
-                                id="imageCover"
-                                label="Upload Image Cover"
-                                images={!id ? imageCover : [pData?.imageCover]}
-                                isEdit={id ? true : false}
-                                onChangeImages={onChangeImageCover}
-                            />
+                            {id ? (
+                                <div className="relative">
+                                    <img
+                                        src={preview || pData?.imageCover}
+                                        alt={pData?.title}
+                                        className="w-full h-full object-cover"
+                                    />
+                                    <div className="w-full flex justify-between items-center gap-4 absolute top-0 right-0">
+                                        <label
+                                            htmlFor="updateImg"
+                                            className="p-2 bg-slate-400 text-white cursor-pointer"
+                                        >
+                                            <Icon.RxUpdate size={24} />
+                                        </label>
+                                        <div className="w-full flex flex-col-reverse items-center gap-2">
+                                            <input
+                                                id="updateImg"
+                                                type="file"
+                                                {...register('imageCover')}
+                                                onChange={handleChange}
+                                                hidden
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <ImageUpload
+                                    id="imageCover"
+                                    label="Upload Image Cover"
+                                    images={imageCover}
+                                    onChangeImages={onChangeImageCover}
+                                />
+                            )}
                             <ImageUpload
                                 id="images"
                                 label="Upload Images"
@@ -225,7 +264,7 @@ const CreateProduct = ({ id, pData }) => {
                     disabled={isLoading ? true : false}
                     type="submit"
                 >
-                    {isLoading ? <Loading size={8} color="white" /> : 'Submit'}
+                    {isLoading ? <Loading size={8} color="white" /> : id ? 'Update' : 'Create'}
                 </button>
             </form>
         </div>

@@ -39,7 +39,7 @@ router
     .put(
         authController.protect,
         authController.restrictTo('admin'),
-        productController.uploadProductImages,
+        productController.populatedImages,
         productController.updateProduct
     )
     .delete(

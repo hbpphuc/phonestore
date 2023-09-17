@@ -54,13 +54,6 @@ const ManageProducts = () => {
     const handleUpdate = async () => {
         setEditItem(null)
         setIsUpdate(false)
-        // const res = await apis.updateUser(editItem)
-        // if (res.status === 'success') {
-        //     setIsNew(!isNew)
-        //     toast.success('Update user successfully!')
-        // } else {
-        //     toast.error('Oops! Something went wrong')
-        // }
     }
 
     const handleDelete = (id) => {
@@ -197,7 +190,7 @@ const ManageProducts = () => {
                             </Button>
                         </div>
                         <div className="w-full h-full p-5 overflow-y-auto">
-                            <CreateProduct id={editItem} pData={data} />
+                            <CreateProduct id={editItem} pData={data} onUpdate={handleUpdate} />
                         </div>
                     </div>
                 </Popup>

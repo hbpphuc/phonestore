@@ -202,7 +202,7 @@ const CreatePost = ({ id, pData, onUpdate }) => {
                     disabled={isLoading ? true : false}
                     type="submit"
                 >
-                    {isLoading ? <Loading size={8} color="white" /> : id ? 'Update' : 'Submit'}
+                    {isLoading ? <Loading size={8} color="white" /> : id ? 'Update' : 'Create'}
                 </button>
             </form>
         </div>

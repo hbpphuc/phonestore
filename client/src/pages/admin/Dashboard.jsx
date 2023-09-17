@@ -113,7 +113,7 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </div>
-                <div className="w-full h-[560px] flex justify-between mt-[15px] bg-adminMain rounded overflow-hidden relative">
+                <div className="w-full h-[480px] flex justify-between mt-[15px] bg-adminMain rounded overflow-hidden relative">
                     <Line options={optionsChart} data={data} />
                     <div className="absolute left-1/2 top-4">
                         <Select

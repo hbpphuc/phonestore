@@ -15,7 +15,7 @@ const Admin = () => {
                     <button onClick={() => setCollapsed(!collapsed)} className="cursor-pointer">
                         <Icon.HiMenu size={32} className="text-[#ffffffbf] hover:text-white transition-colors" />
                     </button>
-                    <Link to="/">
+                    <Link to="/" target="_blank">
                         <Icon.BiSolidHome size={30} className="text-[#ffffffbf] hover:text-white transition-colors" />
                     </Link>
                 </div>

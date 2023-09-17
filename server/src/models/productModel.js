@@ -48,9 +48,6 @@ const productSchema = new mongoose.Schema(
         },
         ratings_average: {
             type: Number,
-            default: 1,
-            min: 1,
-            max: 5,
         },
         ratings_count: {
             type: Number,
