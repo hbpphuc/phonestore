@@ -48,7 +48,7 @@ const ReviewWriter = ({ id, onSetIsNew, isEdit, onSetIsEdit }) => {
     }, [isEdit])
 
     return (
-        <div className="w-full h-auto mb-8 flex justify-center ">
+        <div className="w-full h-auto mb-8 flex justify-center">
             <form className="w-[90%] flex gap-4 items-center" onSubmit={handleSubmit(onSubmit)}>
                 <Input
                     id="content"
@@ -57,7 +57,7 @@ const ReviewWriter = ({ id, onSetIsNew, isEdit, onSetIsEdit }) => {
                     validate={{ required: true }}
                     errors={errors}
                     errmsg="Content is required."
-                    className=" p-[10px_10px] bg-white border-b border-main outline-none"
+                    className=" p-[10px_10px] bg-white border-b border-main outline-none font-robotoCondensed"
                 />
                 <div className="flex gap-2">
                     <button

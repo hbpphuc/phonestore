@@ -72,7 +72,7 @@ const Post = () => {
                         />
                         <div className="">
                             <Link
-                                to={`/posts/${topic?.find((el) => el._id === item?.topic)?.slug}/${item?.slug}`}
+                                to={`/posts/${topic?.find((el) => el._id === item?.topic._id)?.slug}/${item?.slug}`}
                                 className="text-2xl font-bold font-robotoCondensed hover:text-main cursor-pointer"
                             >
                                 {item?.title}

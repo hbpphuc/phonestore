@@ -12,9 +12,9 @@ const DetailPost = () => {
     const { slug } = useParams()
     const { curUser } = useSelector((state) => state.user)
 
-    const [react, setReact] = useState(false)
-
     const [post, setPost] = useState(null)
+
+    const [react, setReact] = useState(false)
 
     useEffect(() => {
         const getPost = async () => {

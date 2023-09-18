@@ -50,8 +50,12 @@ const ReviewItem = ({ data, isNew, onSetIsNew, onSetIsEdit }) => {
                                     />
                                 </div>
                                 <div className="flex-1 h-full flex flex-col">
-                                    <h2 className="text-[#32373d] font-semibold">{item?.user?.name}</h2>
-                                    <p className="text-sm text-[#444b52] font-medium mb-2">{item?.content}</p>
+                                    <h2 className="text-[#32373d] font-semibold font-robotoCondensed">
+                                        {item?.user?.name}
+                                    </h2>
+                                    <p className="text-sm text-[#444b52] font-medium mb-2 font-robotoCondensed">
+                                        {item?.content}
+                                    </p>
                                     <div className="w-full flex">
                                         <span className="text-sm font-normal text-[#939ca3] mr-1">
                                             {moment(toTimestamp(item.createdAt) * 1000).fromNow()}

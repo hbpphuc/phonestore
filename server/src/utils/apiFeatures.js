@@ -55,7 +55,17 @@ class APIFeatures {
             colorObj = { $or: colorQuery };
         }
 
-        this.query = this.query.find({ ...colorObj, ...formatQ });
+        if (this.query.mongooseCollection.name === 'products')
+            this.query = this.query.find({
+                ...colorObj,
+                ...formatQ,
+                quantity: { $gt: 0 },
+            });
+        else
+            this.query = this.query.find({
+                ...colorObj,
+                ...formatQ,
+            });
         this.count = this.query
             .find({ ...colorObj, ...formatQ })
             .clone()
@@ -92,15 +102,9 @@ class APIFeatures {
         const skip = (page - 1) * limit;
 
         this.query = this.query.skip(skip).limit(limit);
-        // this.count = this.query.skip(skip).limit(limit).clone().count();
 
         return this;
     }
-
-    // countDocs() {
-    //     this.count = this.query.clone().count();
-    //     return this.count;
-    // }
 }
 
 module.exports = APIFeatures;

@@ -43,7 +43,6 @@ const AllProduct = () => {
         const fetchApi = async () => {
             setProgress(40)
             const res = await apis.getAllProduct(params)
-            setProgress(100)
 
             if (res?.results === 0) toast.error('No product found!')
             setTotalProds(res?.pagination?.total)
@@ -63,6 +62,7 @@ const AllProduct = () => {
                     }))
                 )
             }
+            setProgress(100)
         }
 
         fetchApi()

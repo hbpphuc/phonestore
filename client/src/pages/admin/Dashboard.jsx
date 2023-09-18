@@ -32,12 +32,13 @@ const Dashboard = () => {
 
     useEffect(() => {
         const fetchApi = async () => {
-            const stats = await apis.getStats()
-            const oStats = await apis.getOrderStats()
-            const mPlan = await apis.getMonthlyPlan({ year: year.value })
-            setStats(stats.data)
-            setOStats(oStats.data.stats)
-            setMonPlan(mPlan.data.plan)
+            await Promise.all([apis.getStats(), apis.getOrderStats(), apis.getMonthlyPlan({ year: year.value })]).then(
+                ([stats, oStats, mPlan]) => {
+                    setStats(stats.data)
+                    setOStats(oStats.data.stats)
+                    setMonPlan(mPlan.data.plan)
+                }
+            )
         }
         fetchApi()
     }, [year])
