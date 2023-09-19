@@ -52,6 +52,7 @@ const ManageOrders = () => {
             toast.error('Oops! Something went wrong')
         }
     }
+
     return (
         <div className="w-full h-auto mt-[60px]">
             <div className="w-full flex justify-between items-center px-4 border-b border-[#999]">
