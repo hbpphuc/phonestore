@@ -52,6 +52,7 @@ const ManageOrders = () => {
             toast.error('Oops! Something went wrong')
         }
     }
+
     return (
         <div className="w-full h-auto mt-[60px]">
             <div className="w-full flex justify-between items-center px-4 border-b border-[#999]">
@@ -92,9 +93,9 @@ const ManageOrders = () => {
                                 <h5 className="text-lg line-clamp-1 font-semibold tracking-tight text-gray-900 dark:text-white">
                                     {el.product.name}
                                 </h5>
-                                <div className="flex py-2 items-center justify-between text-[#999]">
+                                <div className="flex flex-col py-2 justify-between text-[#999]">
                                     <span className="text-[#999]">{moment(item.createdAt).format('DD/MM/YYYY')}</span>
-                                    <span className="text-[#999]"> {item.orderBy.email}</span>
+                                    <span className="text-[#999] line-clamp-1"> {item.orderBy.email}</span>
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <div className="flex flex-col">

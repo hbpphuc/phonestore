@@ -81,6 +81,20 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
 
     const user = await User.findById(req.user.id);
 
+    products.forEach(
+        async (item) =>
+            await Product.findByIdAndUpdate(
+                item.product,
+                {
+                    $inc: {
+                        quantity: -item.count,
+                        sold: item.count,
+                    },
+                },
+                { new: true }
+            )
+    );
+
     // let coupon;
 
     // if (req.body.coupon) {

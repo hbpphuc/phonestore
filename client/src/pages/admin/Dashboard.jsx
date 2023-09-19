@@ -43,6 +43,8 @@ const Dashboard = () => {
         fetchApi()
     }, [year])
 
+    console.log(monPlan)
+
     optionsChart.scales.y.max = totalSalePrice
 
     const data = {
