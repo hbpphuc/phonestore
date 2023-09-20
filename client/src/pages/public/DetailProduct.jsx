@@ -6,7 +6,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import DOMPurify from 'dompurify'
 import 'react-tabs/style/react-tabs.css'
 import * as apis from 'apis'
-import { Breadcrumb, InfoProduct, ProductItem, ReviewWriter, ReviewItem } from 'components'
+import { Breadcrumb, InfoProduct, ProductItem, ReviewWriter, ReviewList } from 'components'
 import { detailProductTabs, productExtrainInfo } from 'utils/menu'
 
 const DetailProduct = () => {
@@ -129,7 +129,7 @@ const DetailProduct = () => {
                                     isEdit={isEditReview}
                                     onSetIsEdit={setIsEditReview}
                                 />
-                                <ReviewItem
+                                <ReviewList
                                     data={product?.reviews}
                                     isNew={isNewReview}
                                     onSetIsNew={setIsNewReview}

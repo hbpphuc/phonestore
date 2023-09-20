@@ -41,6 +41,7 @@ export { default as OrderSidebar } from './sidebar/OrderSidebar'
 // Review
 export { default as ReviewWriter } from './review/ReviewWriter'
 export { default as ReviewItem } from './review/ReviewItem'
+export { default as ReviewList } from './review/ReviewList'
 
 // Post
 export { default as PostItem } from './post/PostItem'
