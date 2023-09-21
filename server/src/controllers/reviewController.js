@@ -43,33 +43,8 @@ exports.createReplyReview = asyncHandler(async (req, res, next) => {
     });
 });
 
-exports.editReplyReview = asyncHandler(async (req, res, next) => {
-    const { id } = req.params;
-
-    req.body.user = req.user.id;
-
-    const review = await Review.findByIdAndUpdate(
-        id,
-        {
-            reply: req.body,
-        },
-        { new: true }
-    );
-
-    if (!review) {
-        return next(new AppError('This review does not exist.', 404));
-    }
-
-    res.status(200).json({
-        status: 'success',
-        data: {
-            review,
-        },
-    });
-});
-
 exports.deleteReplyReview = asyncHandler(async (req, res, next) => {
-    const { id } = req.params;
+    const { id, repId } = req.params;
 
     const review = await Review.findById(id);
 
@@ -77,16 +52,13 @@ exports.deleteReplyReview = asyncHandler(async (req, res, next) => {
         return next(new AppError('This review does not exist.', 404));
     }
 
-    let result;
+    const repItem = review.reply.find((item) => item._id.toString() === repId);
 
-    if (
-        review.reply.map((item) => item._id).includes(req.body.repId) &&
-        review.reply.map((item) => item.user).includes(req.user.id)
-    ) {
-        result = await Review.findByIdAndUpdate(
+    if (repItem && repItem.user._id.toString() === req.user.id) {
+        await Review.findByIdAndUpdate(
             id,
             {
-                $pull: { reply: req.body },
+                $pull: { reply: { _id: repItem._id } },
             },
             { new: true }
         );
@@ -94,8 +66,5 @@ exports.deleteReplyReview = asyncHandler(async (req, res, next) => {
 
     res.status(200).json({
         status: 'success',
-        data: {
-            result,
-        },
     });
 });

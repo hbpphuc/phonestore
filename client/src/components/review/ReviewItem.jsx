@@ -7,8 +7,7 @@ import { toTimestamp } from 'utils/helper'
 import { Icon } from 'components'
 import * as apis from 'apis'
 
-const ReviewItem = ({ data, isNew, onSetIsNew, onSetIsEdit, reply }) => {
-    console.log({ data })
+const ReviewItem = ({ data, reviewId, onSetIsNew, onSetIsEdit, reply, onSetIsReply }) => {
     const { curUser } = useSelector((state) => state.user)
 
     const handleDeleteReview = async (pId, rId, uId) => {
@@ -20,9 +19,12 @@ const ReviewItem = ({ data, isNew, onSetIsNew, onSetIsEdit, reply }) => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 if (uId === curUser?.data?._id) {
-                    const res = await apis.deleteReviewOnProduct(pId, rId)
+                    let res
+                    reviewId
+                        ? (res = await apis.deleteReplyReview(reviewId, rId))
+                        : (res = await apis.deleteReviewOnProduct(pId, rId))
                     if (res?.status === 'success') {
-                        onSetIsNew(!isNew)
+                        onSetIsNew((prev) => !prev)
                     } else {
                         toast.error(res?.message)
                     }
@@ -60,7 +62,7 @@ const ReviewItem = ({ data, isNew, onSetIsNew, onSetIsEdit, reply }) => {
                             </span>
                             {!reply && (
                                 <span
-                                    onClick={() => onSetIsEdit({ rId: data._id, uId: curUser?.data?._id })}
+                                    onClick={() => onSetIsReply(data._id)}
                                     className="flex items-center text-[#939ca3] text-sm hover:text-blue-400 cursor-pointer pl-3 border-l border-gray-500"
                                 >
                                     Reply
@@ -71,12 +73,15 @@ const ReviewItem = ({ data, isNew, onSetIsNew, onSetIsEdit, reply }) => {
                                     <span className="flex items-end font-normal text-gray-500 mr-1">
                                         <Icon.BsDot size={18} />
                                     </span>
-                                    <span
-                                        onClick={() => onSetIsEdit({ rId: data._id, uId: curUser?.data?._id })}
-                                        className="flex items-center text-[#939ca3] hover:text-yellow-400 cursor-pointer pr-3 border-r border-gray-500"
-                                    >
-                                        Edit
-                                    </span>
+                                    {!reply && (
+                                        <span
+                                            onClick={() => onSetIsEdit({ rId: data._id, uId: curUser?.data?._id })}
+                                            className="flex items-center text-[#939ca3] hover:text-yellow-400 cursor-pointer pr-3 border-r border-gray-500"
+                                        >
+                                            Edit
+                                        </span>
+                                    )}
+
                                     <span
                                         onClick={() => handleDeleteReview(data.product, data._id, data.user._id)}
                                         className="flex items-center pl-3 text-[#939ca3] hover:text-red-600 cursor-pointer"

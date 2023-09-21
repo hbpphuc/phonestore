@@ -1,8 +1,7 @@
 import React from 'react'
 import { ReviewItem } from 'components'
 
-const ReviewList = ({ data, isNew, onSetIsNew, onSetIsEdit }) => {
-    console.log(data)
+const ReviewList = ({ data, isNew, onSetIsNew, onSetIsEdit, onSetIsReply }) => {
     return (
         <div className="w-full h-auto flex flex-col">
             {data?.length > 0 ? (
@@ -13,18 +12,18 @@ const ReviewList = ({ data, isNew, onSetIsNew, onSetIsEdit }) => {
                             <ReviewItem
                                 key={item._id}
                                 data={item}
-                                isNew={isNew}
                                 onSetIsNew={onSetIsNew}
                                 onSetIsEdit={onSetIsEdit}
+                                onSetIsReply={onSetIsReply}
                             />
                             {item.reply.length > 0 &&
-                                item.reply.map((el) => (
+                                item.reply.map((el, index) => (
                                     <div className="ml-14">
                                         <ReviewItem
-                                            key={el._id}
+                                            key={index}
                                             data={el}
+                                            reviewId={item._id}
                                             reply
-                                            isNew={isNew}
                                             onSetIsNew={onSetIsNew}
                                             onSetIsEdit={onSetIsEdit}
                                         />

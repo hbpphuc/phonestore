@@ -11,8 +11,10 @@ router.route('/:id').get(reviewController.getReview);
 router.use(authController.protect);
 
 router.route('/:id/reply/create').put(reviewController.createReplyReview);
-router.route('/:id/reply/edit').put(reviewController.editReplyReview);
-router.route('/:id/reply/delete').delete(reviewController.deleteReplyReview);
+
+router
+    .route('/:id/reply/delete/:repId')
+    .put(reviewController.deleteReplyReview);
 
 router
     .route('/')

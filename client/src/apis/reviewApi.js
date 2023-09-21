@@ -44,3 +44,21 @@ export const deleteReviewOnProduct = async (pId, rId) => {
         return error.response.data
     }
 }
+
+export const createReplyReview = async (rId, data) => {
+    try {
+        const res = await httpRequest.put(`reviews/${rId}/reply/create`, data, { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export const deleteReplyReview = async (rId, repId) => {
+    try {
+        const res = await httpRequest.put(`reviews/${rId}/reply/delete/${repId}`, {}, { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}

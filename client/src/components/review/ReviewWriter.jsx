@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 import * as apis from 'apis'
 import { Input, Loading } from 'components'
 
-const ReviewWriter = ({ id, onSetIsNew, isEdit, onSetIsEdit }) => {
+const ReviewWriter = ({ id, onSetIsNew, isEdit, onSetIsEdit, isReply, onSetIsReply }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [review, setReview] = useState(null)
 
@@ -18,7 +18,11 @@ const ReviewWriter = ({ id, onSetIsNew, isEdit, onSetIsEdit }) => {
     const onSubmit = async (data) => {
         let res
 
-        if (isEdit && isEdit?.uId === review?.user._id) {
+        if (isReply) {
+            setIsLoading(true)
+            res = await apis.createReplyReview(isReply, data)
+            setIsLoading(false)
+        } else if (isEdit && isEdit?.uId === review?.user._id) {
             setIsLoading(true)
             res = await apis.updateReviewOnProduct(id, isEdit.rId, data)
             setIsLoading(false)
@@ -31,6 +35,8 @@ const ReviewWriter = ({ id, onSetIsNew, isEdit, onSetIsEdit }) => {
         if (res?.status === 'success') {
             onSetIsNew((prev) => !prev)
             reset({ content: '' })
+            onSetIsEdit(false)
+            onSetIsReply(null)
         } else {
             Swal.fire('Oops!', res?.message, 'error')
         }
@@ -65,11 +71,14 @@ const ReviewWriter = ({ id, onSetIsNew, isEdit, onSetIsEdit }) => {
                         type="submit"
                         className={`p-3 bg-main text-white ${isLoading ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                     >
-                        {isLoading ? <Loading size={8} color="white" /> : isEdit ? 'OK' : 'Send'}
+                        {isLoading ? <Loading size={8} color="white" /> : isEdit || isReply ? 'OK' : 'Send'}
                     </button>
-                    {isEdit && (
+                    {(isEdit || isReply) && (
                         <button
-                            onClick={() => onSetIsEdit(null)}
+                            onClick={() => {
+                                onSetIsEdit(false)
+                                onSetIsReply(null)
+                            }}
                             type="button"
                             className="p-3 bg-gray-400 text-white cursor-pointer"
                         >

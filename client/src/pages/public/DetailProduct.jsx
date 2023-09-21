@@ -6,7 +6,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import DOMPurify from 'dompurify'
 import 'react-tabs/style/react-tabs.css'
 import * as apis from 'apis'
-import { Breadcrumb, InfoProduct, ProductItem, ReviewWriter, ReviewList } from 'components'
+import { Breadcrumb, InfoProduct, ProductItem, Review } from 'components'
 import { detailProductTabs, productExtrainInfo } from 'utils/menu'
 
 const DetailProduct = () => {
@@ -15,9 +15,7 @@ const DetailProduct = () => {
 
     const [product, setProduct] = useState(null)
     const [others, setOthers] = useState(null)
-    const [isNewReview, setIsNewReview] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-    const [isEditReview, setIsEditReview] = useState(null)
 
     const settingsProducts = {
         dots: false,
@@ -36,7 +34,7 @@ const DetailProduct = () => {
             else navigate('/not-found', { replace: true })
         }
         getProduct()
-    }, [slug, isNewReview])
+    }, [slug])
 
     useEffect(() => {
         const getAllProduct = async () => {
@@ -122,20 +120,7 @@ const DetailProduct = () => {
                             </TabPanel>
                         ))}
                         <TabPanel>
-                            <div className="border border-[#aaa] border-t-0 p-5">
-                                <ReviewWriter
-                                    id={product?._id}
-                                    onSetIsNew={setIsNewReview}
-                                    isEdit={isEditReview}
-                                    onSetIsEdit={setIsEditReview}
-                                />
-                                <ReviewList
-                                    data={product?.reviews}
-                                    isNew={isNewReview}
-                                    onSetIsNew={setIsNewReview}
-                                    onSetIsEdit={setIsEditReview}
-                                />
-                            </div>
+                            <Review />
                         </TabPanel>
                     </Tabs>
                 </div>
