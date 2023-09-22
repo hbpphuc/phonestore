@@ -44,3 +44,12 @@ export const getUserOrders = async () => {
         return error.response.data
     }
 }
+
+export const userCancelOrders = async (data) => {
+    try {
+        const res = await httpRequest.put('orders/cancelOrder', data, { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}

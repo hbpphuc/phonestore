@@ -12,6 +12,8 @@ router.route('/createOrder').get(orderController.createOrder);
 
 router.route('/userOrder').get(orderController.getUserOrder);
 
+router.route('/cancelOrder').put(orderController.cancelOrder);
+
 router.route('/:id').get(orderController.getOrder);
 
 router.use(authController.restrictTo('admin'));

@@ -1,10 +1,14 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import moment from 'moment'
+import Tippy from '@tippyjs/react'
 import Skeleton from 'react-loading-skeleton'
 import * as apis from 'apis'
+import { Icon } from 'components'
+import { toast } from 'react-toastify'
 
 const UserOrder = () => {
     const [userOrder, setUserOrder] = useState(null)
+    const [isUpdate, setIsUpdate] = useState(false)
 
     const [loading, setLoading] = useState(false)
 
@@ -16,7 +20,15 @@ const UserOrder = () => {
             setLoading(false)
         }
         getUserOrder()
-    }, [])
+    }, [isUpdate])
+
+    const handleCancelOrder = async (id) => {
+        const res = await apis.userCancelOrders({ oId: id })
+        if (res?.status === 'success') {
+            toast.success('The order has been cancelled!')
+            setIsUpdate((prev) => !prev)
+        }
+    }
 
     return (
         <div className="w-full h-auto flex flex-col gap-2">
@@ -26,7 +38,7 @@ const UserOrder = () => {
             {loading ? (
                 <Skeleton className="h-10 m-4" />
             ) : (
-                <div className="w-full px-4">
+                <div className="w-full pl-4">
                     <table className="table-auto w-full mb-6 text-left border-collapse">
                         <thead className="w-full text-sm">
                             <tr className="border-b border-admin text-center">
@@ -38,6 +50,7 @@ const UserOrder = () => {
                                 <th className="p-2">Order at</th>
                                 <th className="p-2">Total</th>
                                 <th className="p-2">Status</th>
+                                <th className="p-2"></th>
                             </tr>
                         </thead>
                         <tbody className="w-full text-sm ">
@@ -70,6 +83,18 @@ const UserOrder = () => {
                                         >
                                             {item.status}
                                         </td>
+                                        {item.status === 'Shipping' && (
+                                            <td>
+                                                <Tippy content="Cancel Order">
+                                                    <span
+                                                        onClick={() => handleCancelOrder(item._id)}
+                                                        className="cursor-pointer"
+                                                    >
+                                                        <Icon.FcCancel size={24} />
+                                                    </span>
+                                                </Tippy>
+                                            </td>
+                                        )}
                                     </tr>
                                 ))
                             )}

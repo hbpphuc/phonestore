@@ -77,7 +77,7 @@ const CreateProduct = ({ id, pData, onUpdate }) => {
             category: cate?.id,
             brand: brand?.id,
             imageCover: id ? imageCover : imageCover[0].file,
-            images: images.map((item) => item.file),
+            images: images.map((item) => item.file) || undefined,
             ...payload,
         }
 

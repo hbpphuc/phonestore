@@ -6,7 +6,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import DOMPurify from 'dompurify'
 import 'react-tabs/style/react-tabs.css'
 import * as apis from 'apis'
-import { Breadcrumb, InfoProduct, ProductItem, Review } from 'components'
+import { Breadcrumb, Icon, InfoProduct, ProductItem, Review } from 'components'
 import { detailProductTabs, productExtrainInfo } from 'utils/menu'
 
 const DetailProduct = () => {
@@ -16,6 +16,8 @@ const DetailProduct = () => {
     const [product, setProduct] = useState(null)
     const [others, setOthers] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+
+    const [isMore, setIsMore] = useState(false)
 
     const settingsProducts = {
         dots: false,
@@ -93,7 +95,11 @@ const DetailProduct = () => {
 
                         <TabPanel>
                             {!isLoading ? (
-                                <div className="border border-[#aaa] border-t-0 p-5">
+                                <div
+                                    className={`border border-[#aaa] border-t-0 p-5 relative ${
+                                        !isMore ? 'h-[500px] overflow-hidden' : ''
+                                    }`}
+                                >
                                     {product?.description?.length > 0 && (
                                         <div
                                             className="text-base"
@@ -101,6 +107,19 @@ const DetailProduct = () => {
                                                 __html: DOMPurify.sanitize(product?.description),
                                             }}
                                         ></div>
+                                    )}
+                                    {!isMore && (
+                                        <div className="flex justify-center items-end absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-[#ffffff01] to-[#ffffffcc]">
+                                            <div
+                                                onClick={() => setIsMore(true)}
+                                                className="mb-3 p-[8px_20px] flex flex-col items-center cursor-pointer text-[#ffffff] drop-shadow-md hover:text-[#404040] transition-colors"
+                                            >
+                                                <h1 className="text-3xl uppercase font-bold">see more</h1>
+                                                <span className="">
+                                                    <Icon.PiCaretDoubleDownBold size={24} />
+                                                </span>
+                                            </div>
+                                        </div>
                                     )}
                                 </div>
                             ) : (

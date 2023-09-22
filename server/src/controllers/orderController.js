@@ -128,6 +128,29 @@ exports.getUserOrder = asyncHandler(async (req, res, next) => {
     });
 });
 
+exports.cancelOrder = asyncHandler(async (req, res, next) => {
+    const userOrder = await Order.find({ orderBy: req.user._id });
+
+    const uor = userOrder.find((item) => item.id === req.body.oId);
+
+    if (uor && uor.status === 'Shipping') {
+        await Order.findOneAndUpdate(
+            { _id: uor._id, status: 'Shipping' },
+            {
+                status: 'Canceled',
+            },
+            { new: true }
+        );
+    }
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            userOrder,
+        },
+    });
+});
+
 exports.getAllOrder = crud.getAll(Order, {
     path: 'products.product',
     select: 'name imageCover price',

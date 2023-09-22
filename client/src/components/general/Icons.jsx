@@ -30,6 +30,8 @@ import { TfiLayoutListThumbAlt } from 'react-icons/tfi'
 import { LiaMoneyBillWaveAltSolid } from 'react-icons/lia'
 import { RiMore2Fill, RiHandCoinFill } from 'react-icons/ri'
 import { ImCart } from 'react-icons/im'
+import { FcCancel } from 'react-icons/fc'
+import { PiCaretDoubleDownBold } from 'react-icons/pi'
 
 const Icon = {
     RiShoppingBasketFill,
@@ -87,6 +89,8 @@ const Icon = {
     ImCart,
     GrProductHunt,
     RiHandCoinFill,
+    FcCancel,
+    PiCaretDoubleDownBold,
 }
 
 export default Icon
