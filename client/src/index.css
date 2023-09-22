@@ -206,3 +206,11 @@ button.slick-prev::before {
 .post-description-first-letter {
     @apply first-letter:text-[62px] first-letter:leading-[48px] first-letter:font-semibold first-letter:text-[#333] first-letter:pr-2 first-letter:pt-2 first-letter:float-left leading-7;
 }
+
+.bg-glassmorphism {
+    background: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(3.5px);
+    -webkit-backdrop-filter: blur(3.5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}

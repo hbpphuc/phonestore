@@ -8,7 +8,7 @@ import { GrClose, GrProductHunt } from 'react-icons/gr'
 import { BiDetail, BiSolidTruck, BiSolidDashboard } from 'react-icons/bi'
 import { GiReturnArrow } from 'react-icons/gi'
 import { TiPhone } from 'react-icons/ti'
-import { MdNavigateNext, MdDownloadDone, MdShoppingCartCheckout } from 'react-icons/md'
+import { MdNavigateNext, MdDownloadDone, MdShoppingCartCheckout, MdVerticalAlignTop } from 'react-icons/md'
 import { RiEyeCloseLine, RiEyeFill, RiDashboard2Line } from 'react-icons/ri'
 import { IoMdCloseCircle } from 'react-icons/io'
 import { IoPersonCircleSharp, IoClose, IoNewspaperOutline } from 'react-icons/io5'
@@ -91,6 +91,7 @@ const Icon = {
     RiHandCoinFill,
     FcCancel,
     PiCaretDoubleDownBold,
+    MdVerticalAlignTop,
 }
 
 export default Icon

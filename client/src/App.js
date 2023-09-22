@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
@@ -15,11 +15,29 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import 'swiper/css/free-mode'
+import { Icon } from 'components'
 
 function App() {
     const { isLoggedIn, curUser } = useSelector((state) => state.user)
 
     const { signupToken } = Cookies.get()
+
+    const [showTop, setShowTop] = useState(false)
+
+    const handleTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setShowTop(window.scrollY >= 700)
+        }
+        window.addEventListener('scroll', handleScroll)
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
 
     return (
         <>
@@ -67,6 +85,15 @@ function App() {
                 pauseOnHover
                 theme="light"
             />
+
+            {showTop && (
+                <button
+                    onClick={handleTop}
+                    className="p-[8px_4px] flex justify-center items-center bg-glassmorphism fixed right-5 bottom-5 text-main rounded-md"
+                >
+                    <Icon.MdVerticalAlignTop size={40} />
+                </button>
+            )}
         </>
     )
 }
