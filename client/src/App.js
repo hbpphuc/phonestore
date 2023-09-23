@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 import Cookies from 'js-cookie'
 
@@ -9,6 +9,7 @@ import { publicRoutes } from './routes/paths'
 import { Default, NotFound, Signup } from './pages/public'
 import { Admin, NotFoundAdmin } from 'pages/admin'
 import { Private } from 'pages/private'
+import { setWidth } from 'redux/app/appSlice'
 
 import 'react-toastify/dist/ReactToastify.css'
 import 'swiper/css'
@@ -19,25 +20,31 @@ import { Icon } from 'components'
 
 function App() {
     const { isLoggedIn, curUser } = useSelector((state) => state.user)
-
-    const { signupToken } = Cookies.get()
+    const dispatch = useDispatch()
 
     const [showTop, setShowTop] = useState(false)
-
-    const handleTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
+    const [deviceWidth, setDeviceWidth] = useState(window.innerWidth)
 
     useEffect(() => {
         const handleScroll = () => {
             setShowTop(window.scrollY >= 700)
         }
+        const handleResize = (e) => {
+            setDeviceWidth(e.target.innerWidth)
+        }
+
         window.addEventListener('scroll', handleScroll)
+        window.addEventListener('resize', handleResize)
 
         return () => {
             window.removeEventListener('scroll', handleScroll)
+            window.removeEventListener('resize', handleResize)
         }
     }, [])
+
+    useEffect(() => {
+        dispatch(setWidth(deviceWidth))
+    }, [deviceWidth])
 
     return (
         <>
@@ -88,7 +95,9 @@ function App() {
 
             {showTop && (
                 <button
-                    onClick={handleTop}
+                    onClick={() => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' })
+                    }}
                     className="p-[8px_4px] flex justify-center items-center bg-glassmorphism fixed right-5 bottom-5 text-main rounded-md"
                 >
                     <Icon.MdVerticalAlignTop size={40} />

@@ -1,6 +1,8 @@
 import React, { memo, useEffect, useState } from 'react'
 import Slider from 'react-slick'
 import Skeleton from 'react-loading-skeleton'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { useSelector } from 'react-redux'
 import * as apis from 'apis'
 import ProductItem from 'components/product/ProductItem'
 
@@ -9,6 +11,8 @@ const Section = ({ cateData, title }) => {
     const [cateType, setCateType] = useState(null)
     const [prodCate, setProdCate] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+
+    const { deviceWidth } = useSelector((state) => state.app)
 
     useEffect(() => {
         const getCategory = async () => {
@@ -30,10 +34,17 @@ const Section = ({ cateData, title }) => {
         speed: 500,
         slidesToShow: 4,
         slidesToScroll: 1,
+        arrows: deviceWidth >= 1400 ? true : false,
     }
 
+    let countToShow
+
+    if (deviceWidth < 768) countToShow = 2
+    else if (deviceWidth >= 768 && deviceWidth < 992) countToShow = 3
+    else if (deviceWidth >= 1024) countToShow = 4
+
     return (
-        <div className="w-main h-auto flex flex-col justify-center items-center mb-[50px]">
+        <div className="w-full h-auto flex flex-col justify-center items-center mb-[50px]">
             <div className="w-full mb-5 flex justify-center items-center relative">
                 <h2 className="pb-[15px] text-xl text-secondary uppercase font-normal">{title}</h2>
                 <span className="w-10 h-[3px] bg-[#ccc] absolute bottom-0"></span>
@@ -58,11 +69,28 @@ const Section = ({ cateData, title }) => {
                 {isLoading ? (
                     <Skeleton />
                 ) : prodCate?.length > 0 ? (
-                    <Slider {...settingsProducts}>
-                        {prodCate?.slice(0, 6)?.map((item) => (
-                            <ProductItem key={item._id} data={item} cateType={cateType} />
-                        ))}
-                    </Slider>
+                    deviceWidth >= 1400 ? (
+                        <Slider {...settingsProducts}>
+                            {prodCate?.slice(0, 6)?.map((item) => (
+                                <ProductItem key={item._id} data={item} cateType={cateType} />
+                            ))}
+                        </Slider>
+                    ) : (
+                        <Swiper
+                            slidesPerView={countToShow}
+                            spaceBetween={10}
+                            pagination={{
+                                clickable: true,
+                            }}
+                            className="flex"
+                        >
+                            {prodCate?.slice(0, 6)?.map((item) => (
+                                <SwiperSlide>
+                                    <ProductItem key={item._id} data={item} cateType={cateType} />
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    )
                 ) : (
                     <div className="w-full flex justify-center items-cente text-[#8b8b8b] text-xl">No products</div>
                 )}

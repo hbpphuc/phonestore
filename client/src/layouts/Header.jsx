@@ -17,6 +17,7 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { isLoggedIn, curUser } = useSelector((state) => state.user)
+    const { deviceWidth } = useSelector((state) => state.app)
 
     useEffect(() => {
         if (isLoggedIn) dispatch(getCurrentUser())
@@ -40,88 +41,111 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
 
     return (
         <>
-            <div className="w-full h-auto flex flex-col">
-                <div className="w-full flex justify-center items-center border-b border-[#0000000d] py-[10px]">
-                    <div className="w-main flex justify-between ">
-                        <div className="flex">
-                            <p className="text-sm font-normal text-[#848484]">Welcome to our Store!</p>
-                        </div>
-                        <div className="flex relative">
-                            {!curUser ? (
-                                <Button
-                                    text="Sign In | Sign Up"
-                                    onClick={toggle}
-                                    className="text-sm font-normal px-[10px] text-[#848484] hover:text-main"
-                                />
-                            ) : (
-                                <Menu
-                                    menuButton={
-                                        <MenuButton className="text-[#848484] hover:text-main">
-                                            {curUser?.data?.name}
-                                        </MenuButton>
-                                    }
-                                    menuClassName="border rounded-[4px] bg-white z-10"
-                                >
-                                    <MenuItem className="header-menu-item">
-                                        <Link
-                                            className="flex items-center"
-                                            to={
-                                                curUser?.data?.role === 'admin'
-                                                    ? `/${adminRoutes.admin}/${adminRoutes.adminDashboard}`
-                                                    : `/me`
-                                            }
-                                        >
+            <div className="w-full h-auto flex flex-col justify-center items-center">
+                {deviceWidth >= 768 && (
+                    <div className="w-full flex justify-center items-center border-b border-[#0000000d] py-[10px]">
+                        <div className="w-main flex justify-between ">
+                            <div className="flex">
+                                <p className="text-sm font-normal text-[#848484]">Welcome to our Store!</p>
+                            </div>
+                            <div className="flex relative">
+                                {!curUser ? (
+                                    <Button
+                                        text="Sign In | Sign Up"
+                                        onClick={toggle}
+                                        className="text-sm font-normal px-[10px] text-[#848484] hover:text-main"
+                                    />
+                                ) : (
+                                    <Menu
+                                        menuButton={
+                                            <MenuButton className="text-[#848484] hover:text-main">
+                                                {curUser?.data?.name}
+                                            </MenuButton>
+                                        }
+                                        menuClassName="border rounded-[4px] bg-white z-10"
+                                    >
+                                        <MenuItem className="header-menu-item">
+                                            <Link
+                                                className="flex items-center"
+                                                to={
+                                                    curUser?.data?.role === 'admin'
+                                                        ? `/${adminRoutes.admin}/${adminRoutes.adminDashboard}`
+                                                        : `/me`
+                                                }
+                                            >
+                                                <span className="mr-2">
+                                                    <Icon.FaUserCircle size={20} />
+                                                </span>
+                                                Profile
+                                            </Link>
+                                        </MenuItem>
+                                        <hr />
+                                        <MenuItem onClick={logout} className="header-menu-item">
                                             <span className="mr-2">
-                                                <Icon.FaUserCircle size={20} />
+                                                <Icon.BiLogOut size={20} />
                                             </span>
-                                            Profile
-                                        </Link>
-                                    </MenuItem>
-                                    <hr />
-                                    <MenuItem onClick={logout} className="header-menu-item">
-                                        <span className="mr-2">
-                                            <Icon.BiLogOut size={20} />
-                                        </span>
-                                        Logout
-                                    </MenuItem>
-                                </Menu>
-                            )}
+                                            Logout
+                                        </MenuItem>
+                                    </Menu>
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="w-full flex justify-center items-center py-[30px]">
+                )}
+                <div className="w-full h-20 md:h-auto flex justify-center items-center px-5 md:p-[30px_0px]">
                     <div className="w-main flex items-center justify-between">
-                        <div className="flex-1">
+                        {deviceWidth < 768 && (
+                            <div className="w-max md:flex-1 flex justify-start">
+                                <span onClick={() => {}} className="flex justify-center items-center cursor-pointer">
+                                    <Icon.HiMenu size={32} />
+                                </span>
+                            </div>
+                        )}
+                        <div className="flex-1 flex justify-center md:justify-start">
                             <Link to="/">
-                                <img src={logo} alt="logo" />
+                                <img src={logo} alt="logo" className="w-full h-full object-cover" />
                             </Link>
                         </div>
-                        <div className="w-[50%] flex-none px-[57px] mx-5 flex justify-center items-center">
+                        <div className="w-[50%] flex-none px-[57px] mx-5 hidden md:flex justify-center items-center">
                             <SearchBar />
                         </div>
-                        <div className="flex-1 flex justify-end">
+                        <div className="w-max md:flex-1 flex justify-end">
                             <span
                                 onClick={() => {
                                     onSetOpenOrder(true)
                                 }}
                                 className="flex justify-center items-center cursor-pointer"
                             >
-                                <div className="flex flex-col justify-center items-end">
+                                <div className="hidden md:flex flex-col justify-center items-end">
                                     <span>Your Cart</span>
                                     <div className="flex justify-center items-center gap-1 text-base font-bold">
                                         <span className="text-red-500">{cartItemCount > 0 ? cartItemCount : 0}</span>
                                         <span>ITEM</span>
                                     </div>
                                 </div>
-                                <span className="ml-4 text-main">
-                                    <Icon.RiShoppingBasketFill size={38} />
+                                <span className="ml-4 md:text-main">
+                                    {deviceWidth >= 768 ? (
+                                        <Icon.RiShoppingBasketFill size={38} />
+                                    ) : (
+                                        <div className="relative">
+                                            <Icon.ImCart size={28} />
+                                            {cartItemCount > 0 && (
+                                                <span className="w-[25px] h-[18px] text-center text-sm font-medium text-white rounded-full absolute -top-3 -right-2 bg-red-500">
+                                                    {cartItemCount}
+                                                </span>
+                                            )}
+                                        </div>
+                                    )}
                                 </span>
                             </span>
                         </div>
                     </div>
                 </div>
-                <div className="w-full flex justify-center items-center border-t border-[#0000000d]">
-                    <Navigation />
+                <div className="w-full flex justify-center items-center border-t border-[#0000000d] px-5 md:px-0">
+                    <div className={`${deviceWidth >= 768 ? 'w-main' : 'flex-1'}`}>
+                        <Navigation />
+                    </div>
+                    {deviceWidth < 768 && <SearchBar />}
                 </div>
             </div>
             {isShowing && (

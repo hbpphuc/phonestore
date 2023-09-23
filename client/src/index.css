@@ -65,10 +65,10 @@
 }
 
 button.slick-next {
-    @apply -right-[72px] w-20 h-20 flex justify-center items-center;
+    @apply -right-[72px] w-20 h-20  justify-center items-center;
 }
 button.slick-prev {
-    @apply -left-[72px] w-20 h-20 flex justify-center items-center;
+    @apply -left-[72px] w-20 h-20  justify-center items-center;
 }
 
 button.slick-next::before {
@@ -213,4 +213,8 @@ button.slick-prev::before {
     backdrop-filter: blur(3.5px);
     -webkit-backdrop-filter: blur(3.5px);
     border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.slick-slide .slick-active .slick-current > div {
+    @apply !w-1/4;
 }

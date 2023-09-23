@@ -40,14 +40,14 @@ const SearchBar = () => {
         <div
             tabIndex="-1"
             {...attrs}
-            className="w-[526px] border-t-0 border-2 border-main rounded-b-lg bg-white relative -top-[10px]"
+            className="w-[359px] md:w-[526px] border-t-0 border border-gray-200 md:border-2 md:border-main shadow-md rounded-b-lg bg-white relative -top-[10px]"
         >
             <SearchResultPopup data={searchResults} onSetFocus={setIsFocus} />
         </div>
     )
 
     return (
-        <div className="w-full flex justify-center items-center relative">
+        <div className="flex-1 flex justify-center items-center relative">
             <HeadlessTippy
                 interactive
                 placement="bottom"
@@ -56,7 +56,10 @@ const SearchBar = () => {
                 onClickOutside={() => setIsFocus(false)}
                 className="w-full flex justify-center items-center relative"
             >
-                <form onSubmit={handleSubmit(onSubmit)} className="w-full flex justify-center items-center">
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="w-full flex justify-center items-center bg-slate-100"
+                >
                     <input
                         type="text"
                         spellCheck={false}
@@ -68,11 +71,11 @@ const SearchBar = () => {
                                 if (!e.target.value.startsWith(' ')) setSearchValue(e.target.value)
                             },
                         })}
-                        className="flex-1 h-10 text-sm font-normal text-secondary p-[6px_8px] border-2 border-main outline-none"
+                        className="flex-1 h-10 text-sm font-normal text-secondary p-[6px_8px] md:border-2 md:border-main outline-none bg-slate-100"
                     />
                     <Button
                         type="submit"
-                        className="w-10 h-10 flex justify-center items-center text-white bg-main hover:brightness-95 transition-all"
+                        className="w-10 h-10 flex justify-center items-center md:text-white md:bg-main hover:brightness-95 transition-all"
                     >
                         <Icon.TbSearch size={24} />
                     </Button>

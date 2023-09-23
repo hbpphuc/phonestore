@@ -53,7 +53,7 @@ const ProductItem = ({ data, cateType, detail, loading }) => {
     return (
         <>
             <div className="w-full flex justify-center items-center">
-                <div className="w-full h-auto mx-2 flex flex-col items-center product-item border">
+                <div className="w-full h-auto md:mx-2 flex flex-col items-center product-item border">
                     <div className="w-full h-[300px] mb-5 p-[15px] overflow-hidden relative flex flex-col items-center">
                         {!detail && loading === 0 && (
                             <div
