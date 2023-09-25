@@ -52,9 +52,9 @@ const ProductItem = ({ data, cateType, detail, loading }) => {
 
     return (
         <>
-            <div className="w-full flex justify-center items-center">
-                <div className="w-full h-auto md:mx-2 flex flex-col items-center product-item border">
-                    <div className="w-full h-[300px] mb-5 p-[15px] overflow-hidden relative flex flex-col items-center">
+            <div className="w-full h-auto flex justify-center items-center">
+                <div className="w-full h-auto flex flex-col items-center product-item border">
+                    <div className="w-full h-auto p-[15px] overflow-hidden relative flex flex-col items-center">
                         {!detail && loading === 0 && (
                             <div
                                 className={`product-item-favourite ${
@@ -65,18 +65,12 @@ const ProductItem = ({ data, cateType, detail, loading }) => {
                                 <span>New</span>
                             </div>
                         )}
-                        <div className="w-full h-full flex justify-center items-start">
+                        <div className="w-full h-[120px] sm:h-[240px] flex justify-center items-start">
                             {loading > 0 ? (
-                                <Skeleton className="w-[260px] h-[300px]" />
+                                <Skeleton className="w-[260px] h-[240px]" />
                             ) : (
                                 <Link to={`${publicRoutes.products}/${cateType}/${data?.slug}`}>
-                                    <img
-                                        src={
-                                            data?.imageCover || 'https://app.advaiet.com/item_dfile/default_product.png'
-                                        }
-                                        alt={data?.name}
-                                        className="w-full h-full object-center"
-                                    />
+                                    <img src={data?.imageCover} alt={data?.name} />
                                 </Link>
                             )}
                         </div>

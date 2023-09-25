@@ -7,7 +7,7 @@ import DOMPurify from 'dompurify'
 const PostItem = ({ data }) => {
     return (
         <div className="w-full flex justify-center items-center">
-            <div className="w-full md:mx-2 flex flex-col items-center">
+            <div className="w-full flex flex-col items-center">
                 <img src={data?.imageCover} alt={data?.summary} className="w-full mb-5 object-cover" />
                 <Link
                     to={`/posts/${data?.topic?.slug}/${data?.slug}`}

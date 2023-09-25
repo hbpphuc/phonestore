@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const SearchResultPopup = ({ data, onSetFocus }) => {
     return (
-        <div className="w-full max-h-[400px] z-50 overflow-auto text-sm">
+        <div className="w-full h-[300px] md:h-[400px] z-50 overflow-auto text-sm">
             <h2 className="w-full p-[4px_8px] bg-[#f8f9fa] text-[#6c757d] cursor-default select-none">
                 Products in your search
             </h2>
@@ -13,14 +13,14 @@ const SearchResultPopup = ({ data, onSetFocus }) => {
                     data?.map((item, index) => (
                         <div
                             key={item.id}
-                            className={`w-full py-2 flex gap-3 ${
+                            className={`w-full py-2 flex items-center gap-3 ${
                                 index < data?.length - 1 && 'border-b border-[#d5d5d5]'
                             }`}
                         >
                             <Link
                                 onClick={() => onSetFocus(false)}
                                 to={`/products/${item.category.slug}/${item.slug}`}
-                                className="w-20 h-20 flex justify-center items-center"
+                                className="w-12 h-12 md:w-20 md:h-20 flex justify-center items-center"
                             >
                                 <img src={item.imageCover} alt={item.name} className="object-cover" />
                             </Link>
@@ -28,12 +28,12 @@ const SearchResultPopup = ({ data, onSetFocus }) => {
                                 <Link
                                     onClick={() => onSetFocus(false)}
                                     to={`/products/${item.category.slug}/${item.slug}`}
-                                    className="text-[#333] ml-1 text-base font-medium"
+                                    className="text-[#333] ml-1 text-sm md:text-base font-medium"
                                 >
                                     {item.name}
                                 </Link>
-                                <h3 className="flex items-center text-[#e83a45] text-sm font-bold">
-                                    <Icon.TbCurrencyDollar size={18} />
+                                <h3 className="flex items-center text-[#e83a45] text-[10px] md:text-sm font-bold">
+                                    <Icon.TbCurrencyDollar />
                                     <span>{item.price}</span>
                                 </h3>
                             </div>

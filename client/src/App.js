@@ -100,7 +100,7 @@ function App() {
                     }}
                     className="p-[8px_4px] flex justify-center items-center bg-glassmorphism fixed right-5 bottom-5 text-main rounded-md"
                 >
-                    <Icon.MdVerticalAlignTop size={40} />
+                    <Icon.MdVerticalAlignTop size={deviceWidth > 640 ? 40 : 32} />
                 </button>
             )}
         </>

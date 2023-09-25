@@ -72,7 +72,7 @@ const OrderSidebar = ({ onSetOpenOrder, user }) => {
     }, [checkout])
 
     return (
-        <div className="fixed top-0 right-0 w-[400px] h-screen flex flex-col bg-[#1c1d1d] text-white sidebar-shadow">
+        <div className="fixed top-0 right-0 w-[300px] md:w-[400px] h-screen flex flex-col bg-[#1c1d1d] text-white sidebar-shadow z-50">
             <div className="w-full h-20 flex items-center px-6 py-1 relative border-b border-admin">
                 <span
                     className="absolute top-0 right-0 w-[78px] h-[78px] flex justify-center items-center text-gray-400 cursor-pointer"

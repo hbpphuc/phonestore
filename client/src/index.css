@@ -33,6 +33,10 @@
     }
 }
 
+.hidden-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
 .szh-menu {
     top: 30px !important;
     left: -50px !important;
@@ -43,7 +47,6 @@
 }
 
 .product-item:hover .product-item-options {
-    position: absolute;
     bottom: 10px;
     transition: all 0.5s ease;
 }
@@ -62,6 +65,35 @@
 
 .react-tabs__tab-list {
     @apply mb-0;
+}
+
+.bg-glassmorphism {
+    background: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(3.5px);
+    -webkit-backdrop-filter: blur(3.5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    width: auto;
+    height: auto;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(3.5px);
+    -webkit-backdrop-filter: blur(3.5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    z-index: 10;
+}
+
+.swiper-button-next::after {
+    @apply content-['\276F'] p-2 md:p-3 text-[1.5rem] sm:text-[2rem] md:text-[3rem] text-[#3a3a3aae] hover:text-main;
+}
+
+.swiper-button-prev::after {
+    @apply content-['\276E'] p-2 md:p-3 text-[1.5rem] sm:text-[2rem] md:text-[3rem] text-[#3a3a3aae] hover:text-main;
 }
 
 button.slick-next {
@@ -205,16 +237,4 @@ button.slick-prev::before {
 
 .post-description-first-letter {
     @apply first-letter:text-[62px] first-letter:leading-[48px] first-letter:font-semibold first-letter:text-[#333] first-letter:pr-2 first-letter:pt-2 first-letter:float-left leading-7;
-}
-
-.bg-glassmorphism {
-    background: rgba(255, 255, 255, 0.16);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(3.5px);
-    -webkit-backdrop-filter: blur(3.5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.slick-slide .slick-active .slick-current > div {
-    @apply !w-1/4;
 }

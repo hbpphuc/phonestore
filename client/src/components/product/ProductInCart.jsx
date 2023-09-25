@@ -29,8 +29,10 @@ const ProductInCart = ({ data, i, length }) => {
     }, [value])
 
     return (
-        <div className={`w-full h-auto pb-5 flex gap-5 ${!i && 'border-b border-[#4b545c]'}`}>
-            <div className="w-20 h-20 flex-none flex justify-center items-center">
+        <div
+            className={`w-full h-auto pb-5 flex justify-center items-center gap-5 ${!i && 'border-b border-[#4b545c]'}`}
+        >
+            <div className="w-12 h-12 md:w-20 md:h-20 flex-none flex justify-center items-center">
                 <img
                     src={data?.product?.imageCover}
                     alt={data?.product?.name}

@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react'
-import Slider from 'react-slick'
 import Skeleton from 'react-loading-skeleton'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { Autoplay, Navigation } from 'swiper/modules'
 import { useSelector } from 'react-redux'
 import * as apis from 'apis'
 import ProductItem from 'components/product/ProductItem'
@@ -28,21 +28,6 @@ const Section = ({ cateData, title }) => {
         getCategory()
     }, [cateId])
 
-    const settingsProducts = {
-        dots: false,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        arrows: deviceWidth >= 1400 ? true : false,
-    }
-
-    let countToShow
-
-    if (deviceWidth < 768) countToShow = 2
-    else if (deviceWidth >= 768 && deviceWidth < 992) countToShow = 3
-    else if (deviceWidth >= 1024) countToShow = 4
-
     return (
         <div className="w-full h-auto flex flex-col justify-center items-center mb-[50px]">
             <div className="w-full mb-5 flex justify-center items-center relative">
@@ -50,11 +35,11 @@ const Section = ({ cateData, title }) => {
                 <span className="w-10 h-[3px] bg-[#ccc] absolute bottom-0"></span>
             </div>
             {cateData && (
-                <ul className="w-full mb-[30px] flex flex-row-reverse justify-center items-center">
-                    {cateData?.data?.map((item) => (
+                <ul className="w-full mb-[30px] flex flex-row-reverse flex-wrap-reverse gap-[15px] justify-center items-center px-[10px] sm:px-0">
+                    {cateData?.data?.map((item, index) => (
                         <li
-                            key={item.slug}
-                            className={`mx-[15px] text-[#8b8b8b] text-sm uppercase cursor-pointer hover:text-main transition-colors ${
+                            key={index}
+                            className={`text-[#8b8b8b] text-sm uppercase cursor-pointer hover:text-main transition-colors ${
                                 cateId === item._id && 'text-main'
                             }`}
                             onClick={() => setCateId(item._id)}
@@ -65,32 +50,40 @@ const Section = ({ cateData, title }) => {
                 </ul>
             )}
 
-            <div className="w-full h-auto">
+            <div className="w-full h-auto relative overflow-hidden">
                 {isLoading ? (
                     <Skeleton />
                 ) : prodCate?.length > 0 ? (
-                    deviceWidth >= 1400 ? (
-                        <Slider {...settingsProducts}>
-                            {prodCate?.slice(0, 6)?.map((item) => (
-                                <ProductItem key={item._id} data={item} cateType={cateType} />
-                            ))}
-                        </Slider>
-                    ) : (
-                        <Swiper
-                            slidesPerView={countToShow}
-                            spaceBetween={10}
-                            pagination={{
-                                clickable: true,
-                            }}
-                            className="flex"
-                        >
-                            {prodCate?.slice(0, 6)?.map((item) => (
-                                <SwiperSlide>
-                                    <ProductItem key={item._id} data={item} cateType={cateType} />
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
-                    )
+                    <Swiper
+                        slidesPerView={2}
+                        spaceBetween={10}
+                        autoplay={{
+                            delay: 2500,
+                            disableOnInteraction: false,
+                        }}
+                        pagination={{
+                            clickable: true,
+                        }}
+                        breakpoints={{
+                            768: {
+                                slidesPerView: 3,
+                                spaceBetween: 10,
+                            },
+                            1024: {
+                                slidesPerView: 4,
+                                spaceBetween: 10,
+                            },
+                        }}
+                        navigation={true}
+                        modules={[Autoplay, Navigation]}
+                        className="flex"
+                    >
+                        {prodCate?.slice(0, 6)?.map((item, index) => (
+                            <SwiperSlide>
+                                <ProductItem key={index} data={item} cateType={cateType} />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
                 ) : (
                     <div className="w-full flex justify-center items-cente text-[#8b8b8b] text-xl">No products</div>
                 )}

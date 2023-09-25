@@ -4,7 +4,7 @@ import { Autoplay } from 'swiper/modules'
 
 const Slider = () => {
     return (
-        <div className="w-full h-[300px] md:h-[400px] lg:h-[500px] xl:h-[600px] mb-10 -z-10">
+        <div className="w-full h-[200px] sm:h-[300px] md:h-[400px] lg:h-[500px] xl:h-[600px] mb-10 -z-10">
             <Swiper
                 className="mySwiper"
                 spaceBetween={30}

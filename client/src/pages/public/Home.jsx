@@ -14,10 +14,10 @@ const Home = () => {
     return (
         <div className="w-full h-full mb-[30px] flex flex-col items-center">
             <Slider />
-            <div className="w-full lg:w-main">
+            <div className="w-full xl:w-main">
                 <Section cateData={categories} title="Featured Products" />
             </div>
-            <div className="w-full lg:w-main">
+            <div className="w-full xl:w-main">
                 <Section3 title="news" />
             </div>
         </div>

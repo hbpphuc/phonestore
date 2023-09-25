@@ -36,9 +36,20 @@ module.exports = {
                         transform: 'rotate(0)',
                     },
                 },
+                'fade-in-effect': {
+                    '0%': {
+                        opacity: 0,
+                        left: '-100px',
+                    },
+                    '100%': {
+                        opacity: '100%',
+                        left: '0',
+                    },
+                },
             },
             animation: {
                 'like-effect': 'like-effect 1s',
+                'fade-in-effect': 'fade-in-effect 1s',
             },
         },
     },

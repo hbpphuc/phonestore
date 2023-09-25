@@ -40,7 +40,7 @@ const SearchBar = () => {
         <div
             tabIndex="-1"
             {...attrs}
-            className="w-[359px] md:w-[526px] border-t-0 border border-gray-200 md:border-2 md:border-main shadow-md rounded-b-lg bg-white relative -top-[10px]"
+            className="w-full sm:w-[356px] md:w-[526px] border-t-0 border border-gray-200 md:border-2 md:border-main shadow-md rounded-b-lg bg-white relative -top-[10px]"
         >
             <SearchResultPopup data={searchResults} onSetFocus={setIsFocus} />
         </div>
@@ -58,7 +58,7 @@ const SearchBar = () => {
             >
                 <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="w-full flex justify-center items-center bg-slate-100"
+                    className="w-full flex justify-center items-center bg-slate-100 border-b border-gray-300 sm:border-0"
                 >
                     <input
                         type="text"
