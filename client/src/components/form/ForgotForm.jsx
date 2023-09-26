@@ -27,7 +27,7 @@ const ForgotForm = ({ onSetForm }) => {
     }
 
     return (
-        <div className="min-w-[500px] w-full h-full flex flex-col items-center">
+        <div className="w-full h-full flex flex-col items-center">
             <h1 className="w-full mb-5 font-semibold text-xl text-[#505050] text-center ">RESET YOUR PASSWORD</h1>
             <p className="w-full p-[12px_12px] mb-[10px] border border-secondary text-sm text-primary">
                 We will send you an email to reset your password.
@@ -49,7 +49,7 @@ const ForgotForm = ({ onSetForm }) => {
                 <div className="w-full flex justify-center">
                     <Button
                         type="submit"
-                        className="w-[140px] p-[12px_10px] bg-main text-white hover:bg-[#333] transition-colors"
+                        className="w-[140px] p-[10px_8px] bg-main text-white hover:bg-[#333] transition-colors"
                     >
                         {isLoading ? <Loading size={8} color="white" /> : 'Submit'}
                     </Button>

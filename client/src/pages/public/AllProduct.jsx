@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { useDebounce } from 'use-debounce'
 import { toast } from 'react-toastify'
 import LoadingBar from 'react-top-loading-bar'
@@ -11,6 +12,7 @@ import { optSort, optColor } from 'utils/constant'
 const limit = 6
 
 const AllProduct = () => {
+    const { deviceWidth } = useSelector((state) => state.app)
     const { type } = useParams()
     const { search } = useLocation()
 
@@ -78,20 +80,22 @@ const AllProduct = () => {
                 transitionTime={1000}
             />
             <div className="w-full h-auto flex justify-center items-center flex-col">
-                <div className="w-full h-auto py-5 mb-5 bg-[#f7f7f7] flex justify-center items-center">
-                    <Breadcrumb />
-                </div>
-                <div className="w-main flex gap-5">
-                    <div className="w-1/4 h-auto">
+                {deviceWidth >= 768 && (
+                    <div className="w-full h-auto px-0 py-5 lg:mb-5 bg-[#f7f7f7] flex justify-center items-center">
+                        <Breadcrumb />
+                    </div>
+                )}
+                <div className="w-full xl:w-main flex flex-col lg:flex-row justify-center gap-2 xl:gap-5">
+                    <div className="w-full lg:w-1/5 xl:w-1/4 h-auto">
                         <Navbar />
                     </div>
-                    <div className="w-3/4 h-auto flex flex-col ">
+                    <div className="w-full lg:w-4/5 xl:w-3/4 h-auto flex flex-col ">
                         <div className="w-full h-auto p-[0_8px] mb-2">
                             <div
                                 className={`w-full h-auto flex ${type ? 'justify-between' : 'justify-end'} p-2 border`}
                             >
-                                <div className="w-[80%] h-full flex flex-col">
-                                    <h2 className="text-base font-semibold text-primary mb-2">Filter by</h2>
+                                <div className="w-[70%] md:w-[80%] h-full flex flex-col">
+                                    <h2 className="text-sm lg:text-base font-semibold text-primary mb-2">Filter by</h2>
                                     <div className="w-full h-auto flex flex-wrap gap-2">
                                         {type && (
                                             <div className="w-auto h-auto ">
@@ -115,8 +119,8 @@ const AllProduct = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="w-[20%] h-full">
-                                    <h2 className="text-base font-semibold text-primary mb-2">Sort by</h2>
+                                <div className="w-[30%] md:w-[20%] h-full">
+                                    <h2 className="text-sm lg:text-base font-semibold text-primary mb-2">Sort by</h2>
                                     <Select
                                         onChange={setSortS}
                                         options={optSort}
@@ -128,7 +132,7 @@ const AllProduct = () => {
                         </div>
                         <div className="w-full h-auto flex flex-wrap">
                             {prods?.map((item) => (
-                                <div key={item.id} className="w-1/3 h-auto mb-3">
+                                <div key={item.id} className="w-1/2 md:w-1/3 h-auto mb-3">
                                     <ProductItem data={item} cateType={item.category.slug} loading={progress} />
                                 </div>
                             ))}

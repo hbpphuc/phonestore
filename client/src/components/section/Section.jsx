@@ -35,7 +35,7 @@ const Section = ({ cateData, title }) => {
                 <span className="w-10 h-[3px] bg-[#ccc] absolute bottom-0"></span>
             </div>
             {cateData && (
-                <ul className="w-full mb-[30px] flex flex-row-reverse flex-wrap-reverse gap-[15px] justify-center items-center px-[10px] sm:px-0">
+                <ul className="w-full mb-[30px] flex flex-row flex-wrap gap-[15px] justify-center items-center px-[10px] sm:px-0">
                     {cateData?.data?.map((item, index) => (
                         <li
                             key={index}
@@ -58,7 +58,7 @@ const Section = ({ cateData, title }) => {
                         slidesPerView={2}
                         spaceBetween={10}
                         autoplay={{
-                            delay: 2500,
+                            delay: 3000,
                             disableOnInteraction: false,
                         }}
                         pagination={{
@@ -67,16 +67,15 @@ const Section = ({ cateData, title }) => {
                         breakpoints={{
                             768: {
                                 slidesPerView: 3,
-                                spaceBetween: 10,
+                                spaceBetween: 0,
                             },
                             1024: {
                                 slidesPerView: 4,
-                                spaceBetween: 10,
+                                spaceBetween: 0,
                             },
                         }}
                         navigation={true}
                         modules={[Autoplay, Navigation]}
-                        className="flex"
                     >
                         {prodCate?.slice(0, 6)?.map((item, index) => (
                             <SwiperSlide>

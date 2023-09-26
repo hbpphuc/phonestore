@@ -33,9 +33,12 @@ const LoginForm = ({ onSetForm }) => {
     }
 
     return (
-        <div className="min-w-[500px] w-full h-full flex flex-col items-center">
+        <div className="w-full max-w-[500px] h-full flex flex-col items-center">
             <h1 className="w-full mb-5 font-semibold text-xl text-[#505050] text-center ">LOGIN</h1>
-            <form className="w-full flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
+            <form
+                className="w-full px-3 flex flex-col justify-center items-center gap-5"
+                onSubmit={handleSubmit(onSubmit)}
+            >
                 <div className="w-full">
                     <input
                         type="email"
@@ -67,10 +70,10 @@ const LoginForm = ({ onSetForm }) => {
                 <Button
                     text="Sign In"
                     type="submit"
-                    className="w-full mb-5 p-[12px_10px] bg-main text-white hover:bg-[#333] transition-colors"
+                    className="w-[140px] mb-5 p-[10px_8px] bg-main text-white hover:bg-[#333] transition-colors"
                 />
             </form>
-            <div className="w-full mb-5 flex justify-between">
+            <div className="w-full flex justify-between text-sm">
                 <Button
                     text="Forgot Your Password?"
                     onClick={() => onSetForm(2)}

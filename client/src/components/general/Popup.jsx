@@ -1,20 +1,26 @@
 import React, { memo } from 'react'
-import Modal from 'react-modal'
+import Popup from 'reactjs-popup'
+import Button from './Button'
+import Icon from './Icons'
 
-const Popup = ({ children, style, modalIsOpen, afterOpenModal, closeModal }) => {
+const PopupWrapper = ({ children, button, title, styles }) => {
     return (
-        <Modal
-            isOpen={modalIsOpen}
-            onAfterOpen={afterOpenModal}
-            onRequestClose={closeModal}
-            appElement={document.getElementById('root')}
-            className={`h-auto mx-auto relative top-1/2 -translate-y-1/2 ${
-                style ? 'w-[80%] left-1/2 -translate-x-1/2' : 'w-full'
-            } flex items-center justify-center`}
-        >
-            {children}
-        </Modal>
+        <Popup trigger={button} modal nested>
+            {(close) => (
+                <div
+                    className={`${styles} h-auto flex justify-center items-center p-2 bg-white overflow-hidden relative`}
+                >
+                    <div className="w-10 h-10 absolute top-0 right-0">
+                        <Button onClick={close} className="w-full h-full flex justify-center items-center">
+                            <Icon.GrClose size={26} />
+                        </Button>
+                    </div>
+                    {title && <div className="header"> Modal Title </div>}
+                    <div className="w-full h-full flex justify-center items-center">{children}</div>
+                </div>
+            )}
+        </Popup>
     )
 }
 
-export default memo(Popup)
+export default memo(PopupWrapper)

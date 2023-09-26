@@ -7,7 +7,7 @@ import DOMPurify from 'dompurify'
 import 'react-tabs/style/react-tabs.css'
 import * as apis from 'apis'
 import { Breadcrumb, Icon, InfoProduct, ProductItem, Review } from 'components'
-import { detailProductTabs, productExtrainInfo } from 'utils/menu'
+import { productExtrainInfo } from 'utils/menu'
 
 const DetailProduct = () => {
     const { type, slug } = useParams()
@@ -86,13 +86,13 @@ const DetailProduct = () => {
                 <div className="w-main mb-10">
                     <Tabs>
                         <TabList>
-                            {detailProductTabs[0].map((item) => (
-                                <Tab key={item.id}>
-                                    <span className="uppercase text-sm">{item.title}</span>
-                                </Tab>
-                            ))}
+                            <Tab>
+                                <span className="uppercase text-sm">description</span>
+                            </Tab>
+                            <Tab>
+                                <span className="uppercase text-sm">reviews</span>
+                            </Tab>
                         </TabList>
-
                         <TabPanel>
                             {!isLoading ? (
                                 <div
@@ -126,18 +126,6 @@ const DetailProduct = () => {
                                 <Skeleton />
                             )}
                         </TabPanel>
-                        {detailProductTabs[1].map((item) => (
-                            <TabPanel key={item.id}>
-                                <div className="border border-[#aaa] border-t-0 p-5 ">
-                                    {item.subTitle !== '' && (
-                                        <h2 className="text-lg text-[#505050] font-semibold uppercase mb-5">
-                                            {item.subTitle}
-                                        </h2>
-                                    )}
-                                    <p className="whitespace-pre-line">{item.content}</p>
-                                </div>
-                            </TabPanel>
-                        ))}
                         <TabPanel>
                             <Review />
                         </TabPanel>

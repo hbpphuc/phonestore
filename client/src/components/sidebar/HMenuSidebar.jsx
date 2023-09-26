@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Icon } from 'components'
+import { Button, ForgotForm, Icon, LoginForm, Popup, RegisterForm } from 'components'
 import { navigatorMenu } from 'utils/menu'
 import { adminRoutes } from 'routes/paths'
 
 const HMenuSidebar = ({ user, onSetOpenMenu }) => {
-    console.log(user)
+    const [form, setForm] = useState(0)
     return (
         <div className="fixed top-0 left-0 w-[300px] h-screen flex flex-col bg-[#1c1d1d] text-white sidebar-shadow z-50 fade-in-effect">
             <div className="w-full h-20 flex items-center px-6 py-1 relative border-b border-admin">
@@ -26,7 +26,9 @@ const HMenuSidebar = ({ user, onSetOpenMenu }) => {
                     {navigatorMenu.map((item, index) => (
                         <li
                             key={item.id}
-                            className={`py-4 text-sm uppercase ${index !== navigatorMenu.length - 1 ? 'border-b' : ''}`}
+                            className={`py-4 text-sm uppercase ${
+                                index !== navigatorMenu.length - 1 ? 'border-b border-admin' : ''
+                            }`}
                         >
                             <NavLink
                                 to={item.path}
@@ -41,20 +43,42 @@ const HMenuSidebar = ({ user, onSetOpenMenu }) => {
                 </ul>
                 <div>
                     <ul className="w-full flex flex-col text-white border-t border-admin">
-                        <li className="py-4 text-sm uppercase">
-                            <NavLink
-                                onClick={(isActive) => isActive && onSetOpenMenu(false)}
-                                to={
-                                    user?.data?.role === 'admin'
-                                        ? `/${adminRoutes.admin}/${adminRoutes.adminDashboard}`
-                                        : `/me`
-                                }
-                                className={`w-full h-full inline-block ${({ isActive }) =>
-                                    isActive ? 'text-main' : ''}`}
-                            >
-                                {user?.data?.name}
-                            </NavLink>
-                        </li>
+                        {user ? (
+                            <li className="py-4 text-sm uppercase">
+                                <NavLink
+                                    onClick={(isActive) => isActive && onSetOpenMenu(false)}
+                                    to={
+                                        user?.data?.role === 'admin'
+                                            ? `/${adminRoutes.admin}/${adminRoutes.adminDashboard}`
+                                            : `/me`
+                                    }
+                                    className={`w-full h-full inline-block ${({ isActive }) =>
+                                        isActive ? 'text-main' : ''}`}
+                                >
+                                    {user?.data?.name}
+                                </NavLink>
+                            </li>
+                        ) : (
+                            <li className="py-4 text-sm uppercase">
+                                <Popup
+                                    button={
+                                        <Button
+                                            text="Sign In | Sign Up"
+                                            className="text-sm font-normal text-white hover:text-main"
+                                        />
+                                    }
+                                    styles="w-[300px] sm:w-[400px] md:w-[500px]"
+                                >
+                                    {form === 0 ? (
+                                        <LoginForm onSetForm={setForm} />
+                                    ) : form === 1 ? (
+                                        <RegisterForm onSetForm={setForm} />
+                                    ) : (
+                                        <ForgotForm onSetForm={setForm} />
+                                    )}
+                                </Popup>
+                            </li>
+                        )}
                     </ul>
                 </div>
             </div>

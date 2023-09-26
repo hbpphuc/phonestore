@@ -238,3 +238,40 @@ button.slick-prev::before {
 .post-description-first-letter {
     @apply first-letter:text-[62px] first-letter:leading-[48px] first-letter:font-semibold first-letter:text-[#333] first-letter:pr-2 first-letter:pt-2 first-letter:float-left leading-7;
 }
+
+.wrapper {
+    width: 100%;
+    min-height: 100px;
+    max-height: min((100vh - 96px) - 60px, 734px);
+    display: flex;
+    flex-direction: column;
+    background: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 12px;
+    border-radius: 8px;
+    padding-top: 8px;
+    overflow-y: auto;
+}
+
+.popup-content {
+    width: auto;
+    height: auto;
+    margin: auto;
+    background: rgb(255, 255, 255);
+}
+
+.popup-arrow {
+    color: rgb(255, 255, 255);
+}
+
+[role="tooltip"].popup-content {
+    width: 200px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+}
+
+.popup-overlay {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+[data-popup="tooltip"].popup-overlay {
+    background: transparent;
+}

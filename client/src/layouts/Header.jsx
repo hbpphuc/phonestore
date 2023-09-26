@@ -14,7 +14,6 @@ import {
     SearchBar,
     HMenuSidebar,
 } from '../components'
-import useModal from '../hooks/useModal'
 import { adminRoutes } from 'routes/paths'
 import logo from '../assets/images/logo.png'
 import { logoutt } from '../redux/user/userSlice'
@@ -22,7 +21,6 @@ import { getCurrentUser } from '../redux/user/userAction'
 import * as apis from '../apis'
 
 const Header = ({ onSetOpenOrder, cartItemCount }) => {
-    const { isShowing, toggle } = useModal()
     const [form, setForm] = useState(0)
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -62,11 +60,23 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                             </div>
                             <div className="flex relative">
                                 {!curUser ? (
-                                    <Button
-                                        text="Sign In | Sign Up"
-                                        onClick={toggle}
-                                        className="text-sm font-normal text-[#848484] hover:text-main"
-                                    />
+                                    <Popup
+                                        button={
+                                            <Button
+                                                text="Sign In | Sign Up"
+                                                className="text-sm font-normal text-[#848484] hover:text-main"
+                                            />
+                                        }
+                                        styles="w-[300px] sm:w-[400px] md:w-[500px]"
+                                    >
+                                        {form === 0 ? (
+                                            <LoginForm onSetForm={setForm} />
+                                        ) : form === 1 ? (
+                                            <RegisterForm onSetForm={setForm} />
+                                        ) : (
+                                            <ForgotForm onSetForm={setForm} />
+                                        )}
+                                    </Popup>
                                 ) : (
                                     <Menu
                                         menuButton={
@@ -104,7 +114,7 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                         </div>
                     </div>
                 )}
-                <div className="w-full h-14 sm:h-20 md:h-auto flex justify-center items-center px-[10px] md:p-[30px_10px] xl:px-0">
+                <div className="w-full h-16 sm:h-20 md:h-auto flex justify-center items-center px-[10px] md:p-[30px_10px] xl:px-0">
                     <div className="w-main flex items-center justify-between">
                         {deviceWidth < 640 && (
                             <div className="w-max md:flex-1 flex justify-start">
@@ -123,14 +133,27 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                                 <img src={logo} alt="logo" className="w-[200px] sm:w-full h-full object-cover" />
                             </Link>
                         </div>
-                        <div className="w-[50%] flex-none px-[57px] mx-5 hidden md:flex justify-center items-center">
+                        <div className="w-[50%] flex-none px-5 lg:px-[57px] mx-5 hidden md:flex justify-center items-center">
                             <SearchBar />
                         </div>
                         <div className="w-max md:flex-1 flex justify-end gap-3">
                             {deviceWidth >= 640 && deviceWidth < 768 && (
-                                <span>
-                                    <Icon.FaUserCircle size={24} />
-                                </span>
+                                <Popup
+                                    button={
+                                        <span>
+                                            <Icon.FaUserCircle size={24} />
+                                        </span>
+                                    }
+                                    styles="w-[300px] sm:w-[400px] md:w-[500px]"
+                                >
+                                    {form === 0 ? (
+                                        <LoginForm onSetForm={setForm} />
+                                    ) : form === 1 ? (
+                                        <RegisterForm onSetForm={setForm} />
+                                    ) : (
+                                        <ForgotForm onSetForm={setForm} />
+                                    )}
+                                </Popup>
                             )}
                             <span
                                 onClick={() => {
@@ -173,24 +196,6 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                 </div>
             </div>
             {deviceWidth < 640 && openMenu && <HMenuSidebar onSetOpenMenu={setOpenMenu} user={curUser} />}
-            {isShowing && (
-                <Popup modalIsOpen={isShowing} closeModal={toggle}>
-                    <div className="max-w-[700px] h-auto flex flex-col p-5 bg-white overflow-hidden relative">
-                        <div className="w-10 h-10 absolute top-0 right-0">
-                            <Button onClick={toggle} className="w-full h-full flex justify-center items-center">
-                                <Icon.GrClose size={26} />
-                            </Button>
-                        </div>
-                        {form === 0 ? (
-                            <LoginForm onSetForm={setForm} />
-                        ) : form === 1 ? (
-                            <RegisterForm onSetForm={setForm} />
-                        ) : (
-                            <ForgotForm onSetForm={setForm} />
-                        )}
-                    </div>
-                </Popup>
-            )}
         </>
     )
 }

@@ -41,9 +41,9 @@ const RegisterForm = ({ onSetForm }) => {
     }
 
     return (
-        <div className="min-w-[500px] w-full h-full flex flex-col items-center">
+        <div className="w-full h-full flex flex-col items-center">
             <h1 className="w-full mb-5 font-semibold text-xl text-[#505050] text-center ">REGISTER</h1>
-            <form className="w-full flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
+            <form className="w-full flex flex-col items-center gap-5" onSubmit={handleSubmit(onSubmit)}>
                 <div className="w-full">
                     <input
                         type="text"
@@ -102,7 +102,7 @@ const RegisterForm = ({ onSetForm }) => {
                 </div>
                 <Button
                     type="submit"
-                    className="min-w-[140px] p-[12px_10px] bg-main text-white hover:bg-[#333] transition-colors"
+                    className="w-[160px] p-[10px_8px] bg-main text-white hover:bg-[#333] transition-colors"
                 >
                     {isLoading ? <Loading size={8} color="white" /> : 'Create Account'}
                 </Button>

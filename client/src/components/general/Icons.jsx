@@ -3,15 +3,15 @@ import { TbSearch, TbDotsVertical, TbCurrencyDollar, TbPhotoEdit } from 'react-i
 import { FaHeart, FaEye, FaRegComments, FaGift, FaUserCircle, FaChartPie, FaLayerGroup, FaUsers } from 'react-icons/fa'
 import { FaShieldHalved } from 'react-icons/fa6'
 import { HiMenu, HiOutlineArrowNarrowLeft, HiOutlineArrowNarrowRight, HiUserGroup } from 'react-icons/hi'
-import { BsCalendar3, BsDot } from 'react-icons/bs'
+import { BsCalendar3, BsDot, BsSpeaker } from 'react-icons/bs'
 import { GrClose, GrProductHunt } from 'react-icons/gr'
 import { BiDetail, BiSolidTruck, BiSolidDashboard } from 'react-icons/bi'
 import { GiReturnArrow } from 'react-icons/gi'
 import { TiPhone } from 'react-icons/ti'
-import { MdNavigateNext, MdDownloadDone, MdShoppingCartCheckout, MdVerticalAlignTop } from 'react-icons/md'
+import { MdNavigateNext, MdDownloadDone, MdShoppingCartCheckout, MdVerticalAlignTop, MdLaptopMac } from 'react-icons/md'
 import { RiEyeCloseLine, RiEyeFill, RiDashboard2Line } from 'react-icons/ri'
 import { IoMdCloseCircle } from 'react-icons/io'
-import { IoPersonCircleSharp, IoClose, IoNewspaperOutline } from 'react-icons/io5'
+import { IoPersonCircleSharp, IoClose, IoNewspaperOutline, IoHeadset } from 'react-icons/io5'
 import {
     BiLogOut,
     BiSolidEditAlt,
@@ -28,10 +28,13 @@ import { CgRemove } from 'react-icons/cg'
 import { AiFillSetting, AiOutlineCloudUpload } from 'react-icons/ai'
 import { TfiLayoutListThumbAlt } from 'react-icons/tfi'
 import { LiaMoneyBillWaveAltSolid } from 'react-icons/lia'
-import { RiMore2Fill, RiHandCoinFill } from 'react-icons/ri'
+import { RiMore2Fill, RiHandCoinFill, RiCamera3Line } from 'react-icons/ri'
 import { ImCart } from 'react-icons/im'
 import { FcCancel } from 'react-icons/fc'
 import { PiCaretDoubleDownBold } from 'react-icons/pi'
+import { LuSmartphone } from 'react-icons/lu'
+import { SlScreenTablet } from 'react-icons/sl'
+import { FiMonitor } from 'react-icons/fi'
 
 const Icon = {
     RiShoppingBasketFill,
@@ -92,6 +95,14 @@ const Icon = {
     FcCancel,
     PiCaretDoubleDownBold,
     MdVerticalAlignTop,
+
+    LuSmartphone,
+    MdLaptopMac,
+    SlScreenTablet,
+    BsSpeaker,
+    RiCamera3Line,
+    FiMonitor,
+    IoHeadset,
 }
 
 export default Icon
