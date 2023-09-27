@@ -85,12 +85,12 @@ const AllProduct = () => {
                         <Breadcrumb />
                     </div>
                 )}
-                <div className="w-full xl:w-main flex flex-col lg:flex-row justify-center gap-2 xl:gap-5">
+                <div className="w-full xl:w-main flex flex-col lg:flex-row justify-center gap-1 lg:pl-[10px]">
                     <div className="w-full lg:w-1/5 xl:w-1/4 h-auto">
                         <Navbar />
                     </div>
-                    <div className="w-full lg:w-4/5 xl:w-3/4 h-auto flex flex-col ">
-                        <div className="w-full h-auto p-[0_8px] mb-2">
+                    <div className="w-full lg:w-4/5 xl:w-3/4 h-auto flex flex-col">
+                        <div className="w-full h-auto px-[10px] mb-2">
                             <div
                                 className={`w-full h-auto flex ${type ? 'justify-between' : 'justify-end'} p-2 border`}
                             >

@@ -8,7 +8,7 @@ const Breadcrumb = ({ title }) => {
     const breadcrumbs = useBreadcrumbs()
 
     return (
-        <div className="w-full px-[10px] xl:px-0 xl:w-main h-full flex flex-col">
+        <div className="w-full px-[10px] xl:w-main h-full flex flex-col">
             <h3 className="mb-[10px] text-lg text-secondary font-semibold uppercase">
                 {title || breadcrumbs[breadcrumbs.length - 1].breadcrumb.props.children}
             </h3>

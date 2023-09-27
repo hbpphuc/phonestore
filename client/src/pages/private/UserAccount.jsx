@@ -83,14 +83,14 @@ const UserAccount = () => {
     }, [])
 
     return (
-        <div className="w-full h-auto flex flex-col gap-4">
+        <div className="w-full h-auto flex flex-col gap-4 px-[10px]">
             <div className="w-full flex justify-center items-center border-b pb-4">
                 <form className="w-full flex flex-col items-center" onSubmit={handleSubmit3(onUpdateImage)}>
                     <div className="flex justify-end relative">
                         <img
                             src={preview || curUser?.data?.photo}
                             alt={curUser?.data?.name}
-                            className="w-[240px] h-[240px] object-cover rounded-full "
+                            className="w-[180px] md:w-[240px] h-[180px] md:h-[240px] object-cover rounded-full "
                         />
                         <div className="w-full flex flex-col-reverse items-center gap-2">
                             <Tippy content={'Choose new photo'} placement="top">
@@ -124,8 +124,8 @@ const UserAccount = () => {
                     </div>
                 </form>
             </div>
-            <div className="w-full h-auto flex gap-4">
-                <div className="flex-1 ml-4">
+            <div className="w-full h-auto flex flex-col lg:flex-row gap-4">
+                <div className="flex-1 lg:ml-4">
                     <h1 className="w-full h-auto flex text-xl font-bold uppercase gradient-text">
                         Your Account Setting
                     </h1>
@@ -180,7 +180,7 @@ const UserAccount = () => {
                         </form>
                     </div>
                 </div>
-                <div className="flex-1 mr-6">
+                <div className="flex-1 lg:mr-6">
                     <h1 className="w-full h-auto flex text-xl font-bold uppercase gradient-text">Password Change</h1>
                     <div className="w-full mt-5">
                         <form className="w-full flex flex-col items-center" onSubmit={handleSubmit2(onUpdatePassword)}>

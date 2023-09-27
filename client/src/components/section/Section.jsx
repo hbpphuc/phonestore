@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 import * as apis from 'apis'
 import ProductItem from 'components/product/ProductItem'
 
-const Section = ({ cateData, title }) => {
+const Section = ({ pData, cateData, title, detail }) => {
     const [cateId, setCateId] = useState('648d84dbc23688213c792cac')
     const [cateType, setCateType] = useState(null)
     const [prodCate, setProdCate] = useState(null)
@@ -29,12 +29,12 @@ const Section = ({ cateData, title }) => {
     }, [cateId])
 
     return (
-        <div className="w-full h-auto flex flex-col justify-center items-center mb-[50px]">
+        <div className="w-full h-auto flex flex-col justify-center items-center mb-5 md:mb-[50px]">
             <div className="w-full mb-5 flex justify-center items-center relative">
                 <h2 className="pb-[15px] text-xl text-secondary uppercase font-normal">{title}</h2>
                 <span className="w-10 h-[3px] bg-[#ccc] absolute bottom-0"></span>
             </div>
-            {cateData && (
+            {!detail && cateData && (
                 <ul className="w-full mb-[30px] flex flex-row flex-wrap gap-[15px] justify-center items-center px-[10px] sm:px-0">
                     {cateData?.data?.map((item, index) => (
                         <li
@@ -56,7 +56,7 @@ const Section = ({ cateData, title }) => {
                 ) : prodCate?.length > 0 ? (
                     <Swiper
                         slidesPerView={2}
-                        spaceBetween={10}
+                        spaceBetween={0}
                         autoplay={{
                             delay: 3000,
                             disableOnInteraction: false,
@@ -77,11 +77,17 @@ const Section = ({ cateData, title }) => {
                         navigation={true}
                         modules={[Autoplay, Navigation]}
                     >
-                        {prodCate?.slice(0, 6)?.map((item, index) => (
-                            <SwiperSlide>
-                                <ProductItem key={index} data={item} cateType={cateType} />
-                            </SwiperSlide>
-                        ))}
+                        {pData
+                            ? pData?.slice(0, 6)?.map((item, index) => (
+                                  <SwiperSlide>
+                                      <ProductItem key={index} data={item} cateType={cateType} />
+                                  </SwiperSlide>
+                              ))
+                            : prodCate?.slice(0, 6)?.map((item, index) => (
+                                  <SwiperSlide>
+                                      <ProductItem key={index} data={item} cateType={cateType} />
+                                  </SwiperSlide>
+                              ))}
                     </Swiper>
                 ) : (
                     <div className="w-full flex justify-center items-cente text-[#8b8b8b] text-xl">No products</div>

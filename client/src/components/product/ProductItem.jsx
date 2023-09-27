@@ -15,6 +15,7 @@ import InfoProduct from './InfoProduct'
 import Popup from 'components/general/Popup'
 
 const ProductItem = ({ data, cateType, detail, loading }) => {
+    const { deviceWidth } = useSelector((state) => state.app)
     const { curUser } = useSelector((state) => state.user)
     const dispatch = useDispatch()
 
@@ -43,76 +44,78 @@ const ProductItem = ({ data, cateType, detail, loading }) => {
     }
 
     return (
-        <div className="w-full px-1 md:px-2 h-auto flex justify-center items-center">
+        <div className="w-full px-[10px] h-auto flex justify-center items-center">
             <div className="w-full h-auto flex flex-col items-center product-item border">
-                <div className="w-full h-auto p-[15px] overflow-hidden relative flex flex-col items-center">
+                <div className="w-full h-auto p-2 sm:p-[15px] overflow-hidden relative flex flex-col items-center">
                     {!detail && loading === 0 && (
                         <div
                             className={`product-item-favourite ${
                                 isNew ? 'bg-[#00d5d5] border-t-[#00d5d5]' : 'bg-[#ffb400] border-t-[#ffb400]'
                             }`}
                         >
-                            <span className="absolute rounded-full left-1 top-[50%] translate-y-[-50%] w-[6px] h-[6px] bg-[white]"></span>
-                            <span>New</span>
+                            <span className="absolute rounded-full left-1 top-[50%] translate-y-[-50%] w-1 sm:w-[6px] h-1 sm:h-[6px] bg-[white]"></span>
+                            <span className="text-sm sm:text-base">New</span>
                         </div>
                     )}
-                    <div className="w-full h-[120px] min-[400px]:h-[190px] min-[576px]:h-[240px] flex justify-center items-start">
+                    <div className="w-full h-[140px] min-[400px]:h-[190px] min-[500px]:h-[240px] min-[600px]:h-[290px] flex justify-center items-start">
                         {loading > 0 ? (
-                            <Skeleton className="w-[260px] h-[240px]" />
+                            <Skeleton className="w-[140px] h-[120px] sm:w-[260px] sm:h-[240px]" />
                         ) : (
                             <Link to={`${publicRoutes.products}/${cateType}/${data?.slug}`}>
                                 <img src={data?.imageCover} alt={data?.name} />
                             </Link>
                         )}
                     </div>
-                    <div className="product-item-options w-full h-10 flex justify-center items-center gap-3 relative -bottom-16">
-                        {productAction
-                            .filter((el) => el.id !== 3)
-                            .map((item) => (
-                                <Tippy key={item.id} content={item.title} placement="top">
-                                    <button
-                                        onClick={() => handleClickActionBtn(item, data._id)}
-                                        ref={item.id === 1 && wishlistRef}
-                                        className={`w-11 h-11 flex justify-center items-center rounded-full product-action ${
-                                            item.id === 1 && curUser?.data?.wishlist.includes(data._id)
-                                                ? 'wishlist-action'
-                                                : ''
-                                        }`}
-                                    >
-                                        {item.icon}
-                                    </button>
-                                </Tippy>
-                            ))}
-                        {productAction
-                            .filter((el) => el.id === 3)
-                            .map((item) => (
-                                <Popup
-                                    button={
-                                        <button className="w-11 h-11 flex justify-center items-center rounded-full product-action">
+                    {deviceWidth > 768 && (
+                        <div className="product-item-options w-full h-10 flex justify-center items-center gap-3 relative -bottom-16">
+                            {productAction
+                                .filter((el) => el.id !== 3)
+                                .map((item) => (
+                                    <Tippy key={item.id} content={item.title} placement="top">
+                                        <button
+                                            onClick={() => handleClickActionBtn(item, data._id)}
+                                            ref={item.id === 1 && wishlistRef}
+                                            className={`w-11 h-11 flex justify-center items-center rounded-full product-action ${
+                                                item.id === 1 && curUser?.data?.wishlist.includes(data._id)
+                                                    ? 'wishlist-action'
+                                                    : ''
+                                            }`}
+                                        >
                                             {item.icon}
                                         </button>
-                                    }
-                                    styles="w-[300px] sm:w-[500px] md:w-[700px] lg:w-[900px]"
-                                >
-                                    <InfoProduct data={data} />
-                                </Popup>
-                            ))}
-                    </div>
+                                    </Tippy>
+                                ))}
+                            {productAction
+                                .filter((el) => el.id === 3)
+                                .map((item) => (
+                                    <Popup
+                                        button={
+                                            <button className="w-11 h-11 flex justify-center items-center rounded-full product-action">
+                                                {item.icon}
+                                            </button>
+                                        }
+                                        styles="w-[300px] sm:w-[500px] md:w-[700px] lg:w-[900px]"
+                                    >
+                                        <InfoProduct data={data} />
+                                    </Popup>
+                                ))}
+                        </div>
+                    )}
                 </div>
                 {loading > 0 ? (
-                    <Skeleton width={200} />
+                    <Skeleton width={deviceWidth > 640 ? 200 : 100} />
                 ) : (
                     <Link
                         to={`${publicRoutes.products}/${cateType}/${data?.slug}`}
-                        className="mb-[6px] hover:text-main transition-colors line-clamp-1"
+                        className="text-sm sm:text-base mb-[6px] px-1 md:px-0 hover:text-main transition-colors line-clamp-1"
                     >
                         {data?.name}
                     </Link>
                 )}
                 {loading > 0 ? (
-                    <Skeleton width={100} />
+                    <Skeleton width={deviceWidth > 640 ? 100 : 60} />
                 ) : (
-                    <div className="flex text-sm mb-[10px] gap-4">
+                    <div className="flex text-sm sm:mb-[10px] gap-4">
                         {false && <h2 className="text-[#999] line-through">${data?.price} USD</h2>}
                         <h2 className=" text-main">${data?.price} USD</h2>
                     </div>

@@ -54,7 +54,7 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
             <div className="w-full h-auto flex flex-col justify-center items-center">
                 {deviceWidth >= 768 && (
                     <div className="w-full flex justify-center items-center border-b border-[#0000000d] py-[10px]">
-                        <div className="w-main flex justify-between px-[10px] xl:px-0">
+                        <div className="w-main flex justify-between px-[10px]">
                             <div className="flex">
                                 <p className="text-sm font-normal text-[#848484]">Welcome to our Store!</p>
                             </div>
@@ -114,8 +114,8 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                         </div>
                     </div>
                 )}
-                <div className="w-full h-16 sm:h-20 md:h-auto flex justify-center items-center px-[10px] md:p-[30px_10px] xl:px-0">
-                    <div className="w-main flex items-center justify-between">
+                <div className="w-full h-16 sm:h-20 md:h-auto flex justify-center items-center md:py-[30px]">
+                    <div className="w-main flex items-center justify-between px-[10px]">
                         {deviceWidth < 640 && (
                             <div className="w-max md:flex-1 flex justify-start">
                                 <span
@@ -186,7 +186,7 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                         </div>
                     </div>
                 </div>
-                <div className="w-full flex justify-center items-center border-t border-[#0000000d] px-0 sm:px-[10px] xl:px-0">
+                <div className="w-full flex justify-center items-center border-t border-[#0000000d] px-[0px] sm:px-[10px] xl:px-0">
                     {deviceWidth >= 640 && (
                         <div className={`${deviceWidth >= 768 ? 'w-main' : 'flex-1'}`}>
                             <Navigation />

@@ -38,9 +38,31 @@ const InfoProduct = ({ data, detail, isLoading }) => {
     }
 
     return (
-        <div className="w-full sm:w-[500px] md:w-[700px] lg:w-[900px] h-auto flex flex-col items-center md:items-start md:flex-row lg:flex-row gap-5 overflow-y-auto">
+        <div
+            className={`w-full h-auto flex ${
+                detail
+                    ? 'w-full flex-col sm:flex-row sm:gap-5 sm:mt-3'
+                    : 'sm:w-[500px] md:w-[700px] lg:w-[900px] flex-col items-center md:items-start md:flex-row lg:flex-row md:gap-5'
+            } gap-1 overflow-y-auto`}
+        >
             <div className="flex-1 h-full flex flex-col items-center">
-                <div className={`w-full mb-3 h-auto`}>
+                {deviceWidth < 640 && (
+                    <div className="w-full md:mb-5 mt-3 mb-2">
+                        {isLoading ? (
+                            <Skeleton width="70%" />
+                        ) : (
+                            <IsLink
+                                to={`${publicRoutes.products}/${data?.category?.slug}/${data?.slug}`}
+                                className={`text-[#1c1c1c] text-lg font-semibold ${
+                                    detail ? '' : 'hover:text-main'
+                                } transition-colors`}
+                            >
+                                {data?.name}
+                            </IsLink>
+                        )}
+                    </div>
+                )}
+                <div className={`w-full mb-3 ${detail && deviceWidth < 640 ? 'h-[300px]' : 'h-auto'}`}>
                     {isLoading ? (
                         <Skeleton className="w-full h-[300px]" />
                     ) : (
@@ -51,17 +73,17 @@ const InfoProduct = ({ data, detail, isLoading }) => {
                         />
                     )}
                 </div>
-                {data?.images.length > 0 && (
+                {/* {data?.images.length > 0 && (
                     <div className={`w-full h-full ${detail ? 'border-t pt-2' : ''}`}>
                         <Swiper
                             slidesPerView={2}
-                            spaceBetween={30}
+                            spaceBetween={10}
                             freeMode={true}
                             pagination={{
                                 clickable: true,
                             }}
                             modules={[FreeMode]}
-                            className="!w-[500px] !h-auto"
+                            className="sm:!w-[280px] lg:!w-[500px] !h-auto"
                         >
                             {data?.images?.map((item, index) => (
                                 <SwiperSlide key={index}>
@@ -73,29 +95,35 @@ const InfoProduct = ({ data, detail, isLoading }) => {
                             ))}
                         </Swiper>
                     </div>
-                )}
+                )} */}
             </div>
             <div className="flex-1 h-full flex flex-col">
-                <div className="w-full md:mb-5 ">
-                    {isLoading ? (
-                        <Skeleton width="70%" />
-                    ) : (
-                        <IsLink
-                            to={`${publicRoutes.products}/${data?.category?.slug}/${data?.slug}`}
-                            className={`text-[#1c1c1c] text-lg font-semibold ${
-                                detail ? '' : 'hover:text-main'
-                            } transition-colors`}
-                        >
-                            {data?.name}
-                        </IsLink>
-                    )}
-                </div>
+                {deviceWidth >= 640 && (
+                    <div className="w-full md:mb-5 ">
+                        {isLoading ? (
+                            <Skeleton width="70%" />
+                        ) : (
+                            <IsLink
+                                to={`${publicRoutes.products}/${data?.category?.slug}/${data?.slug}`}
+                                className={`text-[#1c1c1c] text-lg font-semibold ${
+                                    detail ? '' : 'hover:text-main'
+                                } transition-colors`}
+                            >
+                                {data?.name}
+                            </IsLink>
+                        )}
+                    </div>
+                )}
                 {(deviceWidth > 768 || detail) && (
                     <div>
                         {isLoading ? (
                             <Skeleton count={10} width="70%" />
                         ) : (
-                            <ul className="w-max ml-4 mb-[15px] list-disc">
+                            <ul
+                                className={`w-max ml-4 mb-[15px] list-disc text-sm sm:text-base ${
+                                    detail ? 'pl-2' : ''
+                                }`}
+                            >
                                 <li>Technology: GSM / HSPA / LTE</li>
                                 <li>Dimensions: 146 x 72 x 8.1 mm</li>
                                 <li>Weight: 161 g</li>
@@ -165,7 +193,7 @@ const InfoProduct = ({ data, detail, isLoading }) => {
                             }}
                             disabled={quantity < 1 && true}
                             className={`${
-                                detail ? 'w-full mt-10' : 'w-[180px]'
+                                detail ? 'w-full mt-6' : 'w-[180px]'
                             } h-10 p-[8px_12px] flex justify-center items-center text-base text-white bg-main hover:bg-[#333] transition-colors disabled:bg-[#ccc]`}
                         >
                             ADD TO CART

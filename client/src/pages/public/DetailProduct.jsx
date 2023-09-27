@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Slider from 'react-slick'
+import { useSelector } from 'react-redux'
 import Skeleton from 'react-loading-skeleton'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import DOMPurify from 'dompurify'
 import 'react-tabs/style/react-tabs.css'
 import * as apis from 'apis'
-import { Breadcrumb, Icon, InfoProduct, ProductItem, Review } from 'components'
+import { Breadcrumb, Icon, InfoProduct, ProductItem, Review, Section } from 'components'
 import { productExtrainInfo } from 'utils/menu'
 
 const DetailProduct = () => {
+    const { deviceWidth } = useSelector((state) => state.app)
+
     const { type, slug } = useParams()
     const navigate = useNavigate()
 
@@ -53,14 +56,16 @@ const DetailProduct = () => {
     return (
         <div className="w-full h-auto">
             <div className="w-full h-auto flex justify-center items-center flex-col">
-                <div className="w-full h-auto py-5 mb-5 bg-[#f7f7f7] flex justify-center items-center">
-                    <Breadcrumb />
-                </div>
-                <div className="w-main h-auto mb-10 flex justify-center">
-                    <div className="w-[80%] pr-5">
+                {deviceWidth >= 768 && (
+                    <div className="w-full h-auto px-0 py-5 lg:mb-5 bg-[#f7f7f7] flex justify-center items-center">
+                        <Breadcrumb />
+                    </div>
+                )}
+                <div className="px-[10px] w-full xl:w-main h-auto mb-10 flex justify-center">
+                    <div className="flex w-full lg:w-[75%] xl:w-[80%] lg:pr-5">
                         <InfoProduct data={product} detail isLoading={isLoading} />
                     </div>
-                    <div className="flex-1">
+                    <div className="flex-1 hidden lg:flex">
                         <ul className="w-full h-full">
                             {productExtrainInfo.map((item) => (
                                 <li
@@ -83,7 +88,7 @@ const DetailProduct = () => {
                         </ul>
                     </div>
                 </div>
-                <div className="w-main mb-10">
+                <div className="w-full xl:w-main mb-4 md:mb-10 px-[10px]">
                     <Tabs>
                         <TabList>
                             <Tab>
@@ -97,7 +102,9 @@ const DetailProduct = () => {
                             {!isLoading ? (
                                 <div
                                     className={`border border-[#aaa] border-t-0 p-5 relative ${
-                                        !isMore ? 'h-[500px] overflow-hidden' : ''
+                                        !isMore && product?.description?.length > 0
+                                            ? 'h-[240px] sm:h-[300px] md:h-[360px] lg:h-[400] overflow-hidden'
+                                            : ''
                                     }`}
                                 >
                                     {product?.description?.length > 0 && (
@@ -108,14 +115,14 @@ const DetailProduct = () => {
                                             }}
                                         ></div>
                                     )}
-                                    {!isMore && (
+                                    {!isMore && product?.description?.length > 0 && (
                                         <div className="flex justify-center items-end absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-[#ffffff01] to-[#ffffffcc]">
                                             <div
                                                 onClick={() => setIsMore(true)}
-                                                className="mb-3 p-[8px_20px] flex flex-col items-center cursor-pointer text-[#ffffff] drop-shadow-md hover:text-[#404040] transition-colors"
+                                                className="mb-3 p-1 md:p-[8px_20px] flex flex-col items-center cursor-pointer text-primary hover:text-secondary transition-colors bg-glassmorphism"
                                             >
-                                                <h1 className="text-3xl uppercase font-bold">see more</h1>
-                                                <span className="">
+                                                <h1 className="text-lg md:text-3xl uppercase font-bold">see more</h1>
+                                                <span>
                                                     <Icon.PiCaretDoubleDownBold size={24} />
                                                 </span>
                                             </div>
@@ -131,17 +138,9 @@ const DetailProduct = () => {
                         </TabPanel>
                     </Tabs>
                 </div>
-                <div className="w-main h-auto mb-20">
-                    <div className="w-full mb-5 flex justify-center items-center relative">
-                        <h2 className="pb-[15px] text-xl text-secondary uppercase font-normal">other products</h2>
-                        <span className="w-10 h-[3px] bg-[#ccc] absolute bottom-0"></span>
-                    </div>
+                <div className="w-full xl:w-main h-auto mb-5">
                     {others?.length > 0 ? (
-                        <Slider {...settingsProducts}>
-                            {others?.map((item, index) => (
-                                <ProductItem key={index} data={item} detail cateType={type} />
-                            ))}
-                        </Slider>
+                        <Section title="other products" pData={others} detail />
                     ) : (
                         <div className="w-full flex justify-center items-cente text-[#8b8b8b] text-xl">No product</div>
                     )}

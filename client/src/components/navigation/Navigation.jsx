@@ -4,7 +4,7 @@ import { navigatorMenu } from 'utils/menu'
 
 const Navigation = () => {
     return (
-        <div className="flex-1 flex justify-center">
+        <div className="flex-1 flex justify-center px-0 xl:px-[10px]">
             <ul className="w-full flex ">
                 {navigatorMenu.map((item, index) => (
                     <li
