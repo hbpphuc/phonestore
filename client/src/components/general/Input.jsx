@@ -21,7 +21,9 @@ const Input = ({
             {label && (
                 <label
                     htmlFor={id}
-                    className={`w-fit text-base font-medium text-primary cursor-pointer ${hidden && 'hover:underline'}`}
+                    className={`w-fit text-sm sm:text-base font-medium text-primary cursor-pointer ${
+                        hidden && 'hover:underline'
+                    }`}
                 >
                     {label}
                 </label>

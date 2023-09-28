@@ -25,7 +25,7 @@ const UserWishlist = () => {
     }, [isWishlist])
 
     return (
-        <div className="w-full h-auto">
+        <div className="w-full h-auto -mx-[10px]">
             <LoadingBar
                 color="#0eb1f2"
                 progress={progress}
@@ -33,13 +33,13 @@ const UserWishlist = () => {
                 height={4}
                 transitionTime={1000}
             />
-            <div className="flex-1 ml-4 mb-2">
-                <h1 className="w-full h-auto flex text-xl font-bold uppercase gradient-text">Your Wishlist</h1>
-            </div>
             <div className="w-full h-auto flex justify-center items-center flex-col">
-                <div className="w-full h-auto flex flex-wrap">
+                <h1 className="w-full h-auto flex justify-center sm:justify-start sm:text-lg md:text-xl font-bold uppercase gradient-text mb-4 px-[10px]">
+                    Your Wishlist
+                </h1>
+                <div className="w-full h-auto flex justify-between md:justify-start flex-wrap">
                     {prods?.map((item) => (
-                        <div key={item.id} className="w-1/3 h-auto mb-3">
+                        <div key={item.id} className="w-1/2 md:w-1/3 h-auto mb-3">
                             <ProductItem data={item} cateType={item.category.slug} />
                         </div>
                     ))}

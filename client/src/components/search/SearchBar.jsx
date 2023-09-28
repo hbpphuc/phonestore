@@ -40,7 +40,7 @@ const SearchBar = () => {
         <div
             tabIndex="-1"
             {...attrs}
-            className="w-full sm:w-[356px] md:w-[526px] border-t-0 border border-gray-200 md:border-2 md:border-main shadow-md rounded-b-lg bg-white relative -top-[10px]"
+            className="w-full min-[425px]:w-[425px] sm:w-[640px] md:w-[526px] border-t-0 border border-gray-200 md:border-2 md:border-main shadow-md rounded-b-lg bg-white relative -top-[10px]"
         >
             <SearchResultPopup data={searchResults} onSetFocus={setIsFocus} />
         </div>

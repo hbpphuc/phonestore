@@ -4,7 +4,7 @@ import { Button, ForgotForm, Icon, LoginForm, Popup, RegisterForm } from 'compon
 import { navigatorMenu } from 'utils/menu'
 import { adminRoutes } from 'routes/paths'
 
-const HMenuSidebar = ({ user, onSetOpenMenu }) => {
+const HMenuSidebar = ({ user, onSetOpenMenu, onLogout }) => {
     const [form, setForm] = useState(0)
     return (
         <div className="fixed top-0 left-0 w-[300px] h-screen flex flex-col bg-[#1c1d1d] text-white sidebar-shadow z-50 fade-in-effect">
@@ -26,7 +26,7 @@ const HMenuSidebar = ({ user, onSetOpenMenu }) => {
                     {navigatorMenu.map((item, index) => (
                         <li
                             key={item.id}
-                            className={`py-4 text-sm uppercase ${
+                            className={`py-4 text-sm uppercase  cursor-pointer ${
                                 index !== navigatorMenu.length - 1 ? 'border-b border-admin' : ''
                             }`}
                         >
@@ -44,22 +44,33 @@ const HMenuSidebar = ({ user, onSetOpenMenu }) => {
                 <div>
                     <ul className="w-full flex flex-col text-white border-t border-admin">
                         {user ? (
-                            <li className="py-4 text-sm uppercase">
-                                <NavLink
-                                    onClick={(isActive) => isActive && onSetOpenMenu(false)}
-                                    to={
-                                        user?.data?.role === 'admin'
-                                            ? `/${adminRoutes.admin}/${adminRoutes.adminDashboard}`
-                                            : `/me`
-                                    }
-                                    className={`w-full h-full inline-block ${({ isActive }) =>
-                                        isActive ? 'text-main' : ''}`}
+                            <>
+                                <li className="py-4 text-sm uppercase cursor-pointer ">
+                                    <NavLink
+                                        onClick={(isActive) => isActive && onSetOpenMenu(false)}
+                                        to={
+                                            user?.data?.role === 'admin'
+                                                ? `/${adminRoutes.admin}/${adminRoutes.adminDashboard}`
+                                                : `/me`
+                                        }
+                                        className={`w-full h-full inline-block ${({ isActive }) =>
+                                            isActive ? 'text-main' : ''}`}
+                                    >
+                                        {user?.data?.name}
+                                    </NavLink>
+                                </li>
+                                <li
+                                    onClick={onLogout}
+                                    className="flex justify-between items-center py-4 text-sm uppercase cursor-pointer"
                                 >
-                                    {user?.data?.name}
-                                </NavLink>
-                            </li>
+                                    <span>Logout</span>
+                                    <span>
+                                        <Icon.BiLogOut size={24} />
+                                    </span>
+                                </li>
+                            </>
                         ) : (
-                            <li className="py-4 text-sm uppercase">
+                            <li className="py-4 text-sm uppercase cursor-pointer">
                                 <Popup
                                     button={
                                         <Button

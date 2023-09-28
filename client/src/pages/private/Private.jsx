@@ -15,10 +15,10 @@ const Private = () => {
                     </div>
                 )}
             </div>
-            <div className="w-full h-auto flex justify-center items-center mt-5 md:mt-0">
-                <div className="w-main h-auto mb-5 flex">
+            <div className="w-full h-auto flex justify-center items-center mt-5 md:mt-0 sm:pl-[10px]">
+                <div className="w-main h-auto mb-5 flex flex-col sm:flex-row">
                     <UserSidebar />
-                    <div className="flex-1">
+                    <div className="flex-1 flex justify-center px-[10px]">
                         <Outlet />
                     </div>
                 </div>

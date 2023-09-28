@@ -195,7 +195,9 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                     {deviceWidth < 768 && <SearchBar />}
                 </div>
             </div>
-            {deviceWidth < 640 && openMenu && <HMenuSidebar onSetOpenMenu={setOpenMenu} user={curUser} />}
+            {deviceWidth < 640 && openMenu && (
+                <HMenuSidebar onSetOpenMenu={setOpenMenu} user={curUser} onLogout={logout} />
+            )}
         </>
     )
 }

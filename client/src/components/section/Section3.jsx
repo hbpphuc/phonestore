@@ -27,7 +27,7 @@ const Section3 = ({ title }) => {
 
             <Swiper
                 slidesPerView={1}
-                spaceBetween={10}
+                spaceBetween={0}
                 autoplay={{
                     delay: 2500,
                     disableOnInteraction: false,
@@ -38,11 +38,11 @@ const Section3 = ({ title }) => {
                 breakpoints={{
                     640: {
                         slidesPerView: 2,
-                        spaceBetween: 10,
+                        spaceBetween: 0,
                     },
                     992: {
                         slidesPerView: 3,
-                        spaceBetween: 10,
+                        spaceBetween: 0,
                     },
                 }}
                 navigation={true}

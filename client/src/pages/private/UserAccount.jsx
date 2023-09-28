@@ -83,7 +83,7 @@ const UserAccount = () => {
     }, [])
 
     return (
-        <div className="w-full h-auto flex flex-col gap-4 px-[10px]">
+        <div className="w-full h-auto flex flex-col gap-4">
             <div className="w-full flex justify-center items-center border-b pb-4">
                 <form className="w-full flex flex-col items-center" onSubmit={handleSubmit3(onUpdateImage)}>
                     <div className="flex justify-end relative">
@@ -126,10 +126,10 @@ const UserAccount = () => {
             </div>
             <div className="w-full h-auto flex flex-col lg:flex-row gap-4">
                 <div className="flex-1 lg:ml-4">
-                    <h1 className="w-full h-auto flex text-xl font-bold uppercase gradient-text">
+                    <h1 className="w-full h-auto flex justify-center sm:justify-start sm:text-lg md:text-xl font-bold uppercase gradient-text">
                         Your Account Setting
                     </h1>
-                    <div className="w-full mt-5">
+                    <div className="w-full mt-2 sm:mt-5">
                         <form className="w-full flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
                             <div className="w-full flex flex-col gap-4">
                                 <Input
@@ -172,17 +172,19 @@ const UserAccount = () => {
                                     user
                                 />
                             </div>
-                            <div className="w-full flex justify-end items-center mt-4">
-                                <button type="submit" className="w-max p-[10px_20px] save-btn">
+                            <div className="w-full flex justify-center sm:justify-end items-center mt-4">
+                                <button type="submit" className="w-1/2 sm:w-max p-[10px_20px] save-btn">
                                     Save
                                 </button>
                             </div>
                         </form>
                     </div>
                 </div>
-                <div className="flex-1 lg:mr-6">
-                    <h1 className="w-full h-auto flex text-xl font-bold uppercase gradient-text">Password Change</h1>
-                    <div className="w-full mt-5">
+                <div className="flex-1 lg:mr-6 border-t sm:border-none">
+                    <h1 className="w-full h-auto flex justify-center sm:justify-start sm:text-lg md:text-xl font-bold uppercase gradient-text mt-4 sm:mt-0">
+                        Password Change
+                    </h1>
+                    <div className="w-full mt-2 sm:mt-5">
                         <form className="w-full flex flex-col items-center" onSubmit={handleSubmit2(onUpdatePassword)}>
                             <div className="w-full flex flex-col gap-4">
                                 <Input
@@ -218,8 +220,8 @@ const UserAccount = () => {
                                     errmsg="Confirm Password is required."
                                     user
                                 />
-                                <div className="w-full flex justify-end items-center">
-                                    <button type="submit" className="w-max p-[10px_20px] save-btn">
+                                <div className="w-full flex justify-center sm:justify-end items-center">
+                                    <button type="submit" className="w-1/2 sm:w-max p-[10px_20px] save-btn">
                                         Update
                                     </button>
                                 </div>
