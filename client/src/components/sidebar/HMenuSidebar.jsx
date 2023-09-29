@@ -22,7 +22,7 @@ const HMenuSidebar = ({ user, onSetOpenMenu, onLogout }) => {
                 </h1>
             </div>
             <div className="flex-1 w-full flex flex-col justify-between px-6 relative">
-                <ul className="w-full flex flex-col text-white">
+                <ul className="w-full flex flex-col md:flex-row text-white">
                     {navigatorMenu.map((item, index) => (
                         <li
                             key={item.id}

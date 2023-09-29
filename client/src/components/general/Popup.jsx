@@ -7,9 +7,7 @@ const PopupWrapper = ({ children, button, title, styles }) => {
     return (
         <Popup trigger={button} modal nested>
             {(close) => (
-                <div
-                    className={`${styles} h-auto flex justify-center items-center p-2 bg-white overflow-hidden relative`}
-                >
+                <div className={`h-auto flex justify-center items-center p-2 bg-white relative ${styles}`}>
                     <div className="w-10 h-10 absolute top-0 right-0">
                         <Button onClick={close} className="w-full h-full flex justify-center items-center">
                             <Icon.GrClose size={26} />

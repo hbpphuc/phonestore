@@ -59,8 +59,10 @@ export const month = [
 ]
 
 export const optionsChart = {
-    aspectRatio: 16 / 9,
+    aspectRatio: 8 / 5,
     responsive: true,
+    maintainAspectRatio: false,
+    resizeDelay: 700,
     plugins: {
         legend: {
             display: false,
@@ -70,7 +72,7 @@ export const optionsChart = {
             text: 'Monthly Recap Report',
             color: '#fff',
             font: {
-                size: 28,
+                size: 20,
                 family: 'Comic Sans MS',
                 weight: 'bold',
                 lineHeight: 2,

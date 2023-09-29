@@ -129,7 +129,7 @@ const CreateProduct = ({ id, pData, onUpdate }) => {
                 {id ? 'update product' : 'create new product'}
             </h1>
             <form className="w-full flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
-                <div className="w-full flex gap-6">
+                <div className="w-full flex flex-col lg:flex-row gap-6">
                     <div className="flex-1 flex flex-col gap-2">
                         <div className="w-full flex items-center mb-3">
                             <Input
@@ -175,25 +175,29 @@ const CreateProduct = ({ id, pData, onUpdate }) => {
                         </div>
                         <div className="w-full flex items-center justify-between gap-2 mb-3 z-40">
                             <div className="flex-1 flex items-center gap-2 text-base font-medium text-primary cursor-pointer">
-                                <label htmlFor="cateOpt">Category</label>
+                                <label htmlFor="cateOpt" className="text-sm md:text-base">
+                                    Category
+                                </label>
                                 <Select
                                     id="cateOpt"
                                     value={id ? cate : undefined}
                                     onChange={setCate}
                                     options={cateOpt}
-                                    placeholder="Choose Category"
+                                    placeholder="Category"
                                     isSearchable={false}
                                     className="w-full font-semibold text-sm text-primary"
                                 />
                             </div>
                             <div className="flex-1 flex items-center justify-end gap-2 text-base font-medium text-primary cursor-pointer">
-                                <label htmlFor="brandOpt">Brand</label>
+                                <label htmlFor="brandOpt" className="text-sm md:text-base">
+                                    Brand
+                                </label>
                                 <Select
                                     id="brandOpt"
                                     value={id ? brand : undefined}
                                     onChange={setBrand}
                                     options={brandOpt}
-                                    placeholder="Choose Brand"
+                                    placeholder="Brand"
                                     isSearchable={false}
                                     className="w-full font-semibold text-sm text-primary"
                                 />
@@ -211,49 +215,53 @@ const CreateProduct = ({ id, pData, onUpdate }) => {
                             />
                         </div>
                     </div>
-                    <div className="w-[35%] flex">
-                        <div className="w-full flex flex-col items-center gap-2 mb-3">
-                            {id ? (
-                                <div className="relative">
-                                    <img
-                                        src={preview || pData?.imageCover}
-                                        alt={pData?.title}
-                                        className="w-full h-full object-cover"
-                                    />
-                                    <div className="w-full flex justify-between items-center gap-4 absolute top-0 right-0">
-                                        <label
-                                            htmlFor="updateImg"
-                                            className="p-2 bg-slate-400 text-white cursor-pointer"
-                                        >
-                                            <Icon.RxUpdate size={24} />
-                                        </label>
-                                        <div className="w-full flex flex-col-reverse items-center gap-2">
-                                            <input
-                                                id="updateImg"
-                                                type="file"
-                                                {...register('imageCover')}
-                                                onChange={handleChange}
-                                                hidden
-                                            />
+                    <div className="w-full lg:w-[35%] flex">
+                        <div className="w-full flex lg:flex-col lg:items-center gap-4 lg:gap-2 mb-3">
+                            <div className="w-1/2 lg:w-full">
+                                {id ? (
+                                    <div className="relative">
+                                        <img
+                                            src={preview || pData?.imageCover}
+                                            alt={pData?.title}
+                                            className="w-full h-full object-cover"
+                                        />
+                                        <div className="w-full flex justify-between items-center gap-4 absolute top-0 right-0">
+                                            <label
+                                                htmlFor="updateImg"
+                                                className="p-2 bg-slate-400 text-white cursor-pointer"
+                                            >
+                                                <Icon.RxUpdate size={24} />
+                                            </label>
+                                            <div className="w-full flex flex-col-reverse items-center gap-2">
+                                                <input
+                                                    id="updateImg"
+                                                    type="file"
+                                                    {...register('imageCover')}
+                                                    onChange={handleChange}
+                                                    hidden
+                                                />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ) : (
+                                ) : (
+                                    <ImageUpload
+                                        id="imageCover"
+                                        label="Upload Image Cover"
+                                        images={imageCover}
+                                        onChangeImages={onChangeImageCover}
+                                    />
+                                )}
+                            </div>
+                            <div className="w-1/2 lg:w-full">
                                 <ImageUpload
-                                    id="imageCover"
-                                    label="Upload Image Cover"
-                                    images={imageCover}
-                                    onChangeImages={onChangeImageCover}
+                                    id="images"
+                                    label="Upload Images"
+                                    images={!id ? images : pData?.images}
+                                    isEdit={id ? true : false}
+                                    onChangeImages={onChangeImages}
+                                    multiple
                                 />
-                            )}
-                            <ImageUpload
-                                id="images"
-                                label="Upload Images"
-                                images={!id ? images : pData?.images}
-                                isEdit={id ? true : false}
-                                onChangeImages={onChangeImages}
-                                multiple
-                            />
+                            </div>
                         </div>
                     </div>
                 </div>

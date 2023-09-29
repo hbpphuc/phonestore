@@ -78,7 +78,7 @@ export const adminSidebarMenu = [
         id: 1,
         title: 'Dashboard',
         type: 'link',
-        icon: <Icon.RiDashboard2Line size={24} />,
+        icon: <Icon.RiDashboard2Line size={26} />,
         path: `/${adminRoutes.admin}/${adminRoutes.adminDashboard}`,
     },
     {
@@ -92,21 +92,21 @@ export const adminSidebarMenu = [
         id: 3,
         title: 'Manage Post',
         type: 'button',
-        icon: <Icon.IoNewspaperOutline size={24} />,
+        icon: <Icon.IoNewspaperOutline size={22} />,
         path: `/${adminRoutes.admin}/${adminRoutes.adminPosts}`,
     },
     {
         id: 4,
         title: 'Manage Users',
         type: 'link',
-        icon: <Icon.HiUserGroup size={24} />,
+        icon: <Icon.HiUserGroup size={25} />,
         path: `/${adminRoutes.admin}/${adminRoutes.adminUsers}`,
     },
     {
         id: 5,
         title: 'Manage Orders',
         type: 'link',
-        icon: <Icon.FaLayerGroup size={24} />,
+        icon: <Icon.FaLayerGroup size={20} />,
         path: `/${adminRoutes.admin}/${adminRoutes.adminOrders}`,
     },
 ]

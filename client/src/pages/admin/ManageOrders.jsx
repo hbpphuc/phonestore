@@ -3,7 +3,6 @@ import Tippy from '@tippyjs/react'
 import moment from 'moment'
 import Select from 'react-select'
 import { toast } from 'react-toastify'
-import { useForm } from 'react-hook-form'
 import * as apis from 'apis'
 import { Button, Icon } from 'components'
 
@@ -23,8 +22,6 @@ const ManageOrders = () => {
         { label: 'Shipping', value: 'Shipping' },
         { label: 'Delivered', value: 'Delivered' },
     ]
-
-    const { register, handleSubmit } = useForm()
 
     const getAllOrder = async () => {
         const res = await apis.getAllOrder()
@@ -54,37 +51,21 @@ const ManageOrders = () => {
     }
     return (
         <div className="w-full h-auto mt-[60px]">
-            <div className="w-full flex justify-between items-center px-4 border-b border-[#999]">
-                <h1 className="h-[75px] flex justify-between items-center text-3xl font-semibold uppercase">
+            <div className="w-full flex justify-between items-center px-[10px] border-b border-[#999]">
+                <h1 className="h-[48px] lg:h-[75px] flex justify-between items-center text-lg md:text-2xl lg:text-3xl font-semibold uppercase">
                     manage order
                 </h1>
             </div>
 
-            {/* <div className="w-full mt-4 px-4 flex justify-end items-center">
-                <form className="w-[400px] flex gap-3" onSubmit={handleSubmit(onSubmit)}>
-                    <div className="w-full flex flex-col">
-                        <input
-                            type="text"
-                            placeholder="Search email or name..."
-                            {...register('q')}
-                            className="w-full p-[12px_10px] text-sm bg-[#f6f6f6] border-transparent text-[#1c1d1d]"
-                        />
-                    </div>
-                    <Button type="submit" className="p-[10px] bg-main text-white hover:bg-[#333] transition-colors">
-                        <Icon.TbSearch size={24} />
-                    </Button>
-                </form>
-            </div> */}
-
-            <div className="w-full h-auto p-4 grid grid-cols-4 gap-2">
+            <div className="w-full h-auto p-[10px] flex flex-col sm:flex-row flex-wrap">
                 {orders?.map((item) =>
                     item.products.map((el) => (
                         <div
                             key={el.id}
-                            className="w-full flex flex-col justify-between max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+                            className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 flex flex-col justify-between max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
                         >
                             <img
-                                className="w-full flex justify-center items-center p-4 rounded-t-lg object-contain"
+                                className="w-full flex justify-center items-center p-[10px] rounded-t-lg object-contain"
                                 src={el.product.imageCover}
                                 alt={el.product.name}
                             />
@@ -92,7 +73,7 @@ const ManageOrders = () => {
                                 <h5 className="text-lg line-clamp-1 font-semibold tracking-tight text-gray-900 dark:text-white">
                                     {el.product.name}
                                 </h5>
-                                <div className="flex py-2 items-center justify-between text-[#999]">
+                                <div className=" py-2 flex flex-col md:flex-row items-center justify-between text-[#999]">
                                     <span className="text-[#999]">{moment(item.createdAt).format('DD/MM/YYYY')}</span>
                                     <span className="text-[#999]"> {item.orderBy.email}</span>
                                 </div>

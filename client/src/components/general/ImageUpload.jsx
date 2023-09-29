@@ -9,7 +9,7 @@ const ImageUpload = ({ id, label, multiple, images, onChangeImages, isEdit }) =>
     return (
         <div className="w-full flex flex-col justify-center gap-2">
             {label && (
-                <label htmlFor={id} className="w-fit text-base font-medium text-primary cursor-pointer">
+                <label htmlFor={id} className="w-fit text-sm md:text-base font-medium text-primary cursor-pointer">
                     {label}
                 </label>
             )}
@@ -24,7 +24,7 @@ const ImageUpload = ({ id, label, multiple, images, onChangeImages, isEdit }) =>
                 {({ imageList, onImageUpload, onImageUpdate, onImageRemove, isDragging, dragProps }) => (
                     <div className="w-full flex gap-2">
                         {multiple ? (
-                            <div className="w-full flex flex-wrap gap-2 justify-around">
+                            <div className="w-full flex flex-wrap gap-2 lg:justify-around">
                                 {imageList?.map((image, index) => (
                                     <div
                                         key={index}
@@ -57,7 +57,7 @@ const ImageUpload = ({ id, label, multiple, images, onChangeImages, isEdit }) =>
                                     style={isDragging ? { color: 'red' } : null}
                                     onClick={onImageUpload}
                                     {...dragProps}
-                                    className="w-[120px] h-[160px] flex justify-center items-center bg-[#f5f5f5] border-4 border-dashed border-gray-500 cursor-pointer"
+                                    className="w-[80px] h-[120px] md:w-[120px] md:h-[160px] flex justify-center items-center bg-[#f5f5f5] border-4 border-dashed border-gray-500 cursor-pointer"
                                 >
                                     <span className="text-xl text-gray-500 font-semibold text-center">
                                         Click or Drop
@@ -95,7 +95,7 @@ const ImageUpload = ({ id, label, multiple, images, onChangeImages, isEdit }) =>
                                         style={isDragging ? { color: 'red' } : null}
                                         onClick={onImageUpload}
                                         {...dragProps}
-                                        className="w-full h-[500px] flex justify-center items-center bg-[#f5f5f5] border-4 border-dashed border-gray-500 cursor-pointer"
+                                        className="w-full h-[200px] sm:h-[300px] md:h-[400px] lg:h-full flex justify-center items-center bg-[#f5f5f5] border-4 border-dashed border-gray-500 cursor-pointer"
                                     >
                                         <span className="text-3xl text-gray-500 font-semibold">Click or Drop</span>
                                     </span>

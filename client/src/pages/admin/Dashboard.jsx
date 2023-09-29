@@ -15,10 +15,13 @@ import Select from 'react-select'
 import { Icon } from 'components'
 import * as apis from 'apis'
 import { month, optionsChart } from 'utils/constant'
+import { useSelector } from 'react-redux'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend)
 
 const Dashboard = () => {
+    const { deviceWidth } = useSelector((state) => state.app)
+
     const [stats, setStats] = useState(null)
     const [oStats, setOStats] = useState(null)
     const [monPlan, setMonPlan] = useState(null)
@@ -69,61 +72,67 @@ const Dashboard = () => {
     ]
 
     return (
-        <div className="w-full h-auto mt-[60px]">
-            <div className="w-full flex justify-between items-center px-4">
-                <h1 className="h-[75px] flex justify-between items-center text-3xl font-semibold uppercase">
+        <div className="w-full h-full mt-[60px]">
+            <div className="w-full flex justify-between items-center px-[10px]">
+                <h1 className="h-[48px] lg:h-[75px] flex justify-between items-center text-lg md:text-2xl lg:text-3xl font-semibold uppercase">
                     Dashboard
                 </h1>
             </div>
-            <div className="w-full h-auto flex flex-col justify-center items-center text-white px-4">
-                <div className="w-full flex justify-between items-center gap-[15px]">
-                    <div className="max-w-[25%] flex-1 flex bg-adminMain rounded shadow-[0_0_1px_rgba(0,0,0,.125)-0_1px_3px_rgba(0,0,0,.2)] p-2">
+            <div className="w-full h-full flex flex-col justify-start items-center text-white px-[10px]">
+                <div className="w-full flex flex-col flex-wrap md:flex-row justify-start lg:justify-between lg:items-center gap-[15px]">
+                    <div className="w-full flex-1 flex bg-adminMain rounded shadow-[0_0_1px_rgba(0,0,0,.125)-0_1px_3px_rgba(0,0,0,.2)] p-2">
                         <span className="w-[70px] h-16 flex justify-center items-center bg-[#17a2b8] rounded">
                             <Icon.GrProductHunt size={30} />
                         </span>
-                        <div className="px-[10px] flex flex-col justify-between leading-[1.8]">
+                        <div className="px-[10px] flex flex-col justify-center md:justify-start leading-[1.8]">
                             <span>Products</span>
                             <span className="font-bold">{stats?.pStats[0].numProduct}</span>
                         </div>
                     </div>
-                    <div className="max-w-[25%] flex-1 flex bg-adminMain rounded shadow-[0_0_1px_rgba(0,0,0,.125)-0_1px_3px_rgba(0,0,0,.2)] p-2">
+                    <div className="w-full flex-1 flex bg-adminMain rounded shadow-[0_0_1px_rgba(0,0,0,.125)-0_1px_3px_rgba(0,0,0,.2)] p-2">
                         <span className="w-[70px] h-16 flex justify-center items-center bg-[#28a745] rounded">
                             <Icon.FaUsers size={30} />
                         </span>
-                        <div className="px-[10px] flex flex-col justify-between leading-[1.8]">
+                        <div className="px-[10px] flex flex-col justify-center md:justify-start leading-[1.8]">
                             <span>Members</span>
                             <span className="font-bold">{stats?.uStats[0].numUser}</span>
                         </div>
                     </div>
-                    <div className="max-w-[25%] flex-1 flex bg-adminMain rounded shadow-[0_0_1px_rgba(0,0,0,.125)-0_1px_3px_rgba(0,0,0,.2)] p-2">
+                    <div className="w-full flex-1 flex bg-adminMain rounded shadow-[0_0_1px_rgba(0,0,0,.125)-0_1px_3px_rgba(0,0,0,.2)] p-2">
                         <span className="w-[70px] h-16 flex justify-center items-center bg-[#dc3545] rounded">
                             <Icon.ImCart size={30} />
                         </span>
-                        <div className="px-[10px] flex flex-col justify-between leading-[1.8]">
+                        <div className="px-[10px] flex flex-col justify-center md:justify-start leading-[1.8]">
                             <span>Sales</span>
                             <span className="font-bold">{totalSaleCount}</span>
                         </div>
                     </div>
-                    <div className="max-w-[25%] flex-1 flex bg-adminMain rounded shadow-[0_0_1px_rgba(0,0,0,.125)-0_1px_3px_rgba(0,0,0,.2)] p-2">
+                    <div className="w-full flex-1 flex bg-adminMain rounded shadow-[0_0_1px_rgba(0,0,0,.125)-0_1px_3px_rgba(0,0,0,.2)] p-2">
                         <span className="w-[70px] h-16 flex justify-center items-center bg-[#ffc107] rounded">
                             <Icon.RiHandCoinFill size={30} color="black" />
                         </span>
-                        <div className="px-[10px] flex flex-col justify-between leading-[1.8]">
+                        <div className="px-[10px] flex flex-col justify-center md:justify-start leading-[1.8]">
                             <span>Total Revenue</span>
                             <span className="font-bold">${totalSalePrice}</span>
                         </div>
                     </div>
                 </div>
-                <div className="w-full h-[480px] flex justify-between mt-[15px] bg-adminMain rounded overflow-hidden relative">
-                    <Line options={optionsChart} data={data} />
-                    <div className="absolute left-1/2 top-4">
+                <div className="w-full h-max mt-[15px] flex justify-center bg-adminMain rounded overflow-hidden relative">
+                    <div className="w-[90vw] h-[240px] sm:h-[280px] md:h-[360px] lg:h-[480px] bg-adminMain rounded overflow-hidden relative">
+                        <Line options={optionsChart} data={data} />
+                    </div>
+                    <div className="absolute right-5 top-2">
                         <Select
                             value={year}
                             onChange={setYear}
                             options={yearOpt}
                             placeholder="Year"
                             isSearchable={false}
-                            className="w-[120px] font-semibold text-sm text-primary"
+                            components={{
+                                IndicatorSeparator: () => null,
+                                IndicatorsContainer: () => null,
+                            }}
+                            className="w-[80px] md:w-[120px] font-semibold text-sm text-primary"
                         />
                     </div>
                 </div>

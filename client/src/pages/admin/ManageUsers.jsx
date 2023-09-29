@@ -80,7 +80,7 @@ const ManageUsers = () => {
 
     return (
         <div className="w-full h-auto mt-[60px]">
-            <div className="w-full flex justify-between items-center px-4 border-b border-[#999]">
+            <div className="w-full flex justify-between items-center px-[10px] border-b border-[#999]">
                 <h1 className="h-[75px] flex justify-between items-center text-3xl font-semibold uppercase">
                     manage user
                 </h1>
@@ -89,7 +89,7 @@ const ManageUsers = () => {
                 </div>
             </div>
 
-            <div className="w-full mt-4 px-4 flex justify-end items-center">
+            <div className="w-full mt-4 px-[10px] flex justify-end items-center">
                 <form className="w-[400px] flex gap-3" onSubmit={handleSubmit(onSubmit)}>
                     <div className="w-full flex flex-col">
                         <input
@@ -105,9 +105,9 @@ const ManageUsers = () => {
                 </form>
             </div>
 
-            <div className="w-full p-4">
+            <div className="w-full p-[10px]">
                 <table className="table-auto w-full mb-6 text-left border-collapse">
-                    <thead className="w-full bg-adminMain font-bold text-sm text-white">
+                    <thead className="w-full bg-adminMain text-sm text-white">
                         <tr className="border border-admin">
                             <th className="p-2">#</th>
                             <th className="p-2">Avatar</th>
@@ -118,7 +118,7 @@ const ManageUsers = () => {
                             <th className="p-2">Actions</th>
                         </tr>
                     </thead>
-                    <tbody className="w-full bg-adminMain font-bold text-sm text-[#ffffffbf]">
+                    <tbody className="w-full bg-adminMain text-sm text-[#ffffffbf]">
                         {users?.map((item, index) => (
                             <tr key={item._id} className="border border-admin">
                                 <td className="p-2">{index + 1}</td>

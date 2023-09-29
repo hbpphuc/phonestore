@@ -109,7 +109,7 @@ const CreatePost = ({ id, pData, onUpdate }) => {
                 {id ? 'update post' : 'create new post'}
             </h1>
             <form className="w-full flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
-                <div className="w-full flex gap-6">
+                <div className="w-full flex flex-col md:flex-row gap-6">
                     <div className="flex-1 flex flex-col gap-2">
                         <div className="w-full flex items-center mb-3">
                             <Input
@@ -122,7 +122,7 @@ const CreatePost = ({ id, pData, onUpdate }) => {
                                 errmsg="Title is required."
                             />
                         </div>
-                        <div className="w-full flex items-center gap-2 mb-3">
+                        <div className="w-full flex flex-col sm:flex-row items-center gap-2 mb-3">
                             <Input
                                 id="summary"
                                 label="Summary"
@@ -132,14 +132,16 @@ const CreatePost = ({ id, pData, onUpdate }) => {
                                 errors={errors}
                                 errmsg="Summary is required."
                             />
-                            <div className="w-[300px] flex items-center gap-2 text-base font-medium text-primary cursor-pointer z-50">
-                                <label htmlFor="topicOpt">Topic</label>
+                            <div className="w-full md:w-[300px] flex items-center gap-2 text-base font-medium text-primary cursor-pointer z-50">
+                                <label htmlFor="topicOpt" className="text-sm lg:text-base">
+                                    Topic
+                                </label>
                                 <Select
                                     id="topicOpt"
                                     onChange={setType}
                                     value={id ? type : undefined}
                                     options={topicOpt}
-                                    placeholder="Choose topic"
+                                    placeholder="Topic"
                                     isSearchable={false}
                                     className="w-full font-semibold text-sm text-primary"
                                 />
@@ -157,7 +159,7 @@ const CreatePost = ({ id, pData, onUpdate }) => {
                             />
                         </div>
                     </div>
-                    <div className="w-[30%] flex">
+                    <div className="w-full lg:w-[30%] flex">
                         <div className="w-full flex flex-col items-center gap-2 mb-3">
                             {id ? (
                                 <div className="relative">
@@ -196,7 +198,7 @@ const CreatePost = ({ id, pData, onUpdate }) => {
                     </div>
                 </div>
                 <button
-                    className={`w-[400px] mt-[30px] bg-main text-white py-2 hover:brightness-95 ${
+                    className={`w-[200px] md:w-[400px] mt-[30px] bg-main text-white py-2 hover:brightness-95 ${
                         isLoading ? 'cursor-not-allowed' : 'cursor-pointer'
                     }`}
                     disabled={isLoading ? true : false}

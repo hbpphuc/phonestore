@@ -3,8 +3,8 @@ import Tippy from '@tippyjs/react'
 import moment from 'moment'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
+import { useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
-import useModal from 'hooks/useModal'
 import * as apis from 'apis'
 import { Button, Icon, Paginate, Popup } from 'components'
 import { CreateProduct } from 'pages/admin'
@@ -12,8 +12,9 @@ import { CreateProduct } from 'pages/admin'
 const limit = 10
 
 const ManageProducts = () => {
-    const { isShowing, toggle } = useModal()
     const { register, handleSubmit } = useForm()
+
+    const { deviceWidth } = useSelector((state) => state.app)
 
     const [products, setProducts] = useState(null)
     const [totalCount, setTotalCount] = useState(0)
@@ -48,7 +49,6 @@ const ManageProducts = () => {
         setEditItem(id)
         setData(data)
         setIsUpdate(true)
-        toggle()
     }
 
     const handleUpdate = async () => {
@@ -78,23 +78,29 @@ const ManageProducts = () => {
 
     return (
         <div className="w-full h-auto mt-[60px] relative">
-            <div className="w-full flex justify-between items-center px-4 border-b border-[#999]">
-                <h1 className="h-[75px] flex justify-between items-center text-3xl font-semibold uppercase">
+            <div className="w-full flex justify-between items-center px-[10px] border-b border-[#999]">
+                <h1 className="h-[48px] lg:h-[75px] flex justify-between items-center text-lg md:text-2xl lg:text-3xl font-semibold uppercase">
                     manage product
                 </h1>
-                <div>
-                    <Button
-                        onClick={() => {
-                            toggle()
-                            setEditItem(null)
-                        }}
-                        className="p-3 bg-green-600 font-medium rounded-md"
-                    >
-                        Create
-                    </Button>
-                </div>
+                <Popup
+                    button={
+                        <Button
+                            onClick={() => {
+                                setEditItem(null)
+                            }}
+                            className="p-3 bg-green-600 font-medium rounded-md"
+                        >
+                            Create
+                        </Button>
+                    }
+                    styles="w-[300px] sm:w-[500px] md:w-[700px] lg:w-[900px] xl:w-full"
+                >
+                    <div className="h-[600px] overflow-y-auto">
+                        <CreateProduct id={editItem} pData={data} onUpdate={handleUpdate} />
+                    </div>
+                </Popup>
             </div>
-            <div className="w-full mt-4 px-4 flex justify-end items-center">
+            <div className="w-full mt-4 px-[10px] flex justify-end items-center">
                 <form className="w-[400px] flex gap-3" onSubmit={handleSubmit(onSubmit)}>
                     <div className="w-full flex flex-col">
                         <input
@@ -110,22 +116,22 @@ const ManageProducts = () => {
                 </form>
             </div>
 
-            <div className="w-full p-4">
+            <div className="w-full p-[10px]">
                 <table className="table-auto w-full mb-6 text-left border-collapse">
-                    <thead className="w-full bg-adminMain font-bold text-sm text-white">
+                    <thead className="w-full bg-adminMain text-sm text-white">
                         <tr className="border border-admin">
                             <th className="p-2">#</th>
                             <th className="p-2">Image</th>
                             <th className="p-2">Name</th>
                             <th className="p-2">Price</th>
-                            <th className="p-2">Amount</th>
+                            <th className="p-2">Qty</th>
                             <th className="p-2">Type</th>
                             <th className="p-2">Brand</th>
-                            <th className="p-2">Created At</th>
+                            {deviceWidth >= 1024 && <th className="p-2">Created At</th>}
                             <th className="p-2">Actions</th>
                         </tr>
                     </thead>
-                    <tbody className="w-full bg-adminMain font-bold text-sm text-[#ffffffbf]">
+                    <tbody className="w-full bg-adminMain text-sm text-[#ffffffbf]">
                         {products?.map((item, index) => (
                             <tr key={item._id} className="border border-admin">
                                 <td className="p-2">{index + 1}</td>
@@ -137,8 +143,10 @@ const ManageProducts = () => {
                                 <td className="p-2">{item.quantity}</td>
                                 <td className="p-2">{item.category.name}</td>
                                 <td className="p-2">{item.brand.name}</td>
-                                <td className="p-2">{moment(item.createdAt).format('DD/MM/YYYY')}</td>
-                                <td className="flex items-center gap-2  p-2">
+                                {deviceWidth >= 1024 && (
+                                    <td className="p-2">{moment(item.createdAt).format('DD/MM/YYYY')}</td>
+                                )}
+                                <td className="flex items-center gap-2 p-2">
                                     <Tippy content="Edit" className="text-base">
                                         {isUpdate && item.id === editItem ? (
                                             <Button
@@ -175,26 +183,6 @@ const ManageProducts = () => {
                     </div>
                 )}
             </div>
-            {isShowing && (
-                <Popup modalIsOpen={isShowing} closeModal={toggle} style>
-                    <div className="w-full h-[620px] flex flex-col bg-white overflow-hidden relative right-10">
-                        <div className="w-10 h-10 absolute top-0 right-0">
-                            <Button
-                                onClick={() => {
-                                    toggle()
-                                    setIsUpdate(false)
-                                }}
-                                className="w-full h-full flex justify-center items-center"
-                            >
-                                <Icon.GrClose size={26} />
-                            </Button>
-                        </div>
-                        <div className="w-full h-full p-5 overflow-y-auto">
-                            <CreateProduct id={editItem} pData={data} onUpdate={handleUpdate} />
-                        </div>
-                    </div>
-                </Popup>
-            )}
         </div>
     )
 }

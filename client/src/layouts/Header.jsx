@@ -64,7 +64,7 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                                         button={
                                             <Button
                                                 text="Sign In | Sign Up"
-                                                className="text-sm font-normal text-[#848484] hover:text-main"
+                                                className="text-sm font-normal text-[#848484] hover:text-main cursor-pointer"
                                             />
                                         }
                                         styles="w-[300px] sm:w-[400px] md:w-[500px]"
@@ -78,37 +78,38 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                                         )}
                                     </Popup>
                                 ) : (
-                                    <Menu
-                                        menuButton={
-                                            <MenuButton className="text-[#848484] hover:text-main">
-                                                {curUser?.data?.name}
-                                            </MenuButton>
-                                        }
-                                        menuClassName="border rounded-[4px] bg-white z-10"
-                                    >
-                                        <MenuItem className="header-menu-item">
-                                            <Link
-                                                className="flex items-center"
-                                                to={
-                                                    curUser?.data?.role === 'admin'
-                                                        ? `/${adminRoutes.admin}/${adminRoutes.adminDashboard}`
-                                                        : `/me`
-                                                }
-                                            >
-                                                <span className="mr-2">
+                                    <div className="relative">
+                                        <h3
+                                            onClick={() => {
+                                                document.querySelector('.userOption-arrow').classList.toggle('hidden')
+                                            }}
+                                            className="text-[#848484] hover:text-main cursor-pointer"
+                                        >
+                                            {curUser?.data?.name}
+                                        </h3>
+                                        <ul className="w-[140px] lg:w-[160px] border rounded-[4px] bg-[#f4f4f4] z-20 absolute top-8 right-0 userOption-arrow">
+                                            <li className="cursor-pointer hover:text-main">
+                                                <Link
+                                                    className="w-full p-[8px_16px] flex items-center gap-2"
+                                                    to={
+                                                        curUser?.data?.role === 'admin'
+                                                            ? `/${adminRoutes.admin}/${adminRoutes.adminDashboard}`
+                                                            : `/me`
+                                                    }
+                                                >
                                                     <Icon.FaUserCircle size={20} />
-                                                </span>
-                                                Profile
-                                            </Link>
-                                        </MenuItem>
-                                        <hr />
-                                        <MenuItem onClick={logout} className="header-menu-item">
-                                            <span className="mr-2">
+                                                    Profile
+                                                </Link>
+                                            </li>
+                                            <li
+                                                onClick={logout}
+                                                className="p-[8px_16px] flex items-center gap-2 cursor-pointer hover:text-main"
+                                            >
                                                 <Icon.BiLogOut size={20} />
-                                            </span>
-                                            Logout
-                                        </MenuItem>
-                                    </Menu>
+                                                Logout
+                                            </li>
+                                        </ul>
+                                    </div>
                                 )}
                             </div>
                         </div>
@@ -140,18 +141,42 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                             {deviceWidth >= 640 && deviceWidth < 768 && (
                                 <Popup
                                     button={
-                                        <span>
+                                        <span className="cursor-pointer">
                                             <Icon.FaUserCircle size={24} />
                                         </span>
                                     }
-                                    styles="w-[300px] sm:w-[400px] md:w-[500px]"
+                                    styles="w-[300px]"
                                 >
-                                    {form === 0 ? (
-                                        <LoginForm onSetForm={setForm} />
-                                    ) : form === 1 ? (
-                                        <RegisterForm onSetForm={setForm} />
+                                    {!curUser ? (
+                                        form === 0 ? (
+                                            <LoginForm onSetForm={setForm} />
+                                        ) : form === 1 ? (
+                                            <RegisterForm onSetForm={setForm} />
+                                        ) : (
+                                            <ForgotForm onSetForm={setForm} />
+                                        )
                                     ) : (
-                                        <ForgotForm onSetForm={setForm} />
+                                        <div className="w-full h-full flex flex-col items-center cursor-pointer">
+                                            <Link
+                                                className="w-full p-[8px_16px] flex items-center gap-2 hover:text-main"
+                                                to={
+                                                    curUser?.data?.role === 'admin'
+                                                        ? `/${adminRoutes.admin}/${adminRoutes.adminDashboard}`
+                                                        : `/me`
+                                                }
+                                            >
+                                                <Icon.FaUserCircle size={20} />
+                                                Profile
+                                            </Link>
+
+                                            <div
+                                                onClick={logout}
+                                                className="w-full p-[8px_16px] flex items-center gap-2 hover:text-main"
+                                            >
+                                                <Icon.BiLogOut size={20} />
+                                                Logout
+                                            </div>
+                                        </div>
                                     )}
                                 </Popup>
                             )}

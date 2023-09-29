@@ -68,7 +68,7 @@
 }
 
 .bg-glassmorphism {
-    background: rgba(255, 255, 255, 0.16);
+    background: #ffffff29;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(3.5px);
     -webkit-backdrop-filter: blur(3.5px);
@@ -274,4 +274,32 @@ button.slick-prev::before {
 
 [data-popup="tooltip"].popup-overlay {
     background: transparent;
+}
+
+.userOption-arrow::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -25%;
+    right: 20%;
+    z-index: 10;
+    border-width: 12px 12px;
+    border-style: solid;
+    border-color: transparent transparent #f4f4f4 transparent;
+}
+
+.ps-sidebar-container {
+    @apply !overflow-visible;
+}
+
+.ps-menu-root > ul {
+    @apply flex flex-row sm:gap-3;
+}
+
+.ps-menu-button {
+    @apply !px-1 sm:!px-2 !h-auto;
+}
+
+.ps-menu-icon {
+    @apply !mr-0;
 }
