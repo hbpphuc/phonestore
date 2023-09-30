@@ -15,6 +15,8 @@ const compression = require('compression');
 const { globalErrorHandler } = require('./src/utils/');
 const initRoutes = require('./src/routes');
 
+const oauthConfig = require('./src/configs/oauth.config');
+
 const app = express();
 
 app.enable('trust proxy');

@@ -253,3 +253,7 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
     // 4. Log user in, send JWT
     sendToken(currUser, 201, req, res);
 });
+
+exports.redirectGG = asyncHandler(async (req, res, next) => {
+    res.send('Success Redirect ...');
+});

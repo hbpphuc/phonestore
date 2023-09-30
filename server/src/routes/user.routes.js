@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 
@@ -7,6 +8,13 @@ const router = express.Router();
 router.route('/sendRequest').post(authController.requestSignup);
 router.route('/signup/:token').get(authController.signup);
 router.route('/login').post(authController.login);
+
+router
+    .route('/login/google')
+    .get(passport.authenticate('google', { scope: ['profile'] }));
+
+router.route('/login/google/redirect').get(authController.redirectGG);
+
 router.route('/logout').get(authController.logout);
 
 router.route('/forgotPassword').post(authController.forgotPassword);
