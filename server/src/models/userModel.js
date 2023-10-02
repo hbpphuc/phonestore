@@ -19,8 +19,8 @@ const userSchema = new mongoose.Schema(
         },
         role: {
             type: String,
-            default: 'user',
             enum: ['user', 'manager', 'admin'],
+            default: 'user',
         },
         password: {
             type: String,
@@ -68,6 +68,12 @@ const userSchema = new mongoose.Schema(
         passwordChangeAt: Date,
         passwordResetToken: String,
         passwordResetExpires: Date,
+        googleId: String,
+        authType: {
+            type: String,
+            enum: ['local', 'google'],
+            default: 'local',
+        },
     },
     { timestamps: true }
 );

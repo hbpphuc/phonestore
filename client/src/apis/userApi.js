@@ -18,6 +18,14 @@ export const login = async (data) => {
     }
 }
 
+export const loginUsingGG = async () => {
+    try {
+        await httpRequest.get('users/login/google', { withCredentials: true })
+    } catch (error) {
+        return console.log(error)
+    }
+}
+
 export const logout = async () => {
     try {
         const res = await httpRequest.get('users/logout', { withCredentials: true })

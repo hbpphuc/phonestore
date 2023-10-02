@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const passport = require('passport');
+const session = require('express-session');
 
 // const hpp = require('hpp');
 const rateLimit = require('express-rate-limit');
@@ -55,6 +57,11 @@ app.use(express.json({ limit: '50mb' }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use(cookieParser());
+
+app.use(session({ secret: 'SECRET' }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize());

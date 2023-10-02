@@ -3,9 +3,8 @@ const crypto = require('crypto');
 const uniqid = require('uniqid');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
-const { createAccessToken, createRefreshToken } = require('../middlewares/jwt');
+const { createAccessToken } = require('../middlewares/jwt');
 const { AppError, Email } = require('../utils');
-const { promisify } = require('util');
 
 const sendToken = asyncHandler(async (user, statusCode, req, res) => {
     const token = createAccessToken(user._id, user.email);
@@ -108,6 +107,20 @@ exports.login = asyncHandler(async (req, res, next) => {
         return next(new AppError('Incorrect email or password.', 401));
 
     sendToken(user, 200, req, res);
+});
+
+exports.redirectGG = asyncHandler(async (req, res, next) => {
+    const token = createAccessToken(req.user._id, req.user.email);
+
+    res.cookie('jwt', token, {
+        expires: new Date(
+            Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+        ),
+        httpOnly: true,
+        secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+    });
+
+    res.redirect(`${process.env.CLIENT_URL}/login/google/success`);
 });
 
 exports.logout = (req, res) => {
@@ -252,8 +265,4 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
 
     // 4. Log user in, send JWT
     sendToken(currUser, 201, req, res);
-});
-
-exports.redirectGG = asyncHandler(async (req, res, next) => {
-    res.send('Success Redirect ...');
 });

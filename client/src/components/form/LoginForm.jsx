@@ -32,11 +32,16 @@ const LoginForm = ({ onSetForm }) => {
         }
     }
 
+    const handleLoginGG = async () => {
+        await apis.loginUsingGG()
+        dispatch(login({ isLoggedIn: true }))
+    }
+
     return (
         <div className="w-full max-w-[500px] h-full flex flex-col items-center">
-            <h1 className="w-full mb-5 font-semibold text-xl text-[#505050] text-center ">LOGIN</h1>
+            <h1 className="w-full mb-2 sm:mb-5 font-semibold text-xl text-[#505050] text-center ">LOGIN</h1>
             <form
-                className="w-full px-3 flex flex-col justify-center items-center gap-5"
+                className="w-full flex flex-col justify-center items-center gap-2 sm:gap-5"
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <div className="w-full">
@@ -70,7 +75,7 @@ const LoginForm = ({ onSetForm }) => {
                 <Button
                     text="Sign In"
                     type="submit"
-                    className="w-[140px] mb-5 p-[10px_8px] bg-main text-white hover:bg-[#333] transition-colors"
+                    className="w-[140px] mb-2 sm:mb-5 p-[10px_8px] bg-main text-white hover:bg-[#333] transition-colors"
                 />
             </form>
             <div className="w-full flex justify-between text-sm">
@@ -83,6 +88,13 @@ const LoginForm = ({ onSetForm }) => {
                     text="Create Account"
                     onClick={() => onSetForm(1)}
                     className="hover:text-main transition-colors"
+                />
+            </div>
+            <div className="w-full mt-3 flex justify-center text-sm">
+                <Button
+                    text="Using Google Account"
+                    onClick={() => handleLoginGG()}
+                    className="w-full h-10 flex justify-center items-center bg-[#ff5353] text-white transition-colors"
                 />
             </div>
         </div>

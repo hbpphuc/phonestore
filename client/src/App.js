@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
-import Cookies from 'js-cookie'
 
 import { publicR, privateR, adminR } from './routes'
 import { publicRoutes } from './routes/paths'
-import { Default, NotFound, Signup } from './pages/public'
+import { Alert, Default, NotFound, Signup } from './pages/public'
 import { Admin, NotFoundAdmin } from 'pages/admin'
 import { Private } from 'pages/private'
 import { setWidth } from 'redux/app/appSlice'
@@ -66,7 +65,20 @@ function App() {
                         <Route path="*" element={<NotFound />} />
                     </Route>
 
-                    <Route path={publicRoutes.signup} element={<Signup />} />
+                    <Route
+                        path={publicRoutes.signup}
+                        element={<Alert successMsg="Now you can log in!" errMsg="Can not sign up. Please try again!" />}
+                    />
+                    <Route
+                        path={publicRoutes.ggLogin}
+                        element={
+                            <Alert
+                                successMsg="Logged in by Google account!"
+                                errMsg="Can not Log in. Please try again!"
+                                isOAuth
+                            />
+                        }
+                    />
 
                     {isLoggedIn && curUser?.data?.role === 'admin' && (
                         <Route path="/admin" element={<Admin />}>

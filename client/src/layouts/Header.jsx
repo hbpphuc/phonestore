@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     Popup,
@@ -78,16 +77,11 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                                         )}
                                     </Popup>
                                 ) : (
-                                    <div className="relative">
-                                        <h3
-                                            onClick={() => {
-                                                document.querySelector('.userOption-arrow').classList.toggle('hidden')
-                                            }}
-                                            className="text-[#848484] hover:text-main cursor-pointer"
-                                        >
+                                    <div className="relative user">
+                                        <h3 className="text-[#848484] hover:text-main cursor-pointer">
                                             {curUser?.data?.name}
                                         </h3>
-                                        <ul className="w-[140px] lg:w-[160px] border rounded-[4px] bg-[#f4f4f4] z-20 absolute top-8 right-0 userOption-arrow">
+                                        <ul className="w-[140px] lg:w-[160px] hidden border rounded-[4px] bg-[#f4f4f4] z-20 absolute top-8 right-0 userOpt">
                                             <li className="cursor-pointer hover:text-main">
                                                 <Link
                                                     className="w-full p-[8px_16px] flex items-center gap-2"

@@ -1,7 +1,7 @@
 import { publicRoutes, adminRoutes, privateRoutes } from './paths'
 import { Home, AllProduct, DetailProduct, Post, ResetPassword, NotFound, DetailPost } from '../pages/public'
 import { Admin, Dashboard, ManageUsers, ManageProducts, ManageOrders } from 'pages/admin'
-import { Private, UserAccount, UserOrder, UserSetting, UserWishlist } from 'pages/private'
+import { UserAccount, UserOrder, UserSetting, UserWishlist } from 'pages/private'
 import ManagePosts from 'pages/admin/ManagePosts'
 
 export const publicR = [

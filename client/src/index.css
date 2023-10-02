@@ -276,7 +276,11 @@ button.slick-prev::before {
     background: transparent;
 }
 
-.userOption-arrow::before {
+.userOpt {
+    display: none;
+}
+
+.userOpt::before {
     content: "";
     display: block;
     position: absolute;
@@ -286,6 +290,22 @@ button.slick-prev::before {
     border-width: 12px 12px;
     border-style: solid;
     border-color: transparent transparent #f4f4f4 transparent;
+}
+
+.userOpt::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 16px;
+    position: absolute;
+    top: -15%;
+    right: 0;
+    z-index: 10;
+    background-color: transparent;
+}
+
+.user:hover > .userOpt {
+    display: block;
 }
 
 .ps-sidebar-container {
