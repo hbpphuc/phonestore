@@ -12,7 +12,7 @@ const Alert = ({ successMsg, errMsg, isOAuth }) => {
 
     useEffect(() => {
         if (status === 'success')
-            Swal.fire('Congratulation!', successMsg, 'success')
+            Swal.fire('OK', successMsg, 'success')
                 .then(() => navigate(`/${publicRoutes.home}`))
                 .then(() => isOAuth && dispatch(login({ isLoggedIn: true })))
 

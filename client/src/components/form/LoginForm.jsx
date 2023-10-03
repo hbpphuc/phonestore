@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import Swal from 'sweetalert2'
@@ -30,11 +30,6 @@ const LoginForm = ({ onSetForm }) => {
         } else {
             Swal.fire('Oops!', res.message, 'error')
         }
-    }
-
-    const handleLoginGG = async () => {
-        await apis.loginUsingGG()
-        dispatch(login({ isLoggedIn: true }))
     }
 
     return (
@@ -91,11 +86,12 @@ const LoginForm = ({ onSetForm }) => {
                 />
             </div>
             <div className="w-full mt-3 flex justify-center text-sm">
-                <Button
-                    text="Using Google Account"
-                    onClick={() => handleLoginGG()}
+                <Link
+                    to={`${process.env.REACT_APP_SERVER_URL}users/login/google`}
                     className="w-full h-10 flex justify-center items-center bg-[#ff5353] text-white transition-colors"
-                />
+                >
+                    Using Google Account
+                </Link>
             </div>
         </div>
     )

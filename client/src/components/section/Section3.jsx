@@ -50,8 +50,8 @@ const Section3 = ({ title }) => {
                 className="flex"
             >
                 {post?.slice(0, 7).map((item, index) => (
-                    <SwiperSlide>
-                        <PostItem key={index} data={item} />
+                    <SwiperSlide key={index}>
+                        <PostItem data={item} />
                     </SwiperSlide>
                 ))}
             </Swiper>

@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { Icon } from 'components'
 import * as apis from 'apis'
+import { Link } from 'react-router-dom'
 
 const UserOrder = () => {
     const { deviceWidth } = useSelector((state) => state.app)
@@ -34,8 +35,8 @@ const UserOrder = () => {
     }
 
     return (
-        <div className="w-full h-auto flex flex-col gap-2">
-            <h1 className="w-full h-auto flex justify-center sm:justify-start sm:text-lg md:text-xl font-bold uppercase gradient-text px-[10px]">
+        <div className="w-full h-auto flex flex-col">
+            <h1 className="w-full h-auto flex justify-center sm:justify-start sm:text-lg md:text-xl font-bold uppercase gradient-text mb-4 px-[10px]">
                 Your Order
             </h1>
             {loading ? (
@@ -57,97 +58,114 @@ const UserOrder = () => {
                             </tr>
                         </thead>
                         <tbody className="w-full text-sm ">
-                            {userOrder?.map((item, index) =>
-                                item.products.map((el, index) => (
-                                    <tr key={el._id} className="text-center border-b border-gray-300">
-                                        <Fragment key={index}>
-                                            <td className="p-2">
-                                                <img
-                                                    src={el.product?.imageCover}
-                                                    alt={el.product?.name}
-                                                    className="w-10 h-10 object-cover"
-                                                />
+                            {userOrder?.length > 0 ? (
+                                userOrder?.map((item, index) =>
+                                    item.products.map((el, index) => (
+                                        <tr key={el._id} className="text-center border-b border-gray-300">
+                                            <Fragment key={index}>
+                                                <td className="p-2">
+                                                    <img
+                                                        src={el.product?.imageCover}
+                                                        alt={el.product?.name}
+                                                        className="w-10 h-10 object-cover"
+                                                    />
+                                                </td>
+                                                <td className="p-2 whitespace-nowrap">{el.product?.name} </td>
+                                                <td className="p-2">{el.color}</td>
+                                                <td className="p-2">${el.product?.price} </td>
+                                                <td className="p-2">{el.count}</td>
+                                            </Fragment>
+                                            <td className="p-2">{moment(item.createdAt).format('DD/MM/YYYY')}</td>
+                                            <td className="p-2">${item.total}</td>
+                                            <td
+                                                className={`p-2 font-medium ${
+                                                    item.status === 'Shipping'
+                                                        ? 'text-yellow-400'
+                                                        : item.status === 'Delivered'
+                                                        ? 'text-green-500'
+                                                        : 'text-red-500'
+                                                }`}
+                                            >
+                                                {item.status}
                                             </td>
-                                            <td className="p-2 whitespace-nowrap">{el.product?.name} </td>
-                                            <td className="p-2">{el.color}</td>
-                                            <td className="p-2">${el.product?.price} </td>
-                                            <td className="p-2">{el.count}</td>
-                                        </Fragment>
-                                        <td className="p-2">{moment(item.createdAt).format('DD/MM/YYYY')}</td>
-                                        <td className="p-2">${item.total}</td>
-                                        <td
-                                            className={`p-2 font-medium ${
-                                                item.status === 'Shipping'
-                                                    ? 'text-yellow-400'
-                                                    : item.status === 'Delivered'
-                                                    ? 'text-green-500'
-                                                    : 'text-red-500'
-                                            }`}
+                                            {item.status === 'Shipping' && (
+                                                <td>
+                                                    <Tippy content="Cancel Order">
+                                                        <span
+                                                            onClick={() => handleCancelOrder(item._id)}
+                                                            className="cursor-pointer"
+                                                        >
+                                                            <Icon.FcCancel size={24} />
+                                                        </span>
+                                                    </Tippy>
+                                                </td>
+                                            )}
+                                        </tr>
+                                    ))
+                                )
+                            ) : (
+                                <tr className="text-center">
+                                    <td colSpan={8} className="p-2">
+                                        <h3 className="text-sm md:text-lg text-center text-gray-500 font-medium w-full h-auto mb-3">
+                                            You have no order
+                                        </h3>
+                                        <Link
+                                            to="/products"
+                                            className="text-sm uppercase sm:text-lg text-center underline text-blue-600 font-medium w-full h-auto"
                                         >
-                                            {item.status}
-                                        </td>
-                                        {item.status === 'Shipping' && (
-                                            <td>
-                                                <Tippy content="Cancel Order">
-                                                    <span
-                                                        onClick={() => handleCancelOrder(item._id)}
-                                                        className="cursor-pointer"
-                                                    >
-                                                        <Icon.FcCancel size={24} />
-                                                    </span>
-                                                </Tippy>
-                                            </td>
-                                        )}
-                                    </tr>
-                                ))
+                                            Go to Shopping now!
+                                        </Link>
+                                    </td>
+                                </tr>
                             )}
                         </tbody>
                     </table>
                 </div>
             ) : (
                 <div className="w-full flex flex-wrap">
-                    {userOrder?.map((item, index) =>
-                        item.products.map((el, index) => (
-                            <div
-                                key={el.id}
-                                className="p-[10px] w-full min-[425px]:w-1/2 min-[992px]:w-1/3 flex flex-col justify-between bg-white"
-                            >
-                                <div className="w-full border border-gray-200 rounded-lg shadow-md">
-                                    <img
-                                        className="w-full flex justify-center items-center p-4 rounded-t-lg object-contain"
-                                        src={el.product.imageCover}
-                                        alt={el.product.name}
-                                    />
-                                    <div className="px-5 pb-5">
-                                        <h5 className="text-center lg:text-lg line-clamp-1 font-semibold tracking-tight">
-                                            {el.product.name}
-                                        </h5>
-                                        <div className="text-center py-2">
-                                            {moment(item.createdAt).format('DD/MM/YYYY')}
-                                        </div>
-                                        <div className="w-full flex flex-col md:flex-row items-center justify-between">
-                                            <div className="w-full flex md:flex-col justify-evenly items-center md:items-start">
-                                                <span className="py-1 md:py-0 lg:text-lg font-bold text-gray-900 dark:text-yellow-500">
-                                                    ${item.total}
-                                                </span>
-                                                <span className="font-medium lg:font-bold text-gray-900">
-                                                    Qty: {el.count}
-                                                </span>
+                    {userOrder?.length > 0 ? (
+                        userOrder?.map((item, index) =>
+                            item.products.map((el, index) => (
+                                <div
+                                    key={el.id}
+                                    className="p-[10px] w-full min-[425px]:w-1/2 min-[992px]:w-1/3 flex flex-col justify-between bg-white"
+                                >
+                                    <div className="w-full border border-gray-200 rounded-lg shadow-md">
+                                        <img
+                                            className="w-full flex justify-center items-center p-4 rounded-t-lg object-contain"
+                                            src={el.product.imageCover}
+                                            alt={el.product.name}
+                                        />
+                                        <div className="px-5 pb-5">
+                                            <h5 className="text-center lg:text-lg line-clamp-1 font-semibold tracking-tight">
+                                                {el.product.name}
+                                            </h5>
+                                            <div className="text-center py-2">
+                                                {moment(item.createdAt).format('DD/MM/YYYY')}
                                             </div>
-                                            <div className="flex flex-1 justify-end items-center gap-2">
-                                                <span
-                                                    className={`flex items-center font-medium ${
-                                                        item.status === 'Shipping'
-                                                            ? 'text-yellow-400'
-                                                            : item.status === 'Delivered'
-                                                            ? 'text-green-500'
-                                                            : 'text-red-500'
-                                                    }`}
-                                                >
-                                                    {item.status}
-                                                </span>
+                                            <div className="w-full flex flex-col md:flex-row items-center justify-between">
+                                                <div className="w-full flex md:flex-col justify-evenly items-center md:items-start">
+                                                    <span className="py-1 md:py-0 lg:text-lg font-bold text-gray-900 dark:text-yellow-500">
+                                                        ${item.total}
+                                                    </span>
+                                                    <span className="font-medium lg:font-bold text-gray-900">
+                                                        Qty: {el.count}
+                                                    </span>
+                                                </div>
+                                                <div className="flex flex-1 justify-end items-center gap-2">
+                                                    <span
+                                                        className={`flex items-center font-medium ${
+                                                            item.status === 'Shipping'
+                                                                ? 'text-yellow-400'
+                                                                : item.status === 'Delivered'
+                                                                ? 'text-green-500'
+                                                                : 'text-red-500'
+                                                        }`}
+                                                    >
+                                                        {item.status}
+                                                    </span>
 
-                                                {/* <Tippy content="Edit" className="text-base">
+                                                    {/* <Tippy content="Edit" className="text-base">
                                                     {isUpdate && item._id === editItem ? (
                                                         <Button
                                                             onClick={() => handleUpdate()}
@@ -164,12 +182,25 @@ const UserOrder = () => {
                                                         </Button>
                                                     )}
                                                 </Tippy> */}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))
+                            ))
+                        )
+                    ) : (
+                        <div className="w-full flex flex-col justify-center items-center">
+                            <h3 className="text-sm md:text-lg text-center text-gray-500 font-medium w-full h-auto mb-3">
+                                You have no order
+                            </h3>
+                            <Link
+                                to="/products"
+                                className="text-sm uppercase sm:text-lg text-center underline text-blue-600 font-medium w-full h-auto"
+                            >
+                                Go to Shopping now!
+                            </Link>
+                        </div>
                     )}
                 </div>
             )}

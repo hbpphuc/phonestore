@@ -42,7 +42,7 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                 const res = await apis.logout()
                 if (res.status === 'success') {
                     dispatch(logoutt({ isLoggedIn: false }))
-                    Swal.fire('Congratulation!', 'User logout successfully!', 'success').then(() => navigate(0))
+                    Swal.fire('Success!', 'User logout successfully!', 'success').then(() => navigate(0))
                 }
             }
         })
@@ -66,7 +66,7 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                                                 className="text-sm font-normal text-[#848484] hover:text-main cursor-pointer"
                                             />
                                         }
-                                        styles="w-[300px] sm:w-[400px] md:w-[500px]"
+                                        styles="w-[500px]"
                                     >
                                         {form === 0 ? (
                                             <LoginForm onSetForm={setForm} />
@@ -139,7 +139,7 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                                             <Icon.FaUserCircle size={24} />
                                         </span>
                                     }
-                                    styles="w-[300px]"
+                                    styles="w-[400px]"
                                 >
                                     {!curUser ? (
                                         form === 0 ? (

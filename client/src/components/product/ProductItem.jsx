@@ -89,6 +89,7 @@ const ProductItem = ({ data, cateType, detail, loading }) => {
                                 .filter((el) => el.id === 3)
                                 .map((item) => (
                                     <Popup
+                                        key={item.id}
                                         button={
                                             <button className="w-11 h-11 flex justify-center items-center rounded-full product-action">
                                                 {item.icon}

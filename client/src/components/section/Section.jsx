@@ -79,13 +79,13 @@ const Section = ({ pData, cateData, title, detail }) => {
                     >
                         {pData
                             ? pData?.slice(0, 6)?.map((item, index) => (
-                                  <SwiperSlide>
-                                      <ProductItem key={index} data={item} cateType={cateType} />
+                                  <SwiperSlide key={index}>
+                                      <ProductItem data={item} cateType={cateType} />
                                   </SwiperSlide>
                               ))
                             : prodCate?.slice(0, 6)?.map((item, index) => (
-                                  <SwiperSlide>
-                                      <ProductItem key={index} data={item} cateType={cateType} />
+                                  <SwiperSlide key={index}>
+                                      <ProductItem data={item} cateType={cateType} />
                                   </SwiperSlide>
                               ))}
                     </Swiper>

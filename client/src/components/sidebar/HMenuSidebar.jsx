@@ -78,7 +78,7 @@ const HMenuSidebar = ({ user, onSetOpenMenu, onLogout }) => {
                                             className="text-sm font-normal text-white hover:text-main"
                                         />
                                     }
-                                    styles="w-[300px] sm:w-[400px] md:w-[500px]"
+                                    styles="w-[300px]"
                                 >
                                     {form === 0 ? (
                                         <LoginForm onSetForm={setForm} />

@@ -8,12 +8,12 @@ const UserSidebar = () => {
             <ul className="w-full flex flex-wrap sm:flex-col justify-between sm:justify-start bg-[#f7f7f7]">
                 {userSidebarMenu.map((item, index) => (
                     <li
+                        key={item.id}
                         className={`flex-1 ${
                             index !== -userSidebarMenu.length - 1 ? 'border-l-2 border-[#fff]' : ''
                         } sm:border-none`}
                     >
                         <NavLink
-                            key={item.id}
                             to={item.path}
                             className={({ isActive }) =>
                                 `p-[10px] xl:p-3 flex gap-2 justify-center sm:justify-start items-center hover:text-main transition-colors ${
