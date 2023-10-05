@@ -9,7 +9,7 @@ import { publicRoutes } from './routes/paths'
 import { Alert, Default, NotFound } from './pages/public'
 import { Admin, NotFoundAdmin } from 'pages/admin'
 import { Private } from 'pages/private'
-import { setWidth } from 'redux/app/appSlice'
+import { setWidth } from './redux/app/appSlice'
 import { Icon } from 'components'
 import * as apis from 'apis'
 
