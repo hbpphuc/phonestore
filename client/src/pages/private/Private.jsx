@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { Breadcrumb, UserSidebar } from 'components'
+import { Breadcrumb, UserSidebar } from '../../components'
 
 const Private = () => {
     const { deviceWidth } = useSelector((state) => state.app)

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { memo } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 import ReactPaginate from 'react-paginate'
 import Icon from '../general/Icons'
 

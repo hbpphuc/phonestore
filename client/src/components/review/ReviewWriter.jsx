@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Swal from 'sweetalert2'
-import * as apis from 'apis'
-import { Input, Loading } from 'components'
+import * as apis from '../../apis'
+import { Input, Loading } from '../../components'
 
 const ReviewWriter = ({ id, onSetIsNew, isEdit, onSetIsEdit, isReply, onSetIsReply }) => {
     const [isLoading, setIsLoading] = useState(false)

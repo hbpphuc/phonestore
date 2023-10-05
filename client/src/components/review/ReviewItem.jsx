@@ -3,9 +3,9 @@ import moment from 'moment'
 import Swal from 'sweetalert2'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { toTimestamp } from 'utils/helper'
-import { Icon } from 'components'
-import * as apis from 'apis'
+import { toTimestamp } from '../../utils/helper'
+import { Icon } from '../../components'
+import * as apis from '../../apis'
 
 const ReviewItem = ({ data, reviewId, onSetIsNew, onSetIsEdit, reply, onSetIsReply }) => {
     const { curUser } = useSelector((state) => state.user)

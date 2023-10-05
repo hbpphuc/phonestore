@@ -4,9 +4,9 @@ import LoadingBar from 'react-top-loading-bar'
 import { useSelector } from 'react-redux'
 import DOMPurify from 'dompurify'
 import moment from 'moment/moment'
-import { Breadcrumb, Icon } from 'components'
-import * as apis from 'apis'
-import { publicRoutes } from 'routes/paths'
+import { Breadcrumb, Icon } from '../../components'
+import * as apis from '../../apis'
+import { publicRoutes } from '../../routes/paths'
 
 const Post = () => {
     const { deviceWidth } = useSelector((state) => state.app)

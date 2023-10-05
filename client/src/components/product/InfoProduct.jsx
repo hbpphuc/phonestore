@@ -1,16 +1,14 @@
 import React, { memo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Skeleton from 'react-loading-skeleton'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { FreeMode } from 'swiper/modules'
 import { useDispatch, useSelector } from 'react-redux'
-import { setProductInCart } from 'redux/order/orderSlice'
 import Select from 'react-select'
-
-import * as apis from 'apis'
-import { publicRoutes } from 'routes/paths'
-import { Button } from 'components'
 import { toast } from 'react-toastify'
+
+import { setProductInCart } from '../../redux/order/orderSlice'
+import * as apis from '../../apis'
+import { publicRoutes } from '../../routes/paths'
+import { Button } from '../../components'
 
 const InfoProduct = ({ data, detail, isLoading }) => {
     const { productInCart } = useSelector((state) => state.order)

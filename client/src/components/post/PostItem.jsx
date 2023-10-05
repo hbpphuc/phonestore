@@ -1,8 +1,8 @@
 import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
-import Icon from 'components/general/Icons'
 import moment from 'moment'
 import DOMPurify from 'dompurify'
+import Icon from '../general/Icons'
 
 const PostItem = ({ data }) => {
     return (

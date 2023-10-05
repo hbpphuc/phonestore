@@ -3,8 +3,8 @@ import HeadlessTippy from '@tippyjs/react/headless'
 import { useNavigate, createSearchParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useDebounce } from 'use-debounce'
-import { Button, Icon, SearchResultPopup } from 'components'
-import * as apis from 'apis'
+import { Button, Icon, SearchResultPopup } from '../../components'
+import * as apis from '../../apis'
 
 const SearchBar = () => {
     const [searchValue, setSearchValue] = useState('')

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllCategories } from 'redux/app/action'
-import { Section, Section2, Section3, Slider } from 'components'
+import { getAllCategories } from '../../redux/app/action'
+import { Section, Section3, Slider } from '../../components'
 
 const Home = () => {
     const { categories } = useSelector((state) => state.app)

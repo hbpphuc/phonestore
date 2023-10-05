@@ -13,7 +13,7 @@ import {
     SearchBar,
     HMenuSidebar,
 } from '../components'
-import { adminRoutes } from 'routes/paths'
+import { adminRoutes } from '../routes/paths'
 import logo from '../assets/images/logo.png'
 import { logoutt } from '../redux/user/userSlice'
 import { getCurrentUser } from '../redux/user/userAction'

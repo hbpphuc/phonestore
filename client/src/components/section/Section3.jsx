@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Navigation } from 'swiper/modules'
-import { PostItem } from 'components'
-import * as apis from 'apis'
+import { PostItem } from '../../components'
+import * as apis from '../../apis'
 
 const Section3 = ({ title }) => {
     const [post, setPost] = useState(null)

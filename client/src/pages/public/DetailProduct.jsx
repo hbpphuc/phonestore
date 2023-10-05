@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import Slider from 'react-slick'
 import { useSelector } from 'react-redux'
 import Skeleton from 'react-loading-skeleton'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import DOMPurify from 'dompurify'
 import 'react-tabs/style/react-tabs.css'
-import * as apis from 'apis'
-import { Breadcrumb, Icon, InfoProduct, ProductItem, Review, Section } from 'components'
-import { productExtrainInfo } from 'utils/menu'
+import * as apis from '../../apis'
+import { Breadcrumb, Icon, InfoProduct, Review, Section } from '../../components'
+import { productExtrainInfo } from '../../utils/menu'
 
 const DetailProduct = () => {
     const { deviceWidth } = useSelector((state) => state.app)

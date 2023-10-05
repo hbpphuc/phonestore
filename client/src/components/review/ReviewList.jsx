@@ -1,5 +1,5 @@
 import React from 'react'
-import { ReviewItem } from 'components'
+import { ReviewItem } from '../../components'
 
 const ReviewList = ({ data, isNew, onSetIsNew, onSetIsEdit, onSetIsReply }) => {
     return (

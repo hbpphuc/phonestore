@@ -7,12 +7,12 @@ import Skeleton from 'react-loading-skeleton'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { wishlist } from 'redux/user/userSlice'
-import * as apis from 'apis'
-import { publicRoutes } from 'routes/paths'
-import { productAction } from 'utils/menu'
+import { wishlist } from '../../redux/user/userSlice'
+import * as apis from '../../apis'
+import { publicRoutes } from '../../routes/paths'
+import { productAction } from '../../utils/menu'
 import InfoProduct from './InfoProduct'
-import Popup from 'components/general/Popup'
+import Popup from '../general/Popup'
 
 const ProductItem = ({ data, cateType, detail, loading }) => {
     const { deviceWidth } = useSelector((state) => state.app)

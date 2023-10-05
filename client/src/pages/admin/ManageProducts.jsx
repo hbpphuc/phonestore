@@ -5,9 +5,9 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
-import * as apis from 'apis'
-import { Button, Icon, Paginate, Popup } from 'components'
-import { CreateProduct } from 'pages/admin'
+import * as apis from '../../apis'
+import { Button, Icon, Paginate, Popup } from '../../components'
+import { CreateProduct } from '../../pages/admin'
 
 const limit = 10
 

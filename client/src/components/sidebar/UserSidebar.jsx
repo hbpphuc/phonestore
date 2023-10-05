@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { userSidebarMenu } from 'utils/menu'
+import { userSidebarMenu } from '../../utils/menu'
 
 const UserSidebar = () => {
     return (

@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import Select from 'react-select'
 import { toast } from 'react-toastify'
-import * as apis from 'apis'
-import { EditorZone, Input, ImageUpload, Loading, Icon } from 'components'
+import * as apis from '../../../apis'
+import { EditorZone, Input, ImageUpload, Loading, Icon } from '../../../components'
 
 const CreateProduct = ({ id, pData, onUpdate }) => {
     const {

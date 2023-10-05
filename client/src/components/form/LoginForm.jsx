@@ -3,10 +3,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import Swal from 'sweetalert2'
-import { login } from 'redux/user/userSlice'
-import * as apis from 'apis'
-import Button from 'components/general/Button'
-import Icon from 'components/general/Icons'
+import { login } from '../../redux/user/userSlice'
+import * as apis from '../../apis'
+import Button from '../general/Button'
+import Icon from '../general/Icons'
 
 const LoginForm = ({ onSetForm }) => {
     const [pw, setPw] = useState(false)

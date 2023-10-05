@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import { publicRoutes } from 'routes/paths'
 import { useDispatch } from 'react-redux'
-import { login } from 'redux/user/userSlice'
+import { publicRoutes } from '../../routes/paths'
+import { login } from '../../redux/user/userSlice'
 
 const Alert = ({ successMsg, errMsg, isOAuth }) => {
     const { status } = useParams()

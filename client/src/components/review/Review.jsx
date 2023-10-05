@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import ReviewList from './ReviewList'
 import ReviewWriter from './ReviewWriter'
-import * as apis from 'apis'
+import * as apis from '../../apis'
 
 const Review = () => {
     const { slug } = useParams()

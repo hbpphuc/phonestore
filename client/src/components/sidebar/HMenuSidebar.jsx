@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Button, ForgotForm, Icon, LoginForm, Popup, RegisterForm } from 'components'
-import { navigatorMenu } from 'utils/menu'
-import { adminRoutes } from 'routes/paths'
+import { Button, ForgotForm, Icon, LoginForm, Popup, RegisterForm } from '../../components'
+import { navigatorMenu } from '../../utils/menu'
+import { adminRoutes } from '../../routes/paths'
 
 const HMenuSidebar = ({ user, onSetOpenMenu, onLogout }) => {
     const [form, setForm] = useState(0)

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Tippy from '@tippyjs/react'
 import moment from 'moment'
-import { useForm } from 'react-hook-form'
+import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
-import * as apis from 'apis'
-import { Button, Icon, Paginate, Popup } from 'components'
-import { CreatePost } from 'pages/admin'
-import { useSelector } from 'react-redux'
+import * as apis from '../../apis'
+import { Button, Icon, Paginate, Popup } from '../../components'
+import { CreatePost } from '../../pages/admin'
 
 const limit = 10
 

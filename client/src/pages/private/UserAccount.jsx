@@ -5,8 +5,8 @@ import Tippy from '@tippyjs/react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { PuffLoader } from 'react-spinners'
-import { Icon, Input, Loading } from 'components'
-import * as apis from 'apis'
+import { Icon, Input, Loading } from '../../components'
+import * as apis from '../../apis'
 
 const UserAccount = () => {
     const { curUser } = useSelector((state) => state.user)

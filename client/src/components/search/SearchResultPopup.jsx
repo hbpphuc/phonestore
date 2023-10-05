@@ -1,6 +1,6 @@
-import { Icon } from 'components'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Icon } from '../../components'
 
 const SearchResultPopup = ({ data, onSetFocus }) => {
     return (

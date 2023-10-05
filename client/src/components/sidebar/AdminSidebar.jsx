@@ -1,8 +1,8 @@
 import React from 'react'
-import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar'
-import { Link, NavLink } from 'react-router-dom'
-import { adminSidebarMenu } from 'utils/menu'
 import Tippy from '@tippyjs/react'
+import { NavLink } from 'react-router-dom'
+import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar'
+import { adminSidebarMenu } from '../../utils/menu'
 
 const AdminSidebar = ({ collapsed }) => {
     return (

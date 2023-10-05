@@ -3,8 +3,8 @@ import Tippy from '@tippyjs/react'
 import moment from 'moment'
 import Select from 'react-select'
 import { toast } from 'react-toastify'
-import * as apis from 'apis'
-import { Button, Icon } from 'components'
+import * as apis from '../../apis'
+import { Button, Icon } from '../../components'
 
 const ManageOrders = () => {
     const [orders, setOrders] = useState(null)

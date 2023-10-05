@@ -3,9 +3,9 @@ import { Link, NavLink, Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Menu, MenuItem, Sidebar } from 'react-pro-sidebar'
 import Tippy from '@tippyjs/react'
-import { Icon } from 'components'
-import adminlogo from 'assets/images/AdminLogo.png'
-import { adminSidebarMenu } from 'utils/menu'
+import { Icon } from '../../components'
+import adminlogo from '../../assets/images/AdminLogo.png'
+import { adminSidebarMenu } from '../../utils/menu'
 
 const Admin = () => {
     const [collapsed, setCollapsed] = useState(true)

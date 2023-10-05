@@ -5,9 +5,9 @@ import { useDebounce } from 'use-debounce'
 import { toast } from 'react-toastify'
 import LoadingBar from 'react-top-loading-bar'
 import Select from 'react-select'
-import * as apis from 'apis'
-import { Breadcrumb, ProductItem, Navbar, Paginate } from 'components'
-import { optSort, optColor } from 'utils/constant'
+import * as apis from '../../apis'
+import { Breadcrumb, ProductItem, Navbar, Paginate } from '../../components'
+import { optSort, optColor } from '../../utils/constant'
 
 const limit = 6
 

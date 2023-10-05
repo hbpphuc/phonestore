@@ -13,6 +13,7 @@ const sendToken = asyncHandler(async (user, statusCode, req, res) => {
         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
         httpOnly: false,
         secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+        sameSite: 'none',
     });
 
     const refreshToken = createRefreshToken(user._id, user.email, accessToken);
@@ -69,6 +70,7 @@ exports.refreshToken = asyncHandler(async (req, res, next) => {
         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
         httpOnly: false,
         secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+        samesite: none,
     });
 
     if (!accessToken) {
@@ -150,6 +152,7 @@ exports.signup = asyncHandler(async (req, res, next) => {
         expires: new Date(Date.now() + 2 * 60 * 1000),
         httpOnly: true,
         secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+        samesite: none,
     });
     res.redirect(`${process.env.CLIENT_URL}/signup/success`);
 });
@@ -175,6 +178,7 @@ exports.redirectGG = asyncHandler(async (req, res, next) => {
         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
         httpOnly: false,
         secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+        samesite: none,
     });
 
     const user = await User.findById(req.user._id);

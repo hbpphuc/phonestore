@@ -10,12 +10,12 @@ import {
     Filler,
     Legend,
 } from 'chart.js'
+import { useSelector } from 'react-redux'
 import { Line } from 'react-chartjs-2'
 import Select from 'react-select'
-import { Icon } from 'components'
-import * as apis from 'apis'
-import { month, optionsChart } from 'utils/constant'
-import { useSelector } from 'react-redux'
+import { Icon } from '../../components'
+import * as apis from '../../apis'
+import { month, optionsChart } from '../../utils/constant'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Filler, Legend)
 

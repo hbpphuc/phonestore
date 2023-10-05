@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import DOMPurify from 'dompurify'
-import { Breadcrumb, Icon } from 'components'
-import * as apis from 'apis'
 import moment from 'moment'
-import { toTimestamp } from 'utils/helper'
 import { useSelector } from 'react-redux'
+import { Breadcrumb, Icon } from '../../components'
+import * as apis from '../../apis'
+import { toTimestamp } from '../../utils/helper'
 
 const DetailPost = () => {
     const { slug } = useParams()

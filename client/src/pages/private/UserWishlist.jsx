@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import LoadingBar from 'react-top-loading-bar'
-import { useDispatch, useSelector } from 'react-redux'
-import * as apis from 'apis'
-import { ProductItem } from 'components'
-import { wishlist } from 'redux/user/userSlice'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import * as apis from '../../apis'
+import { ProductItem } from '../../components'
+import { wishlist } from '../../redux/user/userSlice'
 
 const UserWishlist = () => {
     const { isWishlist } = useSelector((state) => state.user)

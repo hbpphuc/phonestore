@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Footer, Header } from 'layouts'
-import { OrderSidebar } from 'components'
-import * as apis from 'apis'
-import { setProductInCart } from 'redux/order/orderSlice'
+import { Footer, Header } from '../../layouts'
+import { OrderSidebar } from '../../components'
+import * as apis from '../../apis'
+import { setProductInCart } from '../../redux/order/orderSlice'
 
 const Default = () => {
     const dispatch = useDispatch()

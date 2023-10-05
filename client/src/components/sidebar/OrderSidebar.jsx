@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import { loadStripe } from '@stripe/stripe-js'
 import { useDebounce } from 'use-debounce'
 import { PuffLoader } from 'react-spinners'
-import { Button, Icon, ProductInCart, Loading } from 'components'
-import * as apis from 'apis'
-import { toast } from 'react-toastify'
+import { Button, Icon, ProductInCart, Loading } from '../../components'
+import * as apis from '../../apis'
 
 const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
 

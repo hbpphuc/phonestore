@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Swal from 'sweetalert2'
-import * as apis from 'apis'
-import Button from 'components/general/Button'
-import Loading from 'components/general/Loading'
+import * as apis from '../../apis'
+import Button from '../general/Button'
+import Loading from '../general/Loading'
 
 const ForgotForm = ({ onSetForm }) => {
     const [isLoading, setIsLoading] = useState(false)

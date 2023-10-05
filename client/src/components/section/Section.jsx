@@ -2,17 +2,14 @@ import React, { memo, useEffect, useState } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Navigation } from 'swiper/modules'
-import { useSelector } from 'react-redux'
-import * as apis from 'apis'
-import ProductItem from 'components/product/ProductItem'
+import * as apis from '../../apis'
+import { ProductItem } from '../../components'
 
 const Section = ({ pData, cateData, title, detail }) => {
     const [cateId, setCateId] = useState('648d84dbc23688213c792cac')
     const [cateType, setCateType] = useState(null)
     const [prodCate, setProdCate] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
-
-    const { deviceWidth } = useSelector((state) => state.app)
 
     useEffect(() => {
         const getCategory = async () => {

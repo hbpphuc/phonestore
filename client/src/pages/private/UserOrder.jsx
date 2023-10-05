@@ -1,12 +1,12 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import moment from 'moment'
 import Tippy from '@tippyjs/react'
+import { Link } from 'react-router-dom'
 import Skeleton from 'react-loading-skeleton'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
-import { Icon } from 'components'
-import * as apis from 'apis'
-import { Link } from 'react-router-dom'
+import { Icon } from '../../components'
+import * as apis from '../../apis'
 
 const UserOrder = () => {
     const { deviceWidth } = useSelector((state) => state.app)

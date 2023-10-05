@@ -6,8 +6,8 @@ import { useForm } from 'react-hook-form'
 import Select from 'react-select'
 import Swal from 'sweetalert2'
 import { toast } from 'react-toastify'
-import * as apis from 'apis'
-import { Button, Icon, Paginate } from 'components'
+import * as apis from '../../apis'
+import { Button, Icon, Paginate } from '../../components'
 
 const limit = 10
 

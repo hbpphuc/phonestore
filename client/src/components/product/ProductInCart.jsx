@@ -1,12 +1,11 @@
 import React, { memo, useEffect, useState } from 'react'
-import Skeleton from 'react-loading-skeleton'
 import { useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
 import { useDebounce } from 'use-debounce'
 import { Link } from 'react-router-dom'
-import { Button, Icon } from 'components'
-import * as apis from 'apis'
-import { setProductInCart } from 'redux/order/orderSlice'
-import { toast } from 'react-toastify'
+import { Button, Icon } from '../../components'
+import * as apis from '../../apis'
+import { setProductInCart } from '../../redux/order/orderSlice'
 
 const ProductInCart = ({ data, i, length }) => {
     const dispatch = useDispatch()

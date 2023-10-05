@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, memo } from 'react'
 import { NavLink } from 'react-router-dom'
-import { getAllCategories } from 'redux/app/action'
-import { publicRoutes } from 'routes/paths'
 import { useDispatch, useSelector } from 'react-redux'
-import { memo } from 'react'
-import { iconsCate } from 'utils/menu'
+import { getAllCategories } from '../../redux/app/action'
+import { publicRoutes } from '../../routes/paths'
+import { iconsCate } from '../../utils/menu'
 
 const Navbar = () => {
     const { categories, deviceWidth } = useSelector((state) => state.app)
