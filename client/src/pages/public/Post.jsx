@@ -4,7 +4,6 @@ import LoadingBar from 'react-top-loading-bar'
 import { useSelector } from 'react-redux'
 import DOMPurify from 'dompurify'
 import moment from 'moment/moment'
-import LazyLoad from 'react-lazyload'
 import { Breadcrumb, Icon } from 'components'
 import * as apis from 'apis'
 import { publicRoutes } from 'routes/paths'
@@ -73,13 +72,7 @@ const Post = () => {
                 </div>
                 <div className="w-full xl:w-main px-[10px] flex flex-col gap-4 sm:gap-2 md:gap-5">
                     {post?.map((item) => (
-                        <LazyLoad
-                            throttle={200}
-                            height={240}
-                            offset={100}
-                            key={item?._id}
-                            className={`w-full flex flex-col min-[576px]:flex-row gap-4`}
-                        >
+                        <div key={item?._id} className={`w-full flex flex-col min-[576px]:flex-row gap-4`}>
                             <div className="w-full min-[576px]:w-[240px] sm:w-[300px]">
                                 <img
                                     src={item?.imageCover}
@@ -106,7 +99,7 @@ const Post = () => {
                                     className="line-clamp-3 sm:line-clamp-4 md:line-clamp-3 xl:line-clamp-5 font-robotoCondensed text-justify text-sm md:text-base"
                                 ></p>
                             </div>
-                        </LazyLoad>
+                        </div>
                     ))}
                 </div>
             </div>
