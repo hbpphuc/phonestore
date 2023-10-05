@@ -49,9 +49,6 @@ const userSchema = new mongoose.Schema(
         },
         phone: String,
         address: String,
-        refreshToken: {
-            type: String,
-        },
         active: {
             type: Boolean,
             default: true,
@@ -65,15 +62,16 @@ const userSchema = new mongoose.Schema(
             },
         ],
         wishlist: [{ type: mongoose.Types.ObjectId, ref: 'Product' }],
-        passwordChangeAt: Date,
-        passwordResetToken: String,
-        passwordResetExpires: Date,
         googleId: String,
         authType: {
             type: String,
             enum: ['local', 'google'],
             default: 'local',
         },
+        passwordChangeAt: Date,
+        passwordResetToken: String,
+        passwordResetExpires: Date,
+        refreshToken: { type: String, select: false },
     },
     { timestamps: true }
 );

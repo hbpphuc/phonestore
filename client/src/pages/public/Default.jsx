@@ -24,7 +24,7 @@ const Default = () => {
 
     return (
         <div className="w-full h-full flex flex-col justify-center items-center relative">
-            <Header onSetOpenOrder={setOpenOrder} cartItemCount={user?.cart?.length} />
+            <Header onSetOpenOrder={setOpenOrder} user={user} />
             <Outlet />
             <Footer />
             {openOrder && <OrderSidebar onSetOpenOrder={setOpenOrder} user={user} />}

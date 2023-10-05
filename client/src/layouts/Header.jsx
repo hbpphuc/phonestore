@@ -19,11 +19,13 @@ import { logoutt } from '../redux/user/userSlice'
 import { getCurrentUser } from '../redux/user/userAction'
 import * as apis from '../apis'
 
-const Header = ({ onSetOpenOrder, cartItemCount }) => {
+const Header = ({ user, onSetOpenOrder }) => {
     const [form, setForm] = useState(0)
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { isLoggedIn, curUser } = useSelector((state) => state.user)
+
+    const { isLoggedIn } = useSelector((state) => state.user)
     const { deviceWidth } = useSelector((state) => state.app)
 
     const [openMenu, setOpenMenu] = useState(false)
@@ -48,6 +50,8 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
         })
     }
 
+    const cartItemCount = user?.cart.length
+
     return (
         <>
             <div className="w-full h-auto flex flex-col justify-center items-center">
@@ -58,7 +62,7 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                                 <p className="text-sm font-normal text-[#848484]">Welcome to our Store!</p>
                             </div>
                             <div className="flex relative">
-                                {!curUser ? (
+                                {!user ? (
                                     <Popup
                                         button={
                                             <Button
@@ -78,15 +82,13 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                                     </Popup>
                                 ) : (
                                     <div className="relative user">
-                                        <h3 className="text-[#848484] hover:text-main cursor-pointer">
-                                            {curUser?.data?.name}
-                                        </h3>
+                                        <h3 className="text-[#848484] hover:text-main cursor-pointer">{user?.name}</h3>
                                         <ul className="w-[140px] lg:w-[160px] hidden border rounded-[4px] bg-[#f4f4f4] z-20 absolute top-8 right-0 userOpt">
                                             <li className="cursor-pointer hover:text-main">
                                                 <Link
                                                     className="w-full p-[8px_16px] flex items-center gap-2"
                                                     to={
-                                                        curUser?.data?.role === 'admin'
+                                                        user?.role === 'admin'
                                                             ? `/${adminRoutes.admin}/${adminRoutes.adminDashboard}`
                                                             : `/me`
                                                     }
@@ -141,7 +143,7 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                                     }
                                     styles="w-[400px]"
                                 >
-                                    {!curUser ? (
+                                    {!user ? (
                                         form === 0 ? (
                                             <LoginForm onSetForm={setForm} />
                                         ) : form === 1 ? (
@@ -154,7 +156,7 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                                             <Link
                                                 className="w-full p-[8px_16px] flex items-center gap-2 hover:text-main"
                                                 to={
-                                                    curUser?.data?.role === 'admin'
+                                                    user?.role === 'admin'
                                                         ? `/${adminRoutes.admin}/${adminRoutes.adminDashboard}`
                                                         : `/me`
                                                 }
@@ -215,7 +217,7 @@ const Header = ({ onSetOpenOrder, cartItemCount }) => {
                 </div>
             </div>
             {deviceWidth < 640 && openMenu && (
-                <HMenuSidebar onSetOpenMenu={setOpenMenu} user={curUser} onLogout={logout} />
+                <HMenuSidebar onSetOpenMenu={setOpenMenu} user={user} onLogout={logout} />
             )}
         </>
     )

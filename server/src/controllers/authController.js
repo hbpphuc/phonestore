@@ -3,25 +3,86 @@ const crypto = require('crypto');
 const uniqid = require('uniqid');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
-const { createAccessToken } = require('../middlewares/jwt');
+const { createAccessToken, createRefreshToken } = require('../middlewares/jwt');
 const { AppError, Email } = require('../utils');
 
 const sendToken = asyncHandler(async (user, statusCode, req, res) => {
-    const token = createAccessToken(user._id, user.email);
+    const accessToken = createAccessToken(user._id, user.email);
 
-    res.cookie('jwt', token, {
-        expires: new Date(
-            Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-        ),
-        httpOnly: true,
+    res.cookie('jwt', accessToken, {
+        expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        httpOnly: false,
         secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
     });
+
+    const refreshToken = createRefreshToken(user._id, user.email, accessToken);
+    user.refreshToken = refreshToken;
+    await user.save({ validateBeforeSave: false });
 
     user.password = undefined;
 
     res.status(statusCode).json({
         status: 'success',
-        token,
+        accessToken,
+        data: {
+            user,
+        },
+    });
+});
+
+exports.refreshToken = asyncHandler(async (req, res, next) => {
+    const accToken = req.headers.x_authorization;
+
+    if (!accToken) {
+        return next(new AppError('Access token is invalid.', 400));
+    }
+
+    const decodedAccess = jwt.verify(accToken, process.env.JWT_SECRET_KEY, {
+        ignoreExpiration: true,
+    });
+
+    const user = await User.findById(decodedAccess.id).select('refreshToken');
+
+    if (!user) {
+        return next(new AppError('This user is not exist.', 404));
+    }
+
+    if (!user.refreshToken) {
+        return next(new AppError('Refresh token is invalid.', 400));
+    }
+
+    const decodedRefresh = jwt.verify(
+        user.refreshToken,
+        process.env.JWT_SECRET_KEY,
+        {
+            ignoreExpiration: true,
+        }
+    );
+
+    if (decodedRefresh.exp < new Date().getTime() / 1000) {
+        return next(new AppError('You are not log in.', 401));
+    }
+
+    const accessToken = createAccessToken(user._id, user.email);
+
+    res.cookie('jwt', accessToken, {
+        expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        httpOnly: false,
+        secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+    });
+
+    if (!accessToken) {
+        return next(
+            new AppError(
+                'Oops! Can not create access token, please try again!',
+                400
+            )
+        );
+    }
+
+    return res.status(200).json({
+        status: 'success',
+        accessToken,
         data: {
             user,
         },
@@ -91,8 +152,6 @@ exports.signup = asyncHandler(async (req, res, next) => {
         secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
     });
     res.redirect(`${process.env.CLIENT_URL}/signup/success`);
-
-    // sendToken(newUser, 201, req, res);
 });
 
 exports.login = asyncHandler(async (req, res, next) => {
@@ -110,21 +169,28 @@ exports.login = asyncHandler(async (req, res, next) => {
 });
 
 exports.redirectGG = asyncHandler(async (req, res, next) => {
-    const token = createAccessToken(req.user._id, req.user.email);
+    const accessToken = createAccessToken(req.user._id, req.user.email);
 
-    res.cookie('jwt', token, {
-        expires: new Date(
-            Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-        ),
-        httpOnly: true,
+    res.cookie('jwt', accessToken, {
+        expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+        httpOnly: false,
         secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
     });
+
+    const user = await User.findById(req.user._id);
+    const refreshToken = createRefreshToken(user._id, user.email, accessToken);
+    user.refreshToken = refreshToken;
+    await user.save({ validateBeforeSave: false });
 
     res.redirect(`${process.env.CLIENT_URL}/login/google/success`);
 });
 
 exports.logout = (req, res) => {
     res.cookie('jwt', 'logout', {
+        expires: new Date(Date.now()),
+        httpOnly: false,
+    });
+    res.cookie('refresh', 'logout', {
         expires: new Date(Date.now()),
         httpOnly: true,
     });

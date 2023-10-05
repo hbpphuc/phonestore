@@ -1,4 +1,13 @@
-import httpRequest from '../utils/httpRequest'
+import httpRequest from '../axios/httpRequest'
+
+export const refreshToken = async () => {
+    try {
+        const res = await httpRequest.get('users/refreshToken', { withCredentials: true })
+        return res.data
+    } catch (error) {
+        return error.response.data
+    }
+}
 
 export const requestSignup = async (data) => {
     try {
