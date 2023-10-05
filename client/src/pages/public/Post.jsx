@@ -55,7 +55,7 @@ const Post = () => {
                 </div>
             )}
 
-            <div className="w-full flex flex-col">
+            <div className="w-full flex flex-col justify-center items-center">
                 <div className="w-full xl:w-main px-[10px] py-3 md:mb-5 flex items-center gap-5 flex-wrap">
                     {topic?.map((item) => (
                         <NavLink
