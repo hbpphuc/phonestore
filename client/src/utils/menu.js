@@ -1,5 +1,5 @@
 import { Icon } from 'components'
-import { publicRoutes, adminRoutes, privateRoutes } from 'routes/paths'
+import { publicRoutes, adminRoutes, privateRoutes } from '../routes/paths'
 
 export const navigatorMenu = [
     {
