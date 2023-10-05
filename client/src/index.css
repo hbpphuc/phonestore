@@ -1,0 +1,325 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap");
+
+@layer base {
+    * {
+        font-family: "Poppins", sans-serif;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    html {
+        overflow: overlay;
+    }
+
+    html ::-webkit-scrollbar {
+        height: 8px;
+        width: 6px;
+    }
+
+    html ::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: #0000004d;
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+    }
+
+    html ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset #fff;
+        border-radius: 4px;
+    }
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.szh-menu {
+    top: 30px !important;
+    left: -50px !important;
+}
+
+.header-menu-item {
+    @apply flex items-center text-base font-normal p-[10px] text-[#848484] hover:text-main cursor-pointer transition-all;
+}
+
+.product-item:hover .product-item-options {
+    bottom: 10px;
+    transition: all 0.5s ease;
+}
+
+.product-action {
+    @apply bg-white border border-[#c5cfd6] text-[#2a2a2a] hover:text-white hover:bg-[#2a2a2a] hover:border-[#2a2a2a];
+}
+
+.wishlist-action {
+    @apply !bg-white !text-red-500;
+}
+
+.react-tabs__tab--selected {
+    @apply text-main outline-none;
+}
+
+.react-tabs__tab-list {
+    @apply mb-0;
+}
+
+.bg-glassmorphism {
+    background: #ffffff29;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(3.5px);
+    -webkit-backdrop-filter: blur(3.5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    width: auto;
+    height: auto;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(3.5px);
+    -webkit-backdrop-filter: blur(3.5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    z-index: 10;
+}
+
+.swiper-button-next::after {
+    @apply content-['\276F'] p-2 md:p-3 text-[1.5rem] sm:text-[2rem] md:text-[3rem] text-[#3a3a3aae] hover:text-main;
+}
+
+.swiper-button-prev::after {
+    @apply content-['\276E'] p-2 md:p-3 text-[1.5rem] sm:text-[2rem] md:text-[3rem] text-[#3a3a3aae] hover:text-main;
+}
+
+button.slick-next {
+    @apply -right-[72px] w-20 h-20  justify-center items-center;
+}
+button.slick-prev {
+    @apply -left-[72px] w-20 h-20  justify-center items-center;
+}
+
+button.slick-next::before {
+    @apply content-['\276F'] text-[#151515] text-5xl flex justify-center items-center hover:text-main;
+}
+button.slick-prev::before {
+    @apply content-['\276E'] text-[#151515] text-5xl flex justify-center items-center hover:text-main;
+}
+
+.product-item-favourite {
+    @apply absolute top-1 -right-[6px] px-3 sm:px-4 text-sm leading-[1.2rem] sm:leading-[1.6rem] font-normal text-white;
+}
+
+.product-item-favourite::after {
+    @apply content-[""] absolute bottom-[-5px] right-0 border-t-[6px] border-r-[6px] border-r-transparent brightness-75;
+}
+
+.ReactModal__Overlay.ReactModal__Overlay--after-open {
+    background: rgba(0, 0, 0, 0.7) !important;
+}
+
+.seemore-btn {
+    --color: #0eb1f2;
+    font-family: inherit;
+    display: inline-block;
+    width: 6em;
+    height: 2.6em;
+    line-height: 2.5em;
+    overflow: hidden;
+    margin: 20px;
+    font-size: 17px;
+    z-index: 1;
+    color: var(--color);
+    border: 2px solid var(--color);
+    border-radius: 6px;
+    position: relative;
+}
+
+.seemore-btn::before {
+    position: absolute;
+    content: "";
+    background: var(--color);
+    width: 150px;
+    height: 200px;
+    z-index: -1;
+    border-radius: 50%;
+}
+
+.seemore-btn:hover {
+    color: white;
+}
+
+.seemore-btn:before {
+    top: 100%;
+    left: 100%;
+    transition: 0.3s all;
+}
+
+.seemore-btn:hover::before {
+    top: -30px;
+    left: -30px;
+}
+
+.page-item {
+    @apply px-3 text-black text-lg font-semibold hover:text-main cursor-pointer;
+}
+
+.page-item.active {
+    @apply text-main;
+}
+
+.sidebar-shadow {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22) !important;
+}
+
+.ps-menu-button:hover {
+    background-color: #0eb1f2 !important;
+    color: white !important;
+}
+
+.ps-submenu-content {
+    background-color: inherit !important;
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gradient-text {
+    background: radial-gradient(50% 124.93% at 95.86% -10%, #3efad9 0, hsla(0, 0%, 100%, 0) 100%),
+        linear-gradient(91.56deg, #0eb1f2 1.54%, #9000ff 98.71%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.save-btn {
+    @apply flex justify-center items-center text-white bg-main border border-transparent rounded-full uppercase;
+}
+
+.save-btn:hover {
+    background-color: white;
+    color: #0eb1f2;
+    border: 1px solid #0eb1f2;
+    transition: all 0.4s;
+}
+
+.save-btn:disabled {
+    @apply cursor-not-allowed select-none bg-main text-white border-transparent;
+}
+
+.font-robotoCondensed {
+    font-family: "Roboto Condensed", sans-serif !important;
+}
+
+.post-description-first-letter {
+    @apply first-letter:text-[62px] first-letter:leading-[48px] first-letter:font-semibold first-letter:text-[#333] first-letter:pr-2 first-letter:pt-2 first-letter:float-left leading-7;
+}
+
+.wrapper {
+    width: 100%;
+    min-height: 100px;
+    max-height: min((100vh - 96px) - 60px, 734px);
+    display: flex;
+    flex-direction: column;
+    background: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 12px;
+    border-radius: 8px;
+    padding-top: 8px;
+    overflow-y: auto;
+}
+
+.popup-content {
+    width: auto;
+    height: auto;
+    margin: auto;
+    background: rgb(255, 255, 255);
+}
+
+.popup-arrow {
+    color: rgb(255, 255, 255);
+}
+
+[role="tooltip"].popup-content {
+    width: 200px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
+}
+
+.popup-overlay {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+[data-popup="tooltip"].popup-overlay {
+    background: transparent;
+}
+
+.userOpt {
+    display: none;
+}
+
+.userOpt::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: -25%;
+    right: 20%;
+    z-index: 10;
+    border-width: 12px 12px;
+    border-style: solid;
+    border-color: transparent transparent #f4f4f4 transparent;
+}
+
+.userOpt::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 16px;
+    position: absolute;
+    top: -15%;
+    right: 0;
+    z-index: 10;
+    background-color: transparent;
+}
+
+.user:hover > .userOpt {
+    display: block;
+}
+
+.ps-sidebar-container {
+    @apply !overflow-visible;
+}
+
+.ps-menu-root > ul {
+    @apply flex flex-row sm:gap-3;
+}
+
+.ps-menu-button {
+    @apply !px-1 sm:!px-2 !h-auto;
+}
+
+.ps-menu-icon {
+    @apply !mr-0;
+}
