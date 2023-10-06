@@ -93,7 +93,7 @@ const UserOrder = () => {
                                                     <Tippy content="Cancel Order">
                                                         <span
                                                             onClick={() => handleCancelOrder(item._id)}
-                                                            className="cursor-pointer"
+                                                            className="cursor-pointer flex justify-center"
                                                         >
                                                             <Icon.FcCancel size={24} />
                                                         </span>

@@ -17,7 +17,12 @@ exports.getCheckoutSession = asyncHandler(async (req, res, next) => {
     res.cookie(
         'userCart',
         { ...req.body },
-        { httpOnly: true, maxAge: 15 * 60 * 1000 }
+        {
+            expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+            httpOnly: false,
+            secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+            sameSite: process.env.NODE_ENV === 'development' ? '' : 'none',
+        }
     );
 
     // Create checkout session
@@ -80,32 +85,6 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
     });
 
     const user = await User.findById(req.user.id);
-
-    // let coupon;
-
-    // if (req.body.coupon) {
-    //     coupon = await Coupon.findOne({
-    //         code: { $in: req.body.coupon },
-    //     });
-
-    //     if (!coupon)
-    //         return next(
-    //             new AppError('Coupon code does not exist or expired.', 404)
-    //         );
-
-    //     switch (coupon.type) {
-    //         case 'percent':
-    //             totalPrice = Math.round(
-    //                 totalPrice * (1 - coupon.discount / 100)
-    //             );
-    //             break;
-    //         case 'price':
-    //             totalPrice = Math.round(totalPrice - coupon.discount);
-    //             break;
-    //         default:
-    //             next();
-    //     }
-    // }
 
     user.cart = undefined;
     await user.save({ validateBeforeSave: false });

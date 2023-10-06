@@ -13,7 +13,7 @@ const sendToken = asyncHandler(async (user, statusCode, req, res) => {
         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
         httpOnly: false,
         secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
-        sameSite: process.env.NODE_ENV === 'development' ? 'strict' : 'none',
+        sameSite: process.env.NODE_ENV === 'development' ? '' : 'none',
     });
 
     const refreshToken = createRefreshToken(user._id, user.email, accessToken);
@@ -70,7 +70,7 @@ exports.refreshToken = asyncHandler(async (req, res, next) => {
         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
         httpOnly: false,
         secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
-        sameSite: process.env.NODE_ENV === 'development' ? 'strict' : 'none',
+        sameSite: process.env.NODE_ENV === 'development' ? '' : 'none',
     });
 
     if (!accessToken) {
@@ -152,7 +152,7 @@ exports.signup = asyncHandler(async (req, res, next) => {
         expires: new Date(Date.now() + 2 * 60 * 1000),
         httpOnly: true,
         secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
-        sameSite: process.env.NODE_ENV === 'development' ? 'strict' : 'none',
+        sameSite: process.env.NODE_ENV === 'development' ? '' : 'none',
     });
     res.redirect(`${process.env.CLIENT_URL}/signup/success`);
 });
@@ -178,7 +178,7 @@ exports.redirectGG = asyncHandler(async (req, res, next) => {
         expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
         httpOnly: false,
         secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
-        sameSite: process.env.NODE_ENV === 'development' ? 'strict' : 'none',
+        sameSite: process.env.NODE_ENV === 'development' ? '' : 'none',
     });
 
     const user = await User.findById(req.user._id);
@@ -213,6 +213,9 @@ exports.protect = asyncHandler(async (req, res, next) => {
     } else if (req.cookies.jwt) {
         token = req.cookies.jwt;
     }
+
+    console.log('cookie:', req.cookies);
+    console.log({ token });
 
     if (!token)
         return next(new AppError('Please logged in to get access!', 401));

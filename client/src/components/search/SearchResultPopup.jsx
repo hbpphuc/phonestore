@@ -4,7 +4,7 @@ import { Icon } from '../../components'
 
 const SearchResultPopup = ({ data, onSetFocus }) => {
     return (
-        <div className="w-full h-[300px] md:h-[400px] z-50 overflow-auto text-sm">
+        <div className="w-full h-auto max-h-[200px] sm:max-h-[300px] md:max-h-[400px] z-50 overflow-auto text-sm">
             <h2 className="w-full p-[4px_8px] bg-[#f8f9fa] text-[#6c757d] cursor-default select-none">
                 Products in your search
             </h2>

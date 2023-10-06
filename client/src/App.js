@@ -58,8 +58,8 @@ function App() {
 
         if (accessToken)
             intervalId = setInterval(() => {
-                if (!jwtDecode(accessToken).exp < new Date().getTime() / 1000) refreshToken()
-            }, 14 * 60 * 1000)
+                if (!(jwtDecode(accessToken).exp < new Date().getTime() / 1000)) refreshToken()
+            }, 10 * 60 * 1000)
 
         return () => clearInterval(intervalId)
     }, [])
