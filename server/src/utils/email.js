@@ -11,10 +11,6 @@ class Email {
     }
 
     newTransport() {
-        if (process.env.NODE_ENV === 'production') {
-            // SENGRID
-            return 1;
-        }
         return nodemailer.createTransport({
             host: process.env.GG_EMAIL_HOST,
             port: process.env.GG_EMAIL_PORT,

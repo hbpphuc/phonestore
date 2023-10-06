@@ -198,10 +198,14 @@ exports.logout = (req, res) => {
     res.cookie('jwt', 'logout', {
         expires: new Date(Date.now()),
         httpOnly: false,
+        secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+        sameSite: process.env.NODE_ENV === 'development' ? '' : 'none',
     });
     res.cookie('refresh', 'logout', {
         expires: new Date(Date.now()),
-        httpOnly: true,
+        httpOnly: false,
+        secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+        sameSite: process.env.NODE_ENV === 'development' ? '' : 'none',
     });
     res.status(200).json({
         status: 'success',
