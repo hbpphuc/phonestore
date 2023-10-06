@@ -5,11 +5,11 @@ import { useDispatch } from 'react-redux'
 import Swal from 'sweetalert2'
 import { login } from '../../redux/user/userSlice'
 import * as apis from '../../apis'
-import Button from '../general/Button'
-import Icon from '../general/Icons'
+import { Loading, Button, Icon } from '../../components'
 
 const LoginForm = ({ onSetForm }) => {
     const [pw, setPw] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const changeIconPw = pw === true ? false : true
 
     const {
@@ -22,7 +22,9 @@ const LoginForm = ({ onSetForm }) => {
     const dispatch = useDispatch()
 
     const onSubmit = async (data) => {
+        setIsLoading(true)
         const res = await apis.login(data)
+        setIsLoading(false)
 
         if (res.status === 'success') {
             dispatch(login({ isLoggedIn: true }))
@@ -68,10 +70,14 @@ const LoginForm = ({ onSetForm }) => {
                     {errors.password && <i className="text-sm text-red-500">Password is required.</i>}
                 </div>
                 <Button
-                    text="Sign In"
                     type="submit"
-                    className="w-[140px] mb-2 sm:mb-5 p-[10px_8px] bg-main text-white hover:bg-[#333] transition-colors"
-                />
+                    disable={isLoading ? true : false}
+                    className={`w-[140px] mb-2 sm:mb-3 md:mb-5 p-[10px_8px] ${
+                        isLoading ? 'bg-[#333] cursor-not-allowed' : 'bg-main'
+                    } text-white hover:bg-[#333] transition-colors`}
+                >
+                    {isLoading ? <Loading size={8} color="white" /> : 'Sign In'}
+                </Button>
             </form>
             <div className="w-full flex justify-between text-sm">
                 <Button

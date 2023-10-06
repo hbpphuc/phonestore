@@ -18,6 +18,9 @@ const Button = ({
     let Compnt = 'button'
     const props = {
         type,
+        text,
+        className,
+        active,
         onClick,
         ...passProps,
     }
@@ -31,7 +34,7 @@ const Button = ({
     }
 
     return (
-        <Compnt className={className} {...props}>
+        <Compnt className={className} {...props} disabled={disable}>
             {!children ? (
                 <>
                     {leftIcon && <span className="icon">{leftIcon}</span>}

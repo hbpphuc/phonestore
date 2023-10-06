@@ -115,7 +115,12 @@ exports.requestSignup = asyncHandler(async (req, res, next) => {
     res.cookie(
         'registerInfo',
         { ...req.body, token: tempToken },
-        { httpOnly: true, maxAge: 15 * 60 * 1000 }
+        {
+            expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+            httpOnly: false,
+            secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+            sameSite: process.env.NODE_ENV === 'development' ? '' : 'none',
+        }
     );
 
     const url = `${req.protocol}://${req.get(
@@ -214,9 +219,6 @@ exports.protect = asyncHandler(async (req, res, next) => {
         token = req.cookies.jwt;
     }
 
-    console.log('cookie:', req.cookies);
-    console.log({ token });
-
     if (!token)
         return next(new AppError('Please logged in to get access!', 401));
 
@@ -252,8 +254,6 @@ exports.restrictTo = (...roles) => {
 };
 
 exports.forgotPassword = asyncHandler(async (req, res, next) => {
-    console.log(req.body);
-
     const user = await User.findOne({ email: req.body.email });
 
     if (!user)

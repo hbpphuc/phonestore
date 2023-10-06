@@ -49,7 +49,10 @@ const ForgotForm = ({ onSetForm }) => {
                 <div className="w-full flex justify-center">
                     <Button
                         type="submit"
-                        className="w-[140px] p-[10px_8px] bg-main text-white hover:bg-[#333] transition-colors"
+                        disable={isLoading ? true : false}
+                        className={`w-[140px] p-[10px_8px] ${
+                            isLoading ? 'bg-[#333] cursor-not-allowed' : 'bg-main'
+                        } text-white hover:bg-[#333] transition-colors`}
                     >
                         {isLoading ? <Loading size={8} color="white" /> : 'Submit'}
                     </Button>
