@@ -261,9 +261,11 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     const user = await User.findOne({ email: req.body.email });
 
     if (!user)
-        return next(new AppError('No account found with that email.', 404));
+        return next(
+            new AppError('Not found user with this email address.', 404)
+        );
 
-    const resetToken = user.createResetPasswordToken();
+    const resetToken = user.createPasswordResetToken();
     await user.save({ validateBeforeSave: false });
 
     const { email, name } = user;
@@ -327,6 +329,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 
 exports.updatePassword = asyncHandler(async (req, res, next) => {
     const currUser = await User.findById(req.user.id).select('+password');
+    console.log({ currUser });
     const correct = await currUser.correctPassword(
         req.body.passwordCurrent,
         currUser.password

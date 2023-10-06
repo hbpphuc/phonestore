@@ -35,8 +35,8 @@ const ResetPassword = () => {
     }
 
     return (
-        <div className="w-main flex justify-center">
-            <div className="w-[500px] h-full flex flex-col items-center">
+        <div className="w-full xl:w-main flex justify-center px-[10px]">
+            <div className="w-full min-[425px]:w-[360px] sm:w-[400px] md:w-[500px] h-full flex flex-col items-center mt-5">
                 <h1 className="w-full mb-5 font-semibold text-xl text-[#505050] text-center ">RESET PASSWORD</h1>
                 <form className="w-full flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
                     <div className="w-full relative">
@@ -75,9 +75,13 @@ const ResetPassword = () => {
                             <i className="text-sm text-red-500">Password confirm is required.</i>
                         )}
                     </div>
+
                     <Button
                         type="submit"
-                        className="w-full mb-5 p-[12px_10px] bg-main text-white hover:bg-[#333] transition-colors"
+                        disable={isLoading ? true : false}
+                        className={`w-full mb-5 p-[12px_10px] ${
+                            isLoading ? 'bg-[#333] cursor-not-allowed' : 'bg-main'
+                        } text-white hover:bg-[#333] transition-colors`}
                     >
                         {isLoading ? <Loading size={8} color="white" /> : 'Submit'}
                     </Button>

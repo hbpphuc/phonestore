@@ -22,7 +22,6 @@ const InfoProduct = ({ data, detail, isLoading }) => {
 
     const colors = [
         { value: 'red', label: 'Red' },
-        { value: 'blue', label: 'Blue' },
         { value: 'black', label: 'Black' },
         { value: 'white', label: 'White' },
     ]
