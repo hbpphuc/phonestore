@@ -8,9 +8,8 @@ const ReviewList = ({ data, isNew, onSetIsNew, onSetIsEdit, onSetIsReply }) => {
                 data
                     .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
                     .map((item) => (
-                        <div className="flex flex-col">
+                        <div key={item._id} className="flex flex-col">
                             <ReviewItem
-                                key={item._id}
                                 data={item}
                                 onSetIsNew={onSetIsNew}
                                 onSetIsEdit={onSetIsEdit}
@@ -18,9 +17,8 @@ const ReviewList = ({ data, isNew, onSetIsNew, onSetIsEdit, onSetIsReply }) => {
                             />
                             {item.reply.length > 0 &&
                                 item.reply.map((el, index) => (
-                                    <div className="ml-14">
+                                    <div key={index} className="ml-4 sm:ml-8 md:ml-14">
                                         <ReviewItem
-                                            key={index}
                                             data={el}
                                             reviewId={item._id}
                                             reply
@@ -33,7 +31,7 @@ const ReviewList = ({ data, isNew, onSetIsNew, onSetIsEdit, onSetIsReply }) => {
                     ))
             ) : (
                 <div className="w-full h-auto flex justify-center items-center">
-                    <p className="text-base text-primary">This product have no review.</p>
+                    <p className="text-sm md:text-base text-primary">This product have no review.</p>
                 </div>
             )}
         </div>

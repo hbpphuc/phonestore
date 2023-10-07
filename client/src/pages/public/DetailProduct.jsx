@@ -21,14 +21,6 @@ const DetailProduct = () => {
 
     const [isMore, setIsMore] = useState(false)
 
-    const settingsProducts = {
-        dots: false,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-    }
-
     useEffect(() => {
         const getProduct = async () => {
             setIsLoading(true)

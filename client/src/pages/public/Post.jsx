@@ -31,9 +31,8 @@ const Post = () => {
         const getAllPost = async () => {
             setProgress(30)
             const res = await apis.getAllPost()
-            setProgress(100)
-
             type ? setPost(res?.data?.data?.filter((item) => item.topic.slug === type)) : setPost(res?.data?.data)
+            setProgress(100)
         }
 
         getAllPost()

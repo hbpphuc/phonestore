@@ -21,7 +21,7 @@ const Review = () => {
     }, [slug, isNewReview])
 
     return (
-        <div className="border border-[#aaa] border-t-0 p-5">
+        <div className="border border-[#aaa] border-t-0 p-2 md:p-5">
             <ReviewWriter
                 id={reviews?._id}
                 onSetIsNew={setIsNewReview}

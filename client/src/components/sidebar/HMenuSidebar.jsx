@@ -49,14 +49,14 @@ const HMenuSidebar = ({ user, onSetOpenMenu, onLogout }) => {
                                     <NavLink
                                         onClick={(isActive) => isActive && onSetOpenMenu(false)}
                                         to={
-                                            user?.data?.role === 'admin'
+                                            user?.role === 'admin'
                                                 ? `/${adminRoutes.admin}/${adminRoutes.adminDashboard}`
                                                 : `/me`
                                         }
                                         className={`w-full h-full inline-block ${({ isActive }) =>
                                             isActive ? 'text-main' : ''}`}
                                     >
-                                        {user?.data?.name}
+                                        {user?.name}
                                     </NavLink>
                                 </li>
                                 <li
@@ -91,6 +91,9 @@ const HMenuSidebar = ({ user, onSetOpenMenu, onLogout }) => {
                             </li>
                         )}
                     </ul>
+                    <span className="flex md:hidden justify-center items-center py-4 text-sm text-[#999]">
+                        &copy; Digital World
+                    </span>
                 </div>
             </div>
         </div>

@@ -164,6 +164,9 @@ const OrderSidebar = ({ onSetOpenOrder, user }) => {
                     </div>
                 )}
             </div>
+            <span className="flex md:hidden justify-center items-center py-4 text-sm text-[#999]">
+                &copy; Digital World
+            </span>
         </div>
     )
 }

@@ -22,6 +22,7 @@ import {
     BiSolidDislike,
     BiSolidLike,
     BiSolidHome,
+    BiSend,
 } from 'react-icons/bi'
 import { RxUpdate } from 'react-icons/rx'
 import { CgRemove } from 'react-icons/cg'
@@ -95,7 +96,7 @@ const Icon = {
     FcCancel,
     PiCaretDoubleDownBold,
     MdVerticalAlignTop,
-
+    BiSend,
     LuSmartphone,
     MdLaptopMac,
     SlScreenTablet,

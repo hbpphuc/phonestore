@@ -159,7 +159,7 @@ const InfoProduct = ({ data, detail, isLoading }) => {
                                         e.preventDefault()
                                         setQuantity((prev) => prev - 1)
                                     }}
-                                    disabled={quantity === 1 && true}
+                                    disable={quantity === 1 && true}
                                     className="w-8 h-8 flex justify-center items-center text-xl font-normal text-white bg-main disabled:bg-[#ccc]"
                                 >
                                     -
@@ -176,7 +176,8 @@ const InfoProduct = ({ data, detail, isLoading }) => {
                                         e.preventDefault()
                                         setQuantity((prev) => prev + 1)
                                     }}
-                                    className="w-8 h-8 flex justify-center items-center text-xl font-normal text-white bg-main"
+                                    disable={quantity >= data?.quantity && true}
+                                    className="w-8 h-8 flex justify-center items-center text-xl font-normal text-white bg-main disabled:bg-[#ccc]"
                                 >
                                     +
                                 </Button>
