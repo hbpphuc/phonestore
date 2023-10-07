@@ -8,13 +8,14 @@ import { toast } from 'react-toastify'
 import { setProductInCart } from '../../redux/order/orderSlice'
 import * as apis from '../../apis'
 import { publicRoutes } from '../../routes/paths'
-import { Button } from '../../components'
+import { Button, Loading } from '../../components'
 
 const InfoProduct = ({ data, detail, isLoading }) => {
     const { productInCart } = useSelector((state) => state.order)
     const { deviceWidth } = useSelector((state) => state.app)
     const dispatch = useDispatch()
 
+    const [isAdding, setIsAdding] = useState(false)
     const [quantity, setQuantity] = useState(1)
     const [color, setColor] = useState(null)
 
@@ -27,11 +28,13 @@ const InfoProduct = ({ data, detail, isLoading }) => {
     ]
 
     const onSubmit = async () => {
+        setIsAdding(true)
         const res = await apis.addToCart({ quantity, product: data?._id, color: color?.label })
         if (res?.status === 'success') {
             dispatch(setProductInCart(productInCart + quantity))
             toast.success('Done!')
         } else toast.error(res?.message)
+        setIsAdding(false)
     }
 
     return (
@@ -70,29 +73,6 @@ const InfoProduct = ({ data, detail, isLoading }) => {
                         />
                     )}
                 </div>
-                {/* {data?.images.length > 0 && (
-                    <div className={`w-full h-full ${detail ? 'border-t pt-2' : ''}`}>
-                        <Swiper
-                            slidesPerView={2}
-                            spaceBetween={10}
-                            freeMode={true}
-                            pagination={{
-                                clickable: true,
-                            }}
-                            modules={[FreeMode]}
-                            className="sm:!w-[280px] lg:!w-[500px] !h-auto"
-                        >
-                            {data?.images?.map((item, index) => (
-                                <SwiperSlide key={index}>
-                                    <img
-                                        src={item ?? 'https://app.advaiet.com/item_dfile/default_product.png'}
-                                        alt={'item'}
-                                    />
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
-                    </div>
-                )} */}
             </div>
             <div className="flex-1 h-full flex flex-col">
                 {deviceWidth >= 640 && (
@@ -189,12 +169,14 @@ const InfoProduct = ({ data, detail, isLoading }) => {
                                 e.preventDefault()
                                 onSubmit()
                             }}
-                            disabled={quantity < 1 && true}
+                            disabled={(quantity < 1 || isAdding) && true}
                             className={`${
                                 detail ? 'w-full mt-6' : 'w-[180px]'
-                            } h-10 p-[8px_12px] flex justify-center items-center text-base text-white bg-main hover:bg-[#333] transition-colors disabled:bg-[#ccc]`}
+                            } h-10 p-[8px_12px] flex justify-center items-center text-base text-white ${
+                                isAdding ? 'cursor-not-allowed' : 'bg-main'
+                            } hover:bg-[#333] transition-colors disabled:bg-[#ccc]`}
                         >
-                            ADD TO CART
+                            {isAdding ? <Loading size={8} color="white" /> : 'ADD TO CART'}
                         </button>
                     </div>
                 </form>

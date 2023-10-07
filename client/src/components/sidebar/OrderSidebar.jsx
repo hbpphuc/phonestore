@@ -12,6 +12,7 @@ const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)
 const OrderSidebar = ({ onSetOpenOrder, user }) => {
     const [couponCode, setCouponCode] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+    const [isCheckout, setIsCheckout] = useState(false)
     const [isValid, setIsValid] = useState(false)
     const [couponItem, setCouponItem] = useState(null)
 
@@ -52,6 +53,7 @@ const OrderSidebar = ({ onSetOpenOrder, user }) => {
     }
 
     const onSubmit = async (data) => {
+        setIsCheckout(true)
         const dataObj = {
             ...data,
             cart: user?.cart,
@@ -60,6 +62,7 @@ const OrderSidebar = ({ onSetOpenOrder, user }) => {
         if (res?.status === 'success') {
             setCheckout(res?.data)
         } else toast(res?.message)
+        setIsCheckout(false)
     }
 
     useEffect(() => {
@@ -153,11 +156,22 @@ const OrderSidebar = ({ onSetOpenOrder, user }) => {
                                 )}
                             </div>
                             <div>
-                                <Button className="w-full py-3 flex justify-center items-center gap-3 bg-main rounded">
-                                    <span className="uppercase font-medium">Check Out</span>
-                                    <span>
-                                        <Icon.MdShoppingCartCheckout size={24} />
-                                    </span>
+                                <Button
+                                    disable={isCheckout && true}
+                                    className={`w-full py-3 flex justify-center items-center gap-3 ${
+                                        isCheckout ? 'bg-[#333] cursor-not-allowed' : 'bg-main'
+                                    } rounded`}
+                                >
+                                    {isCheckout ? (
+                                        <Loading size={8} color="white" />
+                                    ) : (
+                                        <>
+                                            <span className="uppercase font-medium">Check Out</span>
+                                            <span>
+                                                <Icon.MdShoppingCartCheckout size={24} />
+                                            </span>
+                                        </>
+                                    )}
                                 </Button>
                             </div>
                         </form>
