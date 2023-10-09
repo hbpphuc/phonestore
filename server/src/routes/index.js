@@ -11,6 +11,8 @@ const orderRouter = require('./order.routes');
 const dashboardRouter = require('./dashboard.routes');
 
 const initRoutes = (app) => {
+    app.use('', (req, res) => res.send('Server is running...'));
+
     app.use('/api/v1/products', productRouter);
     app.use('/api/v1/categories', categoryRouter);
     app.use('/api/v1/topics', topicRouter);
