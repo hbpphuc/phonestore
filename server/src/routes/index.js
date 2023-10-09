@@ -23,7 +23,8 @@ const initRoutes = (app) => {
     app.use('/api/v1/users', userRouter);
     app.use('/api/v1/orders', orderRouter);
     app.use('/api/v1/dashboard', dashboardRouter);
-
+    app.use('/', (req,res) => res.send("Server is running..."))
+    
     app.all('*', function (req, res, next) {
         next(new AppError(`Route ${req.originalUrl} not found`, 404));
     });
