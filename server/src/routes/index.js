@@ -11,8 +11,6 @@ const orderRouter = require('./order.routes');
 const dashboardRouter = require('./dashboard.routes');
 
 const initRoutes = (app) => {
-    app.use('', (req, res) => res.send('Server is running...'));
-
     app.use('/api/v1/products', productRouter);
     app.use('/api/v1/categories', categoryRouter);
     app.use('/api/v1/topics', topicRouter);
@@ -23,8 +21,8 @@ const initRoutes = (app) => {
     app.use('/api/v1/users', userRouter);
     app.use('/api/v1/orders', orderRouter);
     app.use('/api/v1/dashboard', dashboardRouter);
-    app.use('/', (req,res) => res.send("Server is running..."))
-    
+    app.use('/', (req, res) => res.send('Server is running...'));
+
     app.all('*', function (req, res, next) {
         next(new AppError(`Route ${req.originalUrl} not found`, 404));
     });
