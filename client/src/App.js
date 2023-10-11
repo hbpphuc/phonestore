@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
-import jwtDecode from 'jwt-decode'
 
 import { publicR, privateR, adminR } from './routes'
 import { publicRoutes } from './routes/paths'
@@ -11,19 +10,16 @@ import { Admin, NotFoundAdmin } from './pages/admin'
 import { Private } from './pages/private'
 import { setWidth } from './redux/app/appSlice'
 import { Icon } from './components'
-import * as apis from './apis'
 
 import 'react-toastify/dist/ReactToastify.css'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import 'swiper/css/free-mode'
-import Cookies from 'js-cookie'
 
 function App() {
     const { isLoggedIn, curUser } = useSelector((state) => state.user)
     const dispatch = useDispatch()
-    const accessToken = Cookies.get('jwt')
 
     const [showTop, setShowTop] = useState(false)
     const [deviceWidth, setDeviceWidth] = useState(window.innerWidth)
@@ -48,21 +44,6 @@ function App() {
     useEffect(() => {
         dispatch(setWidth(deviceWidth))
     }, [deviceWidth])
-
-    useEffect(() => {
-        let intervalId
-
-        const refreshToken = async () => {
-            await apis.refreshToken()
-        }
-
-        if (accessToken)
-            intervalId = setInterval(() => {
-                if (!(jwtDecode(accessToken).exp < new Date().getTime() / 1000)) refreshToken()
-            }, 10 * 60 * 1000)
-
-        return () => clearInterval(intervalId)
-    }, [])
 
     return (
         <>
