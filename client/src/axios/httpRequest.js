@@ -3,9 +3,8 @@ import Cookies from 'js-cookie'
 
 const httpRequest = axios.create({ baseURL: process.env.REACT_APP_SERVER_URL })
 
-let accessToken = Cookies.get('jwt')
+const accessToken = Cookies.get('jwt')
 
-// Request interceptor for API calls
 httpRequest.interceptors.request.use(async (config) => {
     try {
         if (!accessToken) return config
@@ -17,5 +16,25 @@ httpRequest.interceptors.request.use(async (config) => {
         console.log(error)
     }
 })
+
+httpRequest.interceptors.response.use(
+    (response) => {
+        return response
+    },
+    (error) => {
+        if (error.response.status === 401 || error.response.data.message === 'jwt expired') {
+            axios
+                .get(`${process.env.REACT_APP_SERVER_URL}users/refreshToken`, {
+                    withCredentials: true,
+                    headers: { x_authorization: accessToken },
+                })
+                .then((response) => {
+                    Cookies.set('jwt', response.data.accessToken)
+                    window.location.reload()
+                })
+        }
+        return Promise.reject(error)
+    }
+)
 
 export default httpRequest
