@@ -9,7 +9,7 @@ httpRequest.interceptors.request.use(async (config) => {
     try {
         if (!accessToken) return config
 
-        config.headers = { x_authorization: accessToken }
+        config.headers = { authorization: accessToken }
 
         return config
     } catch (error) {
@@ -26,7 +26,10 @@ httpRequest.interceptors.response.use(
             axios
                 .get(`${process.env.REACT_APP_SERVER_URL}users/refreshToken`, {
                     withCredentials: true,
-                    headers: { x_authorization: accessToken },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        authorization: accessToken,
+                    },
                 })
                 .then((response) => {
                     Cookies.set('jwt', response.data.accessToken)

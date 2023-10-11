@@ -32,7 +32,7 @@ const sendToken = asyncHandler(async (user, statusCode, req, res) => {
 });
 
 exports.refreshToken = asyncHandler(async (req, res, next) => {
-    const accToken = req.headers.x_authorization;
+    const accToken = req.headers.authorization;
 
     if (!accToken) {
         return next(new AppError('Access token is invalid.', 400));
@@ -201,12 +201,7 @@ exports.logout = (req, res) => {
         secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
         sameSite: process.env.NODE_ENV === 'development' ? '' : 'none',
     });
-    res.cookie('refresh', 'logout', {
-        expires: new Date(Date.now()),
-        httpOnly: false,
-        secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
-        sameSite: process.env.NODE_ENV === 'development' ? '' : 'none',
-    });
+
     res.status(200).json({
         status: 'success',
     });
@@ -329,7 +324,6 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 
 exports.updatePassword = asyncHandler(async (req, res, next) => {
     const currUser = await User.findById(req.user.id).select('+password');
-    console.log({ currUser });
     const correct = await currUser.correctPassword(
         req.body.passwordCurrent,
         currUser.password
