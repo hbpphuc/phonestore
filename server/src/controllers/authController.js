@@ -32,7 +32,16 @@ const sendToken = asyncHandler(async (user, statusCode, req, res) => {
 });
 
 exports.refreshToken = asyncHandler(async (req, res, next) => {
-    const accToken = req.headers.authorization;
+    let accToken;
+
+    if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')
+    ) {
+        accToken = req.headers.authorization.split(' ')[1];
+    } else if (req.cookies.jwt) {
+        accToken = req.cookies.jwt;
+    }
 
     if (!accToken) {
         return next(new AppError('Access token is invalid.', 400));

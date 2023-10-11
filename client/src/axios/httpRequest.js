@@ -9,7 +9,7 @@ httpRequest.interceptors.request.use(async (config) => {
     try {
         if (!accessToken) return config
 
-        config.headers = { authorization: accessToken }
+        config.headers = { authorization: `Bearer ${accessToken}` }
 
         return config
     } catch (error) {
@@ -28,7 +28,7 @@ httpRequest.interceptors.response.use(
                     withCredentials: true,
                     headers: {
                         'Content-Type': 'application/json',
-                        authorization: accessToken,
+                        authorization: `Bearer ${accessToken}`,
                     },
                 })
                 .then((response) => {
