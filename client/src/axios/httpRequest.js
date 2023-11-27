@@ -22,7 +22,8 @@ httpRequest.interceptors.response.use(
         return response
     },
     (error) => {
-        if (error.response.status === 401 || error.response.data.message === 'jwt expired') {
+        if (!accessToken) console.log(error)
+        else if (error.response.status === 401 || error.response.data.message === 'jwt expired') {
             axios
                 .get(`${process.env.REACT_APP_SERVER_URL}users/refreshToken`, {
                     withCredentials: true,

@@ -13,6 +13,8 @@ const Default = () => {
     const [openOrder, setOpenOrder] = useState(false)
     const [user, setUser] = useState(null)
 
+    const [isRunning, setIsRunning] = useState(false)
+
     useEffect(() => {
         const getCurUser = async () => {
             const res = await apis.getCurrentUser()
@@ -22,13 +24,27 @@ const Default = () => {
         getCurUser()
     }, [productInCart])
 
+    useEffect(() => {
+        const check = async () => {
+            const res = await apis.getAllCategory()
+            if (res?.status === 'success') setIsRunning(true)
+        }
+        check()
+    }, [isRunning])
+
     return (
-        <div className="w-full h-full flex flex-col justify-center items-center relative">
-            <Header onSetOpenOrder={setOpenOrder} user={user} />
-            <Outlet />
-            <Footer />
-            {openOrder && <OrderSidebar onSetOpenOrder={setOpenOrder} user={user} />}
-        </div>
+        <>
+            {isRunning ? (
+                <div className="w-full h-full flex flex-col justify-center items-center relative">
+                    <Header onSetOpenOrder={setOpenOrder} user={user} />
+                    <Outlet />
+                    <Footer />
+                    {openOrder && <OrderSidebar onSetOpenOrder={setOpenOrder} user={user} />}
+                </div>
+            ) : (
+                <div>wating server...</div>
+            )}
+        </>
     )
 }
 
