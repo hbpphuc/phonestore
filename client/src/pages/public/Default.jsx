@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { FadeLoader } from 'react-spinners'
 import { Footer, Header } from '../../layouts'
-import { OrderSidebar } from '../../components'
+import { OrderSidebar, Loading } from '../../components'
 import * as apis from '../../apis'
 import { setProductInCart } from '../../redux/order/orderSlice'
 
@@ -42,7 +43,14 @@ const Default = () => {
                     {openOrder && <OrderSidebar onSetOpenOrder={setOpenOrder} user={user} />}
                 </div>
             ) : (
-                <div>wating server...</div>
+                <div className="w-screen h-screen flex flex-col justify-center items-center px-[10px]">
+                    <h2 className="w-full lg:w-[780px] flex justify-center mb-2 text-base">
+                        This web server is deployed in Render and using Free instance. So, Render spins down a Free web
+                        service that goes 15 minutes without receiving inbound traffic. Please wait a few minutes to
+                        start web service.
+                    </h2>
+                    <FadeLoader color="#0eb1f2" margin={4} aria-label="Loading Spinner" data-testid="loader" />
+                </div>
             )}
         </>
     )
