@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const allowedOrigins = [
     process.env.CLIENT_URL,
-    'https://phonestore-client.vercel.app/',
+    'https://phonestore-client.vercel.app',
 ];
 
 const corsOptions = {
