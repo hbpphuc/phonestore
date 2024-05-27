@@ -32,7 +32,7 @@ const Header = ({ user, onSetOpenOrder }) => {
 
     useEffect(() => {
         if (isLoggedIn) dispatch(getCurrentUser())
-    }, [dispatch, isLoggedIn])
+    }, [isLoggedIn])
 
     const logout = async () => {
         Swal.fire({

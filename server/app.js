@@ -28,8 +28,19 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+const allowedOrigins = [
+    process.env.CLIENT_URL,
+    'https://phonestore-client.vercel.app/',
+];
+
 const corsOptions = {
-    origin: process.env.CLIENT_URL,
+    origin: function (origin, callback) {
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
